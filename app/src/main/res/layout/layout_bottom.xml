@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_bottom"
+    style="@style/tab_bottom"
+    android:orientation="horizontal"
+    android:background="@color/layout_bottom"
+    android:gravity="center"
+    >
+    <LinearLayout
+        android:id="@+id/ll_information"
+        style="@style/bottom_ll"
+        >
+        <ImageView
+            style="@style/layout_w_weight"
+            android:src="@mipmap/tab_information_n"
+            />
+        <TextView
+            android:text="@string/information"
+            style="@style/tv_silver"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_video"
+        style="@style/bottom_ll"
+        >
+
+        <ImageView
+            style="@style/layout_w_weight"
+            android:src="@mipmap/tab_video_n"
+            />
+        <TextView
+            android:text="@string/video"
+            style="@style/tv_silver" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_me"
+        style="@style/bottom_ll"
+        >
+        <ImageView
+            style="@style/layout_w_weight"
+            android:src="@mipmap/tab_my_n"
+            />
+        <TextView
+            android:text="@string/my"
+            style="@style/tv_silver" />
+
+    </LinearLayout>
+
+</LinearLayout>

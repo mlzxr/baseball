@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">baseball</string>
     <string name="action_settings">Settings</string>
+
+    <string name="information">资讯</string>
+    <string name="video">视频</string>
+    <string name="my">我的</string>
+
 </resources>
