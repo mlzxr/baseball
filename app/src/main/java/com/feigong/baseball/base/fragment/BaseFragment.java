@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.feigong.baseball.base.util.L;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import com.feigong.baseball.base.util.L;
 
 /**
  * 项目名称：cqt_app
