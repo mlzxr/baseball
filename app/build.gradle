@@ -8,7 +8,7 @@ android {
     //aaptOptions.useNewCruncher = false
 
     defaultConfig {
-        applicationId "ml.com.baseball"
+        applicationId "com.feigong.baseball"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -30,4 +30,6 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile project(':baseUtil')
     compile project(':imageLoader')
+    compile files('libs/jcore-android_v1.0.0.jar')
+    compile files('libs/jpush-android_v3.0.0.jar')
 }
