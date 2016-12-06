@@ -5,6 +5,7 @@ package com.feigong.baseball.fgview;/**
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +28,8 @@ public class View_ITI_Horizontal extends LinearLayout {
     private TextView centreTextView;
     private ImageView rightImageView;
 
+    private View left_view;
+
     public View_ITI_Horizontal(Context context) {
         super(context);
         init(context);
@@ -47,6 +50,17 @@ public class View_ITI_Horizontal extends LinearLayout {
 
         rightImageView =(ImageView)findViewById(R.id.right_imageView);
 
+        left_view=(View)findViewById(R.id.left_view);
+
+    }
+
+    public View getLeft_view() {
+        return left_view;
+    }
+
+    public View_ITI_Horizontal setLeft_view(View left_view) {
+        this.left_view = left_view;
+        return this;
     }
 
     public ImageView getLeftImageView() {

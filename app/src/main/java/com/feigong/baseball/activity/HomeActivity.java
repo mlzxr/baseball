@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,12 +15,17 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.base.activity.BaseActivity;
+import com.feigong.baseball.base.common.MapUtil;
+import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.information.InformationFragment;
 import com.feigong.baseball.myinfo.MeFragment;
+import com.feigong.baseball.myinfo.SecurityAccountFragment;
+import com.feigong.baseball.myinfo.SettingFragment;
 import com.feigong.baseball.video.VideoFragment;
 
 /**
@@ -38,8 +44,6 @@ public class HomeActivity extends BaseActivity {
 
     private ViewPager home_viewPager;
     private LinearLayout ll_information, ll_video, ll_me;
-
-    private LinearLayout ll_layout;
 
     private FragmentPagerAdapter fragmentPagerAdapter;
     private List<Fragment> fragmentArrayList = new ArrayList<>();
@@ -72,8 +76,6 @@ public class HomeActivity extends BaseActivity {
         ll_information = (LinearLayout) findViewById(R.id.ll_information);
         ll_video = (LinearLayout) findViewById(R.id.ll_video);
         ll_me = (LinearLayout) findViewById(R.id.ll_me);
-
-        ll_layout =(LinearLayout)findViewById(R.id.ll_layout);
 
         //
         ll_information.setOnClickListener(new CheckTag(0));
@@ -121,21 +123,32 @@ public class HomeActivity extends BaseActivity {
 
     }
 
-    public void setLl_layout(int tag){
-        switch (tag){
-            case 0:
-
-
+    public void setLayout(Map<String,Object> map){
+        Fragment fragment = null;
+        int flag = MapUtil.getInt(map, Constant.FLAG);
+        String tag = MapUtil.getValue(map, Constant.TAG);
+        switch (flag){
+            case Constant.FragmentTAG.setting_fragment:
+                fragment = getSupportFragmentManager().findFragmentByTag(tag);
+                if(fragment==null){
+                    fragment = SettingFragment.newInstance();
+                }
                 break;
-
-            case 1:
-
+            case Constant.FragmentTAG.security_account_fragment:
+                fragment = getSupportFragmentManager().findFragmentByTag(tag);
+                if(fragment==null){
+                    fragment = SecurityAccountFragment.newInstance();
+                }
                 break;
-
+        }
+        //
+        if (fragment != null) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.frameLayout, fragment,tag);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commitAllowingStateLoss();
         }
     }
-
-
 
     class CheckTag implements View.OnClickListener {
         private int index;

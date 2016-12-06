@@ -30,12 +30,26 @@
             />
 
     </LinearLayout>
-    <View
-        android:layout_marginLeft="@dimen/iti_image_width"
-        android:paddingLeft="10dp"
-        android:layout_height="1px"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:background="@color/lightgray"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <View
+            android:id="@+id/left_view"
+            android:layout_height="0px"
+            android:layout_width="@dimen/iti_image_width"
+            android:background="@color/lightgray"
+            />
+
+        <View
+            android:layout_height="1px"
+            android:layout_width="match_parent"
+            android:background="@color/lightgray"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>

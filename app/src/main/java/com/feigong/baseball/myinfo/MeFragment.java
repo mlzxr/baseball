@@ -6,8 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.feigong.baseball.R;
+import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.fgview.View_ITI_Horizontal;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * 项目名称：baseball
@@ -61,10 +67,18 @@ public class MeFragment extends BaseFragment {
         myAccount_iti.getCentreTextView().setText(getString(R.string.my_account));
         mySetting_iti.getCentreTextView().setText(getString(R.string.my_setting));
         //
-
-
-
-
+        mySetting_iti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String,Object> map = new HashMap<String, Object>();
+                //
+                map.put(Constant.FLAG,Constant.FragmentTAG.setting_fragment);
+                map.put(Constant.TAG,Constant.FragmentTAG.setting_fragmentTAG);
+                //
+                HomeActivity homeActivity = (HomeActivity)getActivity();
+                homeActivity.setLayout(map);
+            }
+        });
     }
 
     @Override

@@ -15,4 +15,13 @@
     <string name="my_setting">设置</string>
 
 
+    <!--设置-->
+    <string name="security_account">账号与安全</string>
+    <string name="push_notification">推送通知</string>
+    <string name="clear_cache">清空缓存</string>
+    <string name="share_friend">分享给好友</string>
+    <string name="about_us">关于我们</string>
+
+    <string name="go_out">退出登陆</string>
+
 </resources>

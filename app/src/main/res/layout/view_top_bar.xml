@@ -3,24 +3,28 @@
     style="@style/tab_bottom"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-
+    android:background="@color/tab_select_s"
     >
     <ImageView
         android:id="@+id/iv_back"
         style="@style/layout_ww"
-
+        android:src="@mipmap/topbar_back_white"
+        android:layout_marginLeft="10dp"
         />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_weight="1"
+        android:textColor="@color/white"
+        android:gravity="center_horizontal"
         android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/iv_commit"
         style="@style/layout_ww"
-
+        android:visibility="invisible"
+        android:src="@mipmap/topbar_back_white"
         />
 
 </LinearLayout>

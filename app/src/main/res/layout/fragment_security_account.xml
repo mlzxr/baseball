@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:background="@color/lightgray"
+    >
+
+    <com.feigong.baseball.fgview.ViewTopBar
+        android:id="@+id/viewTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.feigong.baseball.fgview.ViewTopBar>
+
+    <Button
+        android:id="@+id/bt_login"
+        style="@style/layout_mw"
+        android:background="@drawable/shape_dodgerblue"
+        android:text="@string/go_out"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentBottom="true"
+        />
+
+</LinearLayout>
