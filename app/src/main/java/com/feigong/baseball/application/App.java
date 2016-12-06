@@ -9,7 +9,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import cn.jpush.android.api.JPushInterface;
+
 import com.feigong.baseball.base.util.ScreenUtils;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 /**
  * 项目名称：cqt_app
@@ -23,24 +26,35 @@ import com.feigong.baseball.base.util.ScreenUtils;
  */
 public class App extends Application {
 
+    public static RefWatcher getRefWatcher(Context context) {
+        App application = (App) context.getApplicationContext();
+        return application.refWatcher;
+    }
+
+
     private static Context context;
+
+    private RefWatcher refWatcher;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        //监听内存泄漏
+        refWatcher = LeakCanary.install(this);
+
+
+        //网络图片加载框架
+        initImageLoader(this);
+        //
+        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);
+        //定义单列Context
         context = getApplicationContext();
         //获取屏幕相关属性
         ScreenUtils.getScreenWidth(context);
         ScreenUtils.getScreenHeight(context);
         ScreenUtils.getScreenDensity(context);
-        //网络图片加载框架
-        initImageLoader(context);
-        //
-        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
-        JPushInterface.init(this);
 
-        //Debug
-        //LeakCanary.install(this);
     }
 
     public static void initImageLoader(Context context) {
@@ -48,8 +62,7 @@ public class App extends Application {
         ImageLoader.getInstance().init(config);
     }
 
-
-    public static Context getContext(){
+    public static Context getContext() {
         return context;
     }
 

@@ -36,9 +36,10 @@ public class HomeActivity extends BaseActivity {
 
     private static final String TAG="HomeActivity";
 
-
     private ViewPager home_viewPager;
     private LinearLayout ll_information, ll_video, ll_me;
+
+    private LinearLayout ll_layout;
 
     private FragmentPagerAdapter fragmentPagerAdapter;
     private List<Fragment> fragmentArrayList = new ArrayList<>();
@@ -71,6 +72,9 @@ public class HomeActivity extends BaseActivity {
         ll_information = (LinearLayout) findViewById(R.id.ll_information);
         ll_video = (LinearLayout) findViewById(R.id.ll_video);
         ll_me = (LinearLayout) findViewById(R.id.ll_me);
+
+        ll_layout =(LinearLayout)findViewById(R.id.ll_layout);
+
         //
         ll_information.setOnClickListener(new CheckTag(0));
         ll_video.setOnClickListener(new CheckTag(1));
@@ -115,6 +119,20 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initData() {
 
+    }
+
+    public void setLl_layout(int tag){
+        switch (tag){
+            case 0:
+
+
+                break;
+
+            case 1:
+
+                break;
+
+        }
     }
 
 

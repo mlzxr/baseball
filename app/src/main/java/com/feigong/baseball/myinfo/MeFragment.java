@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.fgview.View_ITI_Horizontal;
 
 /**
  * 项目名称：baseball
@@ -21,6 +22,8 @@ import com.feigong.baseball.base.fragment.BaseFragment;
 public class MeFragment extends BaseFragment {
 
     private static final String TAG="MeFragment";
+
+
 
     //
     public static MeFragment newInstance() {
@@ -40,6 +43,27 @@ public class MeFragment extends BaseFragment {
 
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
+
+        View_ITI_Horizontal myMessage_iti = (View_ITI_Horizontal)view.findViewById(R.id.my_message_iti);
+        View_ITI_Horizontal myCollect_iti = (View_ITI_Horizontal)view.findViewById(R.id.my_collect_iti);
+        //
+        View_ITI_Horizontal myAccount_iti = (View_ITI_Horizontal)view.findViewById(R.id.my_account_iti);
+        View_ITI_Horizontal mySetting_iti = (View_ITI_Horizontal)view.findViewById(R.id.my_setting_iti);
+
+        //
+        myMessage_iti.getLeftImageView().setImageResource(R.mipmap.ic_launcher);
+        myCollect_iti.getLeftImageView().setImageResource(R.mipmap.ic_launcher);
+        myAccount_iti.getLeftImageView().setImageResource(R.mipmap.ic_launcher);
+        mySetting_iti.getLeftImageView().setImageResource(R.mipmap.ic_launcher);
+        //
+        myMessage_iti.getCentreTextView().setText(getString(R.string.my_message));
+        myCollect_iti.getCentreTextView().setText(getString(R.string.my_collect));
+        myAccount_iti.getCentreTextView().setText(getString(R.string.my_account));
+        mySetting_iti.getCentreTextView().setText(getString(R.string.my_setting));
+        //
+
+
+
 
     }
 

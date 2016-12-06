@@ -39,6 +39,6 @@ public class MainActivity extends BaseActivity {
                 //
                 finish();
             }
-        },2000);
+        },100);
     }
 }

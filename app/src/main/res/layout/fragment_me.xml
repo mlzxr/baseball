@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lavender"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/cadetblue"
+        >
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <com.feigong.baseball.fgview.View_ITI_Horizontal
+            android:id="@+id/my_message_iti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_ITI_Horizontal>
+
+        <com.feigong.baseball.fgview.View_ITI_Horizontal
+            android:id="@+id/my_collect_iti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_ITI_Horizontal>
+
+        <com.feigong.baseball.fgview.View_ITI_Horizontal
+            android:id="@+id/my_account_iti"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_ITI_Horizontal>
+
+        <com.feigong.baseball.fgview.View_ITI_Horizontal
+            android:id="@+id/my_setting_iti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_ITI_Horizontal>
+
+
+    </LinearLayout>
+
 
 </LinearLayout>
+
+

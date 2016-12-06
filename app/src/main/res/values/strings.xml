@@ -1,9 +1,18 @@
 <resources>
-    <string name="app_name">baseball</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">非攻棒球</string>
 
+    <!--主页模块-->
     <string name="information">资讯</string>
     <string name="video">视频</string>
     <string name="my">我的</string>
+
+
+
+    <!--我的模块-->
+    <string name="my_message">我的消息</string>
+    <string name="my_collect">我的收藏</string>
+    <string name="my_account">账号</string>
+    <string name="my_setting">设置</string>
+
 
 </resources>

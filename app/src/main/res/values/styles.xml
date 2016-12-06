@@ -54,4 +54,19 @@
     </style>
 
 
+
+    <!--我的-->
+    <style name="iti_left_image_width">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <style name="iti_right_image_width">
+        <item name="android:layout_width">14dp</item>
+        <item name="android:layout_height">14dp</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+
 </resources>
