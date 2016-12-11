@@ -13,32 +13,32 @@
         android:layout_height="wrap_content">
     </com.feigong.baseball.fgview.ViewTopBar>
 
-    <com.feigong.baseball.fgview.View_ITI_Horizontal
-        android:id="@+id/view_iti_account"
+    <com.feigong.baseball.fgview.View_TTI_Horizontal
+        android:id="@+id/view_tti_account"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_ITI_Horizontal>
+        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_TTI_Horizontal>
 
-    <com.feigong.baseball.fgview.View_ITI_Horizontal
-        android:id="@+id/view_iti_push"
+    <com.feigong.baseball.fgview.View_TTI_Horizontal
+        android:id="@+id/view_tti_push"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_ITI_Horizontal>
-    <com.feigong.baseball.fgview.View_ITI_Horizontal
-        android:id="@+id/view_iti_cache"
+        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_TTI_Horizontal>
+    <com.feigong.baseball.fgview.View_TTI_Horizontal
+        android:id="@+id/view_tti_cache"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_ITI_Horizontal>
+        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_TTI_Horizontal>
 
 
-    <com.feigong.baseball.fgview.View_ITI_Horizontal
-        android:id="@+id/view_iti_share"
+    <com.feigong.baseball.fgview.View_TTI_Horizontal
+        android:id="@+id/view_tti_share"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_ITI_Horizontal>
-    <com.feigong.baseball.fgview.View_ITI_Horizontal
-        android:id="@+id/view_iti_about"
+        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_TTI_Horizontal>
+    <com.feigong.baseball.fgview.View_TTI_Horizontal
+        android:id="@+id/view_tti_about"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_ITI_Horizontal>
+        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_TTI_Horizontal>
 
     <RelativeLayout
         android:layout_width="match_parent"

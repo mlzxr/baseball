@@ -8,6 +8,7 @@ import android.view.View;
 import com.feigong.baseball.R;
 import com.feigong.baseball.base.fragment.BaseFragment;
 import com.feigong.baseball.fgview.ViewTopBar;
+import com.feigong.baseball.fgview.View_TTI_Horizontal;
 
 /**
  * 项目名称：baseball
@@ -49,10 +50,27 @@ public class SecurityAccountFragment extends BaseFragment {
                 getFragmentManager().popBackStack();
             }
         });
+        //
+        View_TTI_Horizontal view_tti_avatar = (View_TTI_Horizontal)view.findViewById(R.id.view_tti_avatar);
+        View_TTI_Horizontal view_tti_nickname = (View_TTI_Horizontal)view.findViewById(R.id.view_tti_nickname);
+        View_TTI_Horizontal view_tti_sex = (View_TTI_Horizontal)view.findViewById(R.id.view_tti_sex);
+        View_TTI_Horizontal view_tti_phone_binding = (View_TTI_Horizontal)view.findViewById(R.id.view_tti_phone_binding);
+        View_TTI_Horizontal view_tti_account_binding = (View_TTI_Horizontal)view.findViewById(R.id.view_tti_account_binding);
+        View_TTI_Horizontal view_tti_register_time = (View_TTI_Horizontal)view.findViewById(R.id.view_tti_register_time);
+        //
+        view_tti_avatar.getLeft_textView().setText(getString(R.string.avatar));
+        view_tti_nickname.getLeft_textView().setText(getString(R.string.nickname));
+        view_tti_sex.getLeft_textView().setText(getString(R.string.sex));
+        view_tti_phone_binding.getLeft_textView().setText(getString(R.string.phone_binding));
+        view_tti_account_binding.getLeft_textView().setText(getString(R.string.account_binding));
+        view_tti_register_time.getLeft_textView().setText(getString(R.string.register_time));
+        //
     }
 
     @Override
     protected void loadData() {
+
+
 
     }
 

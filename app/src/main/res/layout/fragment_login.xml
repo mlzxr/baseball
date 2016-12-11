@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    >
+
+    <com.feigong.baseball.fgview.AutoZoomInImageView
+        android:id="@+id/zoomInImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/bg_login"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:layout_height="0dp">
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:src="@mipmap/ic_launcher"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:text="最好的棒球社区"
+                android:layout_centerInParent="true"
+                android:textSize="18sp"
+                style="@style/layout_ww"
+                android:visibility="gone"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_login"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            >
+            <!--快速登陆-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5px"
+                    android:background="@color/lightgray"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_centerVertical="true"
+                    />
+                <TextView
+                    android:text="@string/speediness_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_centerInParent="true"
+                    />
+            </RelativeLayout>
+            <!--图标-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_launcher"
+                    />
+                <ImageView
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_launcher"
+                    />
+            </LinearLayout>
+            <!--账号-->
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+                <TextView
+                    android:textColor="@color/lightgray"
+                    style="@style/layout_ww"
+                    android:text="@string/new_user"
+                    />
+                <TextView
+                    style="@style/layout_ww"
+                    android:text="@string/register"
+                    />
+                <TextView
+                    android:textColor="@color/lightgray"
+                    style="@style/layout_ww"
+                    android:text="@string/fg_account"
+                    />
+                <TextView
+                    style="@style/layout_ww"
+                    android:text="@string/login"
+                    />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp">
+
+                <TextView
+                    android:text="@string/look_around"
+                    android:layout_centerInParent="true"
+                    style="@style/layout_ww"
+                    android:background="@drawable/shape_view"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

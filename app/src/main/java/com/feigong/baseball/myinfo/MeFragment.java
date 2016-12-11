@@ -3,13 +3,17 @@ package com.feigong.baseball.myinfo;/**
  */
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.base.fragment.BaseFragment;
 import com.feigong.baseball.common.Constant;
+import com.feigong.baseball.common.ImageUtil;
 import com.feigong.baseball.fgview.View_ITI_Horizontal;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +33,9 @@ public class MeFragment extends BaseFragment {
 
     private static final String TAG="MeFragment";
 
+
+    private ImageView iv_avatar;//头像
+    private ImageView iv_setting;//设置
 
 
     //
@@ -50,6 +57,9 @@ public class MeFragment extends BaseFragment {
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
 
+        iv_avatar =(ImageView)view.findViewById(R.id.iv_avatar);
+        iv_setting =(ImageView)view.findViewById(R.id.iv_setting);
+        //
         View_ITI_Horizontal myMessage_iti = (View_ITI_Horizontal)view.findViewById(R.id.my_message_iti);
         View_ITI_Horizontal myCollect_iti = (View_ITI_Horizontal)view.findViewById(R.id.my_collect_iti);
         //
@@ -67,6 +77,20 @@ public class MeFragment extends BaseFragment {
         myAccount_iti.getCentreTextView().setText(getString(R.string.my_account));
         mySetting_iti.getCentreTextView().setText(getString(R.string.my_setting));
         //
+        iv_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String,Object> map = new HashMap<String, Object>();
+                //
+                map.put(Constant.FLAG,Constant.FragmentTAG.login_fragment);
+                map.put(Constant.TAG,Constant.FragmentTAG.login_fragmentTAG);
+                //
+                HomeActivity homeActivity = (HomeActivity)getActivity();
+                homeActivity.setLayout(map);
+
+            }
+        });
+        //
         mySetting_iti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,10 +103,17 @@ public class MeFragment extends BaseFragment {
                 homeActivity.setLayout(map);
             }
         });
+
+
     }
 
     @Override
     protected void loadData() {
+
+        ImageLoader.getInstance().displayImage("http://g.hiphotos.baidu.com/image/pic/item/c2cec3fdfc03924578c6cfe18394a4c27c1e25e8.jpg", iv_avatar,ImageUtil.getImageOptionsCircle());
+
+
+
 
     }
 }

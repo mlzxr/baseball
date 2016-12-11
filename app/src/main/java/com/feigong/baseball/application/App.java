@@ -39,26 +39,28 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+
         //监听内存泄漏
         refWatcher = LeakCanary.install(this);
-
-
-        //网络图片加载框架
-        initImageLoader(this);
+        //定义单列Context
+        context = getApplicationContext();
         //
         JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);
-        //定义单列Context
-        context = getApplicationContext();
+
         //获取屏幕相关属性
         ScreenUtils.getScreenWidth(context);
         ScreenUtils.getScreenHeight(context);
         ScreenUtils.getScreenDensity(context);
+        //网络图片加载框架
+        initImageLoader();
+
 
     }
 
-    public static void initImageLoader(Context context) {
-        ImageLoaderConfiguration config = ImageLoaderConfiguration.createDefault(context);
+    private void initImageLoader() {
+        ImageLoaderConfiguration config = ImageLoaderConfiguration.createDefault(getApplicationContext());
         ImageLoader.getInstance().init(config);
     }
 

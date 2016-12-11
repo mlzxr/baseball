@@ -11,6 +11,7 @@ import com.feigong.baseball.base.fragment.BaseFragment;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.fgview.ViewTopBar;
 import com.feigong.baseball.fgview.View_ITI_Horizontal;
+import com.feigong.baseball.fgview.View_TTI_Horizontal;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,32 +58,21 @@ public class SettingFragment extends BaseFragment {
             }
         });
         //
-        View_ITI_Horizontal view_iti_account =(View_ITI_Horizontal)view.findViewById(R.id.view_iti_account);
-        View_ITI_Horizontal view_iti_push =(View_ITI_Horizontal)view.findViewById(R.id.view_iti_push);
-        View_ITI_Horizontal view_iti_cache =(View_ITI_Horizontal)view.findViewById(R.id.view_iti_cache);
+        View_TTI_Horizontal view_tti_account =(View_TTI_Horizontal)view.findViewById(R.id.view_tti_account);
+        View_TTI_Horizontal view_tti_push =(View_TTI_Horizontal)view.findViewById(R.id.view_tti_push);
+        View_TTI_Horizontal view_tti_cache =(View_TTI_Horizontal)view.findViewById(R.id.view_tti_cache);
         //
-        View_ITI_Horizontal view_iti_share =(View_ITI_Horizontal)view.findViewById(R.id.view_iti_share);
-        View_ITI_Horizontal view_iti_about =(View_ITI_Horizontal)view.findViewById(R.id.view_iti_about);
+        View_TTI_Horizontal view_tti_share =(View_TTI_Horizontal)view.findViewById(R.id.view_tti_share);
+        View_TTI_Horizontal view_tti_about =(View_TTI_Horizontal)view.findViewById(R.id.view_tti_about);
+
         //
-        view_iti_account.getLeftImageView().setVisibility(View.GONE);
-        view_iti_push.getLeftImageView().setVisibility(View.GONE);
-        view_iti_cache.getLeftImageView().setVisibility(View.GONE);
-        view_iti_share.getLeftImageView().setVisibility(View.GONE);
-        view_iti_about.getLeftImageView().setVisibility(View.GONE);
+        view_tti_account.getLeft_textView().setText("  "+getString(R.string.security_account));
+        view_tti_push.getLeft_textView().setText("  "+getString(R.string.push_notification));
+        view_tti_cache.getLeft_textView().setText("  "+getString(R.string.clear_cache));
+        view_tti_share.getLeft_textView().setText("  "+getString(R.string.share_friend));
+        view_tti_about.getLeft_textView().setText("  "+getString(R.string.about_us));
         //
-        view_iti_account.getLeft_view().setVisibility(View.GONE);
-        view_iti_push.getLeft_view().setVisibility(View.GONE);
-        view_iti_cache.getLeft_view().setVisibility(View.GONE);
-        view_iti_share.getLeft_view().setVisibility(View.GONE);
-        view_iti_about.getLeft_view().setVisibility(View.GONE);
-        //
-        view_iti_account.getCentreTextView().setText("  "+getString(R.string.security_account));
-        view_iti_push.getCentreTextView().setText("  "+getString(R.string.push_notification));
-        view_iti_cache.getCentreTextView().setText("  "+getString(R.string.clear_cache));
-        view_iti_share.getCentreTextView().setText("  "+getString(R.string.share_friend));
-        view_iti_about.getCentreTextView().setText("  "+getString(R.string.about_us));
-        //
-        view_iti_account.setOnClickListener(new View.OnClickListener() {
+        view_tti_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Map<String,Object> map = new HashMap<String, Object>();

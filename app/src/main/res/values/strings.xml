@@ -24,4 +24,21 @@
 
     <string name="go_out">退出登陆</string>
 
+    <!--账号安全-->
+    <string name="avatar">头像</string>
+    <string name="nickname">昵称</string>
+    <string name="sex">性别</string>
+    <string name="phone_binding">手机绑定</string>
+    <string name="account_binding">社交账号绑定</string>
+    <string name="register_time">注册时间</string>
+
+
+    <!--登陆-->
+    <string name="speediness_login">快速登陆</string>
+    <string name="new_user">新用户</string>
+    <string name="register">注册</string>
+    <string name="fg_account">/非攻账号</string>
+    <string name="login">登陆</string>
+    <string name="look_around">随便看看</string>
+
 </resources>

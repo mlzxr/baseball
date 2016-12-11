@@ -25,7 +25,9 @@ public class Constant {
         //
         int security_account_fragment=2;
         String security_account_fragmentTAG="security_account_fragment";
-
+        //
+        int login_fragment=3;
+        String login_fragmentTAG="login_fragment";
 
     }
 

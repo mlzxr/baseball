@@ -23,6 +23,7 @@ import com.feigong.baseball.base.activity.BaseActivity;
 import com.feigong.baseball.base.common.MapUtil;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.information.InformationFragment;
+import com.feigong.baseball.myinfo.LoginFragment;
 import com.feigong.baseball.myinfo.MeFragment;
 import com.feigong.baseball.myinfo.SecurityAccountFragment;
 import com.feigong.baseball.myinfo.SettingFragment;
@@ -138,6 +139,12 @@ public class HomeActivity extends BaseActivity {
                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
                 if(fragment==null){
                     fragment = SecurityAccountFragment.newInstance();
+                }
+                break;
+            case Constant.FragmentTAG.login_fragment:
+                fragment = getSupportFragmentManager().findFragmentByTag(tag);
+                if(fragment==null){
+                    fragment = LoginFragment.newInstance();
                 }
                 break;
         }

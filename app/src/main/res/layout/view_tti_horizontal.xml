@@ -14,15 +14,17 @@
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
         >
-        <ImageView
-            android:id="@+id/left_imageView"
-            style="@style/iti_left_image_width"
+        <TextView
+            android:id="@+id/left_textView"
+            style="@style/layout_ww"
+            android:layout_marginLeft="10dp"
             />
 
         <TextView
             android:id="@+id/centre_textView"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:gravity="right"
             android:layout_height="wrap_content" />
 
         <ImageView
@@ -33,25 +35,12 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <View
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-        <View
-            android:id="@+id/left_view"
-            android:layout_height="0px"
-            android:layout_width="@dimen/iti_image_width"
-            android:background="@color/lightgray"
-            />
-
-        <View
-            android:layout_height="1px"
-            android:layout_width="match_parent"
-            android:background="@color/lightgray"
-            />
-
-    </LinearLayout>
+        android:background="@color/lightgray"
+        />
 
 </LinearLayout>
