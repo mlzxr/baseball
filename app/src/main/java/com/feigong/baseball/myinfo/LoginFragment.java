@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.fgview.AutoZoomInImageView;
 
 /**
@@ -32,9 +33,8 @@ public class LoginFragment extends BaseFragment {
 
     private AutoZoomInImageView autoZoomInImageView;
     private ImageView iv_logo;
-    private TextView tv_title;
+    private TextView tv_title,tv_look;
     private LinearLayout ll_login;
-
 
     public static LoginFragment newInstance() {
         LoginFragment loginFragment = new LoginFragment();
@@ -108,6 +108,35 @@ public class LoginFragment extends BaseFragment {
 
             }
         });
+        //
+        view.findViewById(R.id.tv_look).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
+        //
+
+       view.findViewById(R.id.iv_icon_wx).setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               loginWX();
+           }
+       });
+        view.findViewById(R.id.iv_icon_wb).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginWB();
+            }
+        });
+        view.findViewById(R.id.iv_icon_qq).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginQQ();
+            }
+        });
+
+
     }
 
     @Override
@@ -138,7 +167,23 @@ public class LoginFragment extends BaseFragment {
         });
         iv_logo.startAnimation(animationSetLogin);
         ll_login.startAnimation(animationSetLogin);
+    }
 
+
+
+    //第三方登陆
+    private void loginWX(){
+        L.e(TAG,"loginWX");
+
+
+    }
+    private void loginWB(){
+        L.e(TAG,"loginWB");
+
+    }
+
+    private void loginQQ(){
+        L.e(TAG,"loginQQ");
 
     }
 

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/ruler/AS/baseball/imageLoader/src/main/assets"/></dataSet><dataSet config="debug"><source path="/Users/ruler/AS/baseball/imageLoader/src/debug/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/ruler/AS/baseball/imageLoader/src/main/assets"/><source path="/Users/ruler/AS/baseball/imageLoader/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/ruler/AS/baseball/imageLoader/src/debug/assets"/></dataSet></merger>

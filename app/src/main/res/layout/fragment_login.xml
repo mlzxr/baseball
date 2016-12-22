@@ -20,7 +20,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="7"
             android:layout_height="0dp">
             <ImageView
                 android:id="@+id/iv_logo"
@@ -45,7 +45,7 @@
             android:id="@+id/ll_login"
             android:visibility="invisible"
             android:layout_width="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:layout_height="0dp"
             android:orientation="vertical"
             >
@@ -75,6 +75,7 @@
             </RelativeLayout>
             <!--图标-->
             <LinearLayout
+                android:id="@+id/ll_login_icon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -82,15 +83,24 @@
                 android:layout_margin="10dp"
                 >
                 <ImageView
+                    android:id="@+id/iv_icon_wx"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@mipmap/icon_login_wx"
                     />
                 <ImageView
-                    android:layout_marginLeft="30dp"
+                    android:id="@+id/iv_icon_wb"
+                    android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@mipmap/icon_login_wb"
+                    />
+                <ImageView
+                    android:id="@+id/iv_icon_qq"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_login_qq"
                     />
             </LinearLayout>
             <!--账号-->
@@ -100,6 +110,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
+                android:visibility="gone"
                 >
                 <TextView
                     android:textColor="@color/lightgray"
@@ -127,6 +138,7 @@
                 android:layout_height="0dp">
 
                 <TextView
+                    android:id="@+id/tv_look"
                     android:text="@string/look_around"
                     android:layout_centerInParent="true"
                     style="@style/layout_ww"

@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -50,6 +51,8 @@ public class HomeActivity extends BaseActivity {
     private List<Fragment> fragmentArrayList = new ArrayList<>();
 
     private int index = 1;
+
+    private boolean isLogin =false;
 
     @Override
 
@@ -121,6 +124,15 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+
+        if(!isLogin){
+            Map<String,Object> map = new HashMap<String, Object>();
+            //
+            map.put(Constant.FLAG,Constant.FragmentTAG.login_fragment);
+            map.put(Constant.TAG,Constant.FragmentTAG.login_fragmentTAG);
+            //
+            this.setLayout(map);
+        }
 
     }
 

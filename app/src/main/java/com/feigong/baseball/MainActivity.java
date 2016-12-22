@@ -7,6 +7,9 @@ import android.os.Handler;
 import com.feigong.baseball.base.activity.BaseActivity;
 import com.feigong.baseball.activity.HomeActivity;
 
+/**
+ * 应用主入口
+ */
 public class MainActivity extends BaseActivity {
 
     private static final String TAG="MainActivity";
@@ -39,6 +42,7 @@ public class MainActivity extends BaseActivity {
                 //
                 finish();
             }
-        },100);
+        },400);
+
     }
 }

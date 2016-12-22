@@ -28,7 +28,7 @@
         <ImageView
             android:id="@+id/right_imageView"
             style="@style/iti_right_image_width"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/iconmonstr_arrow"
             />
 
     </LinearLayout>

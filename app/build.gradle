@@ -32,10 +32,8 @@ dependencies {
     compile project(':imageLoader')
     compile files('libs/jcore-android_v1.0.0.jar')
     compile files('libs/jpush-android_v3.0.0.jar')
-
-
-//    测试
+    //    测试
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-
+    compile project(':okhttputils')
 }
