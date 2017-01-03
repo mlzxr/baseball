@@ -31,4 +31,29 @@ public class Constant {
 
     }
 
+
+    /***第三方应用参数***/
+
+    // 微信
+    public interface WX{
+        public static final String APP_ID = "wx03acd4dc4205b6f2";
+        public static final String APP_SECRET = "wx03acd4dc4205b6f2";
+    }
+    //微博
+    public interface WB{
+        public static final String APP_KEY      = "3273926641";
+        public static final String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";
+        public static final String SCOPE =
+                "email,direct_messages_read,direct_messages_write,"
+                        + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
+                        + "follow_app_official_microblog," + "invitation_write";
+    }
+
+    //QQ
+
+
+
+
+
+
 }

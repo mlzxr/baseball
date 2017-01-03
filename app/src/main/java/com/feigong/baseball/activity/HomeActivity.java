@@ -2,6 +2,7 @@ package com.feigong.baseball.activity;/**
  * Created by ruler on 16/9/6.
  */
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -220,4 +222,17 @@ public class HomeActivity extends BaseActivity {
         ((TextView) ll_me.getChildAt(1)).setTextColor(Color.parseColor("#989898"));
     }
 
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        Fragment f = fragmentArrayList.get(home_viewPager.getCurrentItem());
+//        f.onActivityResult(requestCode, resultCode, data);
+
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constant.FragmentTAG.login_fragmentTAG);
+        if(fragment!=null){
+            fragment.onActivityResult(requestCode,resultCode,data);
+        }
+    }
 }

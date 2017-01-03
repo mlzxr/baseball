@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_baseball" default="compile.module.baseball">
+  <dirname property="module.baseball.basedir" file="${ant.file.module_baseball}"/>
+  
+  <property name="module.jdk.home.baseball" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.baseball" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.baseball" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.baseball" value="-encoding UTF-8 -source 1.6 -target 1.6 ${compiler.args}"/>
+  
+  <property name="baseball.output.dir" value="${module.baseball.basedir}/build/classes/production/baseball"/>
+  <property name="baseball.testoutput.dir" value="${module.baseball.basedir}/build/classes/test/baseball"/>
+  
+  <path id="baseball.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="baseball.module.production.classpath">
+    <path refid="${module.jdk.classpath.baseball}"/>
+  </path>
+  
+  <path id="baseball.runtime.production.module.classpath">
+    <pathelement location="${baseball.output.dir}"/>
+  </path>
+  
+  <path id="baseball.module.classpath">
+    <path refid="${module.jdk.classpath.baseball}"/>
+    <pathelement location="${baseball.output.dir}"/>
+  </path>
+  
+  <path id="baseball.runtime.module.classpath">
+    <pathelement location="${baseball.testoutput.dir}"/>
+    <pathelement location="${baseball.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.baseball">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.baseball">
+    <patternset refid="excluded.from.module.baseball"/>
+  </patternset>
+  
+  
+  <target name="compile.module.baseball" depends="compile.module.baseball.production,compile.module.baseball.tests" description="Compile module baseball"/>
+  
+  <target name="compile.module.baseball.production" depends="register.custom.compilers" description="Compile module baseball; production classes"/>
+  
+  <target name="compile.module.baseball.tests" depends="register.custom.compilers,compile.module.baseball.production" description="compile module baseball; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.baseball" description="cleanup module">
+    <delete dir="${baseball.output.dir}"/>
+    <delete dir="${baseball.testoutput.dir}"/>
+  </target>
+</project>

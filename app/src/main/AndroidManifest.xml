@@ -24,7 +24,6 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 
-
     <!-- Optional for location -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -56,6 +55,20 @@
         </activity>
 
         <activity android:name="com.feigong.baseball.activity.HomeActivity" android:screenOrientation="portrait" />
+
+
+        <!--  第三方登陆 start  -->
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true" />
+
+        <activity
+            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <!-- 第三方登陆 end  -->
 
 
 
@@ -136,6 +149,7 @@
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
         <meta-data android:name="JPUSH_APPKEY" android:value="05c981480c64bffd0ee81a30" /> <!--  </>值来自开发者平台取得的AppKey-->
 
+        <!--d195edf102c44b2857458c7cf9a04f71-->
 
     </application>
 
