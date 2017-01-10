@@ -20,14 +20,25 @@ import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.fgview.AutoZoomInImageView;
+import com.feigong.baseball.weibo.openapi.UsersAPI;
+import com.feigong.baseball.weibo.openapi.WBUser;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
 import com.sina.weibo.sdk.auth.sso.SsoHandler;
 import com.sina.weibo.sdk.exception.WeiboException;
+import com.sina.weibo.sdk.net.RequestListener;
+import com.tencent.connect.UserInfo;
+import com.tencent.connect.common.Constants;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.SendAuth;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.open.utils.Util;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
+
+import org.json.JSONObject;
 
 /**
  * 项目名称：baseball
@@ -45,15 +56,18 @@ public class LoginFragment extends BaseFragment {
 
     private AutoZoomInImageView autoZoomInImageView;
     private ImageView iv_logo;
-    private TextView tv_title,tv_look;
+    private TextView tv_title, tv_look;
     private LinearLayout ll_login;
 
     private IWXAPI iwxapi;
+    private Tencent mTencent;
+    private UserInfo mInfo;
 
     private AuthInfo mAuthInfo;
     private Oauth2AccessToken mAccessToken;
     private SsoHandler mSsoHandler;
 
+    private UsersAPI mUsersAPI;
 
     public static LoginFragment newInstance() {
         LoginFragment loginFragment = new LoginFragment();
@@ -136,12 +150,12 @@ public class LoginFragment extends BaseFragment {
         });
         //
 
-       view.findViewById(R.id.iv_icon_wx).setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               loginWX();
-           }
-       });
+        view.findViewById(R.id.iv_icon_wx).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginWX();
+            }
+        });
         view.findViewById(R.id.iv_icon_wb).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,13 +203,12 @@ public class LoginFragment extends BaseFragment {
     }
 
 
-
     //第三方登陆
-    private void loginWX(){//微信登陆
-        L.e(TAG,"loginWX");
-        iwxapi = WXAPIFactory.createWXAPI(getActivity(), Constant.WX.APP_ID,true);
+    private void loginWX() {//微信登陆
+        L.e(TAG, "loginWX");
+        iwxapi = WXAPIFactory.createWXAPI(getActivity(), Constant.WX.APP_ID, true);
         if (!iwxapi.isWXAppInstalled()) {
-            T.showLong(App.getContext(),R.string.check_wx);
+            T.showLong(App.getContext(), R.string.check_wx);
             return;
         }
         iwxapi.registerApp(Constant.WX.APP_ID);
@@ -206,27 +219,27 @@ public class LoginFragment extends BaseFragment {
 
 
     }
-    private void loginWB(){//微博登陆
-        L.e(TAG,"loginWB");
+
+    private void loginWB() {//微博登陆
+        L.e(TAG, "loginWB");
         mAuthInfo = new AuthInfo(getActivity(), Constant.WB.APP_KEY, Constant.WB.REDIRECT_URL, Constant.WB.SCOPE);
         mSsoHandler = new SsoHandler(getActivity(), mAuthInfo);
         mSsoHandler.authorizeClientSso(new AuthListener());
 
     }
 
-    private void loginQQ(){//QQ登陆
-        L.e(TAG,"loginQQ");
+    private void loginQQ() {//QQ登陆
+        L.e(TAG, "loginQQ");
+        mTencent = Tencent.createInstance(Constant.QQ.APP_ID, getActivity());
+        if(!mTencent.isSessionValid()){
+            mTencent.login(getActivity(),"all",loginListener);
+        }
 
     }
 
 
-
     /**
      * 微博认证授权回调类。
-     * 1. SSO 授权时，需要在 {@link #onActivityResult} 中调用 {@link SsoHandler#authorizeCallBack} 后，
-     *    该回调才会被执行。
-     * 2. 非 SSO 授权时，当授权结束后，该回调就会被执行。
-     * 当授权成功后，请保存该 access_token、expires_in、uid 等信息到 SharedPreferences 中。
      */
     class AuthListener implements WeiboAuthListener {
 
@@ -235,11 +248,15 @@ public class LoginFragment extends BaseFragment {
             // 从 Bundle 中解析 Token
             mAccessToken = Oauth2AccessToken.parseAccessToken(values);
             //从这里获取用户输入的 电话号码信息
-            String  phoneNum =  mAccessToken.getPhoneNum();
+            String phoneNum = mAccessToken.getPhoneNum();
             if (mAccessToken.isSessionValid()) {
                 // 显示 Token
-                //updateTokenView(false);
-                T.showLong(App.getContext(),R.string.auth_success);
+                T.showLong(App.getContext(), R.string.auth_success);
+                mUsersAPI = new UsersAPI(getActivity(), Constant.WB.APP_KEY, mAccessToken);
+                long uid = Long.parseLong(mAccessToken.getUid());
+                mUsersAPI.show(uid, mListener);
+
+
             } else {
                 // 以下几种情况，您会收到 Code：
                 // 1. 当您未在平台上注册的应用程序的包名与签名时；
@@ -250,21 +267,46 @@ public class LoginFragment extends BaseFragment {
                 if (!TextUtils.isEmpty(code)) {
                     message = message + "\nObtained the code: " + code;
                 }
-                T.showLong(App.getContext(),message);
+                T.showLong(App.getContext(), message);
             }
         }
 
         @Override
         public void onCancel() {
-            T.showShort(App.getContext(),R.string.auth_canceled);
+            T.showShort(App.getContext(), R.string.auth_canceled);
         }
 
         @Override
         public void onWeiboException(WeiboException e) {
-            T.showShort(App.getContext(),e.getMessage());
+            T.showShort(App.getContext(), e.getMessage());
         }
     }
 
+
+    /**
+     * 微博 OpenAPI 回调接口。
+     */
+    private RequestListener mListener = new RequestListener() {
+        @Override
+        public void onComplete(String response) {
+            if (!TextUtils.isEmpty(response)) {
+                L.e(TAG, response);
+                // 调用 User#parse 将JSON串解析成User对象
+                WBUser user = WBUser.parse(response);
+                if (user != null) {
+                    L.e(TAG, "获取User信息成功，用户昵称：" + user.screen_name);
+                } else {
+                    L.e(TAG, response);
+                }
+            }
+        }
+
+        @Override
+        public void onWeiboException(WeiboException e) {
+            L.e(TAG, e.getMessage());
+
+        }
+    };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -272,6 +314,94 @@ public class LoginFragment extends BaseFragment {
         //微博回调
         if (mSsoHandler != null) {
             mSsoHandler.authorizeCallBack(requestCode, resultCode, data);
+        }
+        //QQ回调
+        if (requestCode == Constants.REQUEST_LOGIN ||
+                requestCode == Constants.REQUEST_APPBAR) {
+            Tencent.onActivityResultData(requestCode,resultCode,data,loginListener);
+        }
+    }
+
+    IUiListener loginListener = new BaseUiListener() {
+        @Override
+        protected void doComplete(JSONObject values) {
+            L.e(TAG,"values:"+values.toString());
+            initOpenidAndToken(values);
+            updateUserInfo();
+        }
+    };
+
+    private void initOpenidAndToken(JSONObject jsonObject) {
+        try {
+            String token = jsonObject.getString(Constants.PARAM_ACCESS_TOKEN);
+            String expires = jsonObject.getString(Constants.PARAM_EXPIRES_IN);
+            String openId = jsonObject.getString(Constants.PARAM_OPEN_ID);
+            if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(expires)
+                    && !TextUtils.isEmpty(openId)) {
+                mTencent.setAccessToken(token, expires);
+                mTencent.setOpenId(openId);
+            }
+        } catch(Exception e) {
+
+        }
+    }
+
+    private void updateUserInfo() {
+        if (mTencent != null && mTencent.isSessionValid()) {
+            IUiListener listener = new IUiListener() {
+                @Override
+                public void onError(UiError e) {
+
+                }
+
+                @Override
+                public void onComplete(final Object response) {
+                    JSONObject json = (JSONObject)response;
+                    L.e(TAG,"json:"+json.toString());
+
+
+                }
+                @Override
+                public void onCancel() {
+
+                }
+            };
+            mInfo = new UserInfo(getActivity(), mTencent.getQQToken());
+            mInfo.getUserInfo(listener);
+        }
+    }
+
+
+    private class BaseUiListener implements IUiListener {
+
+        @Override
+        public void onComplete(Object response) {
+            if (null == response) {
+                T.showLong(App.getContext(),"登录失败");
+                return;
+            }
+            JSONObject jsonResponse = (JSONObject) response;
+            if (null != jsonResponse && jsonResponse.length() == 0) {
+                T.showLong(App.getContext(),"登录失败");
+                return;
+            }
+            T.showLong(App.getContext(),"登录成功");
+            // 有奖分享处理
+            doComplete((JSONObject)response);
+        }
+
+        protected void doComplete(JSONObject values) {
+
+        }
+
+        @Override
+        public void onError(UiError e) {
+            T.showLong(App.getContext(),"onError: " + e.errorDetail);
+        }
+
+        @Override
+        public void onCancel() {
+            T.showLong(App.getContext(),"onCancel: ");
         }
     }
 

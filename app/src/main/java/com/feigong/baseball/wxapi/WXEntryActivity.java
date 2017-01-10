@@ -3,9 +3,8 @@ package com.feigong.baseball.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
+import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.T;
@@ -22,6 +21,8 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.Callback;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONObject;
 
 import okhttp3.Call;
 import okhttp3.Request;
@@ -76,23 +77,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 //        }
 //    };
 //
-//    Handler netHandler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//
-//            switch (msg.what) {
-//                case 1:
-//                    ResultTokenWX resultTokenWX = (ResultTokenWX) msg.obj;
-//                    getUserInfo(resultTokenWX);
-//
-//                    break;
-//                case 0:
-//                    Meg.Show("获取验证失败");
-//                    WXEntryActivity.this.finish();
-//                    break;
-//            }
-//        }
-//    };
+
 //
 //    Handler userInfoHandler = new Handler() {
 //        @Override
@@ -157,17 +142,43 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
         @Override
         public void onResponse(String response, int id) {
+            L.e(TAG,response);
+            //
             switch (id) {
-                case 100:
-                    L.e(TAG, "response:" + response);
+                case 100://通过code获取access_token
+                    ResultTokenWX resultTokenWX = new Gson().fromJson(response, ResultTokenWX.class);
+                    if(resultTokenWX!=null){
+                        getWXUserInfo(resultTokenWX);
+                    }else {
+                        T.showLong(App.getContext(), R.string.auth_failed);
+                    }
+                    break;
+
+                case 101://通过access_token调用接口,返回用户数据
+                    UserInfoWX userInfoWX = new Gson().fromJson(response, UserInfoWX.class);
+                    if(userInfoWX!=null){
+                        L.e(TAG,userInfoWX.toString());
+
+                    }else {
+                        T.showLong(App.getContext(), R.string.get_user_info_error);
+                    }
+
                     break;
             }
+
+
         }
 
         @Override
         public void inProgress(float progress, long total, int id) {
             L.e(TAG, "inProgress:" + progress);
         }
+    }
+
+    private void getWXUserInfo(ResultTokenWX resultTokenWX){
+        String url = GetUrl.getWXUserInfo(resultTokenWX.getAccess_token(),resultTokenWX.getOpenid());
+        OkHttpUtils.get().url(url).id(101).build().execute(new MyStringCallback());
+
     }
 
 
@@ -213,7 +224,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
-                T.showLong(App.getContext(), "ERR_USER_CANCEL");
+                T.showLong(App.getContext(), R.string.auth_canceled);
 
                 break;
             case BaseResp.ErrCode.ERR_AUTH_DENIED:

@@ -47,5 +47,7 @@
     <string name="auth_failed">授权失败</string>
     <string name="auth_success">授权成功</string>
 
+    <string name="get_user_info_error">获取用户信息失败</string>
+
 
 </resources>

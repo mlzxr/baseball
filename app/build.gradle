@@ -38,4 +38,6 @@ dependencies {
     compile project(':okhttputils')
     compile files('libs/libammsdk.jar')
     compile files('libs/weibosdkcore_release.jar')
+    compile files('libs/mta-sdk-1.6.2.jar')
+    compile files('libs/open_sdk_r5778.jar')
 }

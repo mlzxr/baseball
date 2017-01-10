@@ -30,6 +30,19 @@ public class GetUrl {
         return sb.toString();
     }
 
+    /**
+     * 获取微信用户信息
+     * @param access_token
+     * @param openid
+     * @return
+     */
+    public static String getWXUserInfo(String access_token,String openid) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("https://api.weixin.qq.com/sns/userinfo");
+        sb.append("?access_token=" + access_token + "&openid=" + openid);
+        return sb.toString();
+    }
+
 
 
 
