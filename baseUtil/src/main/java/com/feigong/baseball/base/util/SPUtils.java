@@ -20,6 +20,7 @@ import java.util.Map;
  * @version 1.0
  */
 public class SPUtils {
+    public static final String TAG="SPUtils";
 
     /**
      * 保存在手机里面的文件名
@@ -194,10 +195,13 @@ public class SPUtils {
                 }
             } catch (IllegalArgumentException e)
             {
+                L.e(TAG,e.getMessage());
             } catch (IllegalAccessException e)
             {
+                L.e(TAG,e.getMessage());
             } catch (InvocationTargetException e)
             {
+                L.e(TAG,e.getMessage());
             }
             editor.commit();
         }

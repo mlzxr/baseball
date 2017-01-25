@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -22,8 +23,11 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 
 import com.feigong.baseball.R;
+import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.activity.BaseActivity;
 import com.feigong.baseball.base.common.MapUtil;
+import com.feigong.baseball.base.util.L;
+import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.information.InformationFragment;
 import com.feigong.baseball.myinfo.LoginFragment;
@@ -54,8 +58,6 @@ public class HomeActivity extends BaseActivity {
 
     private int index = 1;
 
-    private boolean isLogin =false;
-
     @Override
 
     protected int getLayout() {
@@ -64,11 +66,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initVariables() {
-
         activity = HomeActivity.this;
-
-        baseExecutorService = Executors.newCachedThreadPool();
-
         fragmentArrayList.add(InformationFragment.newInstance());
         fragmentArrayList.add(VideoFragment.newInstance());
         fragmentArrayList.add(MeFragment.newInstance());
@@ -126,8 +124,9 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
-        if(!isLogin){
+        String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
+        L.e(TAG,token);
+        if(TextUtils.isEmpty(token)){
             Map<String,Object> map = new HashMap<String, Object>();
             //
             map.put(Constant.FLAG,Constant.FragmentTAG.login_fragment);

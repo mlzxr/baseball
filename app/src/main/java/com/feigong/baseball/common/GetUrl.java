@@ -14,6 +14,7 @@ package com.feigong.baseball.common;/**
  */
 public class GetUrl {
 
+    public static final String DOMAIN="http://api.baseballsay.com";
 
     /**
      *  微信登陆，获取验证
@@ -43,10 +44,15 @@ public class GetUrl {
         return sb.toString();
     }
 
-
-
-
-
+    /**
+     * 社会化登陆（第三方登录）
+     * @param type
+     * @return
+     */
+    public static String getSocialLogin(String type) {
+        String url =DOMAIN+"/userApi/social_login/"+type;
+        return url;
+    }
 
 
 

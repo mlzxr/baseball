@@ -15,13 +15,21 @@ import android.widget.TextView;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
+import com.feigong.baseball.base.common.JSONUtil;
 import com.feigong.baseball.base.fragment.BaseFragment;
 import com.feigong.baseball.base.util.L;
+import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.base.util.T;
+import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
+import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.fgview.AutoZoomInImageView;
 import com.feigong.baseball.weibo.openapi.UsersAPI;
 import com.feigong.baseball.weibo.openapi.WBUser;
+import com.feigong.baseball.wxapi.ResultTokenWX;
+import com.feigong.baseball.wxapi.UserInfoWX;
+import com.feigong.baseball.wxapi.WXEntryActivity;
+import com.google.gson.Gson;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
@@ -37,8 +45,18 @@ import com.tencent.open.utils.Util;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.GenericsCallback;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.Request;
 
 /**
  * 项目名称：baseball
@@ -295,6 +313,11 @@ public class LoginFragment extends BaseFragment {
                 WBUser user = WBUser.parse(response);
                 if (user != null) {
                     L.e(TAG, "获取User信息成功，用户昵称：" + user.screen_name);
+                    String openid = user.id;
+                    String nickname = user.screen_name;
+                    String avator = user.avatar_large;
+                    //获取新用户实例
+                    getFGUserInfo(openid,nickname,avator,Constant.Other.WB);
                 } else {
                     L.e(TAG, response);
                 }
@@ -358,8 +381,11 @@ public class LoginFragment extends BaseFragment {
                 public void onComplete(final Object response) {
                     JSONObject json = (JSONObject)response;
                     L.e(TAG,"json:"+json.toString());
-
-
+                    String openid = mTencent.getOpenId();
+                    String nickname = JSONUtil.getValue(json,"nickname");
+                    String avator = JSONUtil.getValue(json,"figureurl_qq_2");
+                    //获取新用户实例
+                    getFGUserInfo(openid,nickname,avator,Constant.Other.QQ);
                 }
                 @Override
                 public void onCancel() {
@@ -377,16 +403,15 @@ public class LoginFragment extends BaseFragment {
         @Override
         public void onComplete(Object response) {
             if (null == response) {
-                T.showLong(App.getContext(),"登录失败");
+                T.showLong(App.getContext(),R.string.auth_failed);
                 return;
             }
             JSONObject jsonResponse = (JSONObject) response;
             if (null != jsonResponse && jsonResponse.length() == 0) {
-                T.showLong(App.getContext(),"登录失败");
+                T.showLong(App.getContext(),R.string.auth_failed);
                 return;
             }
-            T.showLong(App.getContext(),"登录成功");
-            // 有奖分享处理
+            T.showLong(App.getContext(),R.string.auth_success);
             doComplete((JSONObject)response);
         }
 
@@ -404,5 +429,85 @@ public class LoginFragment extends BaseFragment {
             T.showLong(App.getContext(),"onCancel: ");
         }
     }
+
+    /**
+     * 获取第三方信息保存数据，返回新的非攻用户
+     * @param openid
+     * @param nickname
+     * @param avator
+     */
+    private void getFGUserInfo(String openid,String nickname,String avator,String type){
+
+        String url = GetUrl.getSocialLogin(type);
+        //
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("openid", openid);
+        params.put("nickname", nickname);
+        params.put("avator", avator);
+
+        String json = new Gson().toJson(params);
+        L.e(TAG,json);
+        OkHttpUtils
+                .postString()
+                .url(url)
+                .id(100)
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .content(json)
+                .build()
+                .execute(new MyStringCallback());
+    }
+
+    public class MyStringCallback extends StringCallback {
+        @Override
+        public void onBefore(Request request, int id) {
+            L.e(TAG, "onBefore...");
+        }
+
+        @Override
+        public void onAfter(int id) {
+            L.e(TAG, "onAfter...");
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id) {
+            e.printStackTrace();
+        }
+
+        @Override
+        public void onResponse(String response, int id) {
+            L.e(TAG,"非攻新用户实例："+response);
+            //
+            switch (id) {
+                case 100:
+                    ReturnMSG_UserInfo returnMSG_userInfo =  new Gson().fromJson(response,ReturnMSG_UserInfo.class);
+                    if(returnMSG_userInfo!=null && returnMSG_userInfo.getCode()==Constant.FGCode.OpOk_code){
+                        ReturnMSG_UserInfo.DataBean dataBean= returnMSG_userInfo.getData();
+                        if(dataBean!=null){
+                            ReturnMSG_UserInfo.DataBean.LoginInfoBean loginInfoBean = dataBean.getLoginInfo();
+                            SPUtils.put(App.getContext(),Constant.TOKEN,dataBean.getToken());
+                            SPUtils.put(App.getContext(),Constant.USERINFO.NICKNAME,loginInfoBean.getNickname());
+                            SPUtils.put(App.getContext(),Constant.USERINFO.AVATOR,loginInfoBean.getAvator());
+                        }
+                    }
+                    break;
+
+                case 101:
+
+
+                    break;
+            }
+        }
+
+        @Override
+        public void inProgress(float progress, long total, int id) {
+            L.e(TAG, "inProgress:" + progress);
+        }
+    }
+
+    //
+
+
+
+
 
 }

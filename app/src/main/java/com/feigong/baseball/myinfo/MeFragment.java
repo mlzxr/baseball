@@ -9,7 +9,11 @@ import android.widget.ImageView;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.activity.HomeActivity;
+import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.base.util.L;
+import com.feigong.baseball.base.util.SPUtils;
+import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.ImageUtil;
 import com.feigong.baseball.fgview.View_ITI_Horizontal;
@@ -94,11 +98,8 @@ public class MeFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
-
-        ImageLoader.getInstance().displayImage("http://g.hiphotos.baidu.com/image/pic/item/c2cec3fdfc03924578c6cfe18394a4c27c1e25e8.jpg", iv_avatar,ImageUtil.getImageOptionsCircle());
-
-
-
-
+        String nickname = String.valueOf(SPUtils.get(App.getContext(),Constant.USERINFO.NICKNAME,""));
+        String avator = String.valueOf(SPUtils.get(App.getContext(),Constant.USERINFO.AVATOR,""));
+        ImageLoader.getInstance().displayImage(avator, iv_avatar,ImageUtil.getImageOptionsCircle());
     }
 }

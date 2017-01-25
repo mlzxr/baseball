@@ -6,10 +6,14 @@ import android.os.Bundle;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
+import com.feigong.baseball.base.common.JSONUtil;
 import com.feigong.baseball.base.util.L;
+import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.base.util.T;
+import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
+import com.feigong.baseball.myinfo.LoginFragment;
 import com.google.gson.Gson;
 import com.tencent.mm.sdk.openapi.BaseReq;
 import com.tencent.mm.sdk.openapi.BaseResp;
@@ -24,7 +28,11 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import okhttp3.Call;
+import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -45,83 +53,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     private static final String TAG = "WXEntryActivity";
 
     private IWXAPI iwxapi = null;
-
-//    //第三方统一登陆
-//    Handler otherHandler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            String token = (String) msg.obj;
-//            switch (msg.what) {
-//                case 1:
-//                    //****
-//                    SharedPreferencesManager.getInstance().putString(Constants.TOKEN, token);
-//                    SharedPreferencesManager.getInstance().putBoolean(Constants.IS_LOGIN, true);
-//                    SharedPreferencesManager.getInstance().commit();
-//
-//                    Meg.Show(R.string.login_succeed);
-//                    //
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("login", "login");
-//                    Intent intent = new Intent();
-//                    intent.putExtras(bundle);
-//                    intent.setClass(WXEntryActivity.this, MenuActivity.class);
-//                    startActivity(intent);
-//                    //
-//                    WXEntryActivity.this.finish();
-//                    break;
-//
-//                case 0:
-//                    WXEntryActivity.this.finish();
-//                    break;
-//            }
-//        }
-//    };
-//
-
-//
-//    Handler userInfoHandler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//
-//            switch (msg.what) {
-//                case 1:
-//                    UserInfoWX userInfoWX = (UserInfoWX) msg.obj;
-//                    String sex = FunctionUtil.getSex(3, userInfoWX.getSex() + "");
-//                    otherLogin(userInfoWX.getOpenid(), userInfoWX.getNickname(), userInfoWX.getHeadimgurl(), sex, 3);
-//
-//                    break;
-//                case 0:
-//                    Meg.Show("获取用户信息失败");
-//                    WXEntryActivity.this.finish();
-//                    break;
-//            }
-//        }
-//    };
-//
-//
-//    private void getUserInfo(final ResultTokenWX resultTokenWX) {
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                //
-//                LogUtil.I(TAG,"resultTokenWX:"+resultTokenWX.toString());
-//                String val = NetworkTool.getUserInfoWithWX(resultTokenWX);
-//                LogUtil.I(TAG,"val:"+val);
-//                //
-//                try {
-//                    UserInfoWX userInfoWX = new Gson().fromJson(val, UserInfoWX.class);
-//                    if (userInfoWX != null) {
-//                        userInfoHandler.obtainMessage(1, userInfoWX).sendToTarget();
-//                    } else {
-//                        userInfoHandler.obtainMessage(0).sendToTarget();
-//                    }
-//                } catch (Exception e) {
-//                    userInfoHandler.obtainMessage(0).sendToTarget();
-//                }
-//            }
-//        }.start();
-//    }
-
 
     public class MyStringCallback extends StringCallback {
         @Override
@@ -157,22 +88,64 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 case 101://通过access_token调用接口,返回用户数据
                     UserInfoWX userInfoWX = new Gson().fromJson(response, UserInfoWX.class);
                     if(userInfoWX!=null){
-                        L.e(TAG,userInfoWX.toString());
+                        String openid = userInfoWX.getOpenid();
+                        String nickname = userInfoWX.getNickname();
+                        String avator = userInfoWX.getHeadimgurl();
+                        //获取新用户实例
+                        getFGUserInfo(openid,nickname,avator,Constant.Other.WX);
+
 
                     }else {
                         T.showLong(App.getContext(), R.string.get_user_info_error);
                     }
 
                     break;
+
+                case 102:
+                    //
+                    ReturnMSG_UserInfo returnMSG_userInfo =  new Gson().fromJson(response,ReturnMSG_UserInfo.class);
+                    if(returnMSG_userInfo!=null && returnMSG_userInfo.getCode()==Constant.FGCode.OpOk_code){
+                        ReturnMSG_UserInfo.DataBean dataBean= returnMSG_userInfo.getData();
+                        if(dataBean!=null){
+
+                            ReturnMSG_UserInfo.DataBean.LoginInfoBean loginInfoBean = dataBean.getLoginInfo();
+                            SPUtils.put(App.getContext(),Constant.TOKEN,dataBean.getToken());
+                            SPUtils.put(App.getContext(),Constant.USERINFO.NICKNAME,loginInfoBean.getNickname());
+                            SPUtils.put(App.getContext(),Constant.USERINFO.AVATOR,loginInfoBean.getAvator());
+                            WXEntryActivity.this.finish();
+                        }
+                    }
+
+                    break;
+
             }
-
-
         }
 
         @Override
         public void inProgress(float progress, long total, int id) {
             L.e(TAG, "inProgress:" + progress);
         }
+    }
+
+    private void getFGUserInfo(String openid, String nickname, String avator, String type) {
+
+        String url = GetUrl.getSocialLogin(type);
+        //
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("openid", openid);
+        params.put("nickname", nickname);
+        params.put("avator", avator);
+
+        String json = new Gson().toJson(params);
+        L.e(TAG,json);
+        OkHttpUtils
+                .postString()
+                .url(url)
+                .id(102)
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .content(json)
+                .build()
+                .execute(new MyStringCallback());
     }
 
     private void getWXUserInfo(ResultTokenWX resultTokenWX){

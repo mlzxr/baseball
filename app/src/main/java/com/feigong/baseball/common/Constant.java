@@ -14,49 +14,72 @@ package com.feigong.baseball.common;/**
  */
 public class Constant {
 
+    public static final String TOKEN="token";
+    public interface USERINFO{
+        public static final String NICKNAME="nickname";
+        public static final String AVATOR="avator";
+    }
 
-    public static final String FLAG="flag";
-    public static final String TAG="tag";
+    public static final String FLAG = "flag";
+    public static final String TAG = "tag";
 
-
-    public interface FragmentTAG{
-        int setting_fragment=1;
-        String setting_fragmentTAG="setting_fragment";
+    public interface FragmentTAG {
+        int setting_fragment = 1;
+        String setting_fragmentTAG = "setting_fragment";
         //
-        int security_account_fragment=2;
-        String security_account_fragmentTAG="security_account_fragment";
+        int security_account_fragment = 2;
+        String security_account_fragmentTAG = "security_account_fragment";
         //
-        int login_fragment=3;
-        String login_fragmentTAG="login_fragment";
+        int login_fragment = 3;
+        String login_fragmentTAG = "login_fragment";
 
     }
 
 
-    /***第三方应用参数***/
+    // 第三方应用参数
+    public interface Other {
+        //登录类型(1:微博,2:微信,3:扣扣)
+        public static final String WB = "1";
+        public static final String WX = "2";
+        public static final String QQ = "3";
+
+    }
 
     // 微信
-    public interface WX{
+    public interface WX {
         public static final String APP_ID = "wx03acd4dc4205b6f2";
         public static final String APP_SECRET = "4a70b851767dcb9b896468aaf43f086e";
     }
+
     //微博
-    public interface WB{
-        public static final String APP_KEY      = "3273926641";
+    public interface WB {
+        public static final String APP_KEY = "3273926641";
         public static final String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";
         public static final String SCOPE =
                 "email,direct_messages_read,direct_messages_write,"
                         + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
                         + "follow_app_official_microblog," + "invitation_write";
     }
-    public interface QQ{
+
+    //QQ
+    public interface QQ {
         public static final String APP_ID = "1105849119";
     }
 
-    //QQ
 
-
-
-
+    //返回状态码
+    public interface FGCode {
+        public static final int OpOk_code = 10000;
+        public static final String OpOk_msg = "操作成功";
+        public static final int OpFail_code = 10004;
+        public static final String OpFail_msg = "操作失败";
+        public static final int ParamError_code = 40001;
+        public static final String ParamError_msg = "参数问题";
+        public static final int TokenExpire_code = 40002;
+        public static final String TokenExpire_msg = "Token过期";
+        public static final int TokenInValid_code = 40003;
+        public static final String TokenInValid_msg = "无效的Token";
+    }
 
 
 }
