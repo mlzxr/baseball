@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/baseball.iml" filepath="$PROJECT_DIR$/baseball.iml" />
       <module fileurl="file://$PROJECT_DIR$/imageLoader/imageLoader.iml" filepath="$PROJECT_DIR$/imageLoader/imageLoader.iml" />
       <module fileurl="file://$PROJECT_DIR$/okhttputils/okhttputils.iml" filepath="$PROJECT_DIR$/okhttputils/okhttputils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xrecyclerview/xrecyclerview.iml" filepath="$PROJECT_DIR$/xrecyclerview/xrecyclerview.iml" />
     </modules>
   </component>
 </project>

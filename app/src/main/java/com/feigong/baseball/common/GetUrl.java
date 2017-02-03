@@ -16,6 +16,12 @@ public class GetUrl {
 
     public static final String DOMAIN="http://api.baseballsay.com";
 
+
+    public static String getUserInfoByToken(){
+        String url =DOMAIN+"/userApi/get_uinfo/";
+        return url;
+    }
+
     /**
      *  微信登陆，获取验证
      * @param code

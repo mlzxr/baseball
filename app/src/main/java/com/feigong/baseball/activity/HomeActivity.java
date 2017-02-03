@@ -10,11 +10,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,19 +24,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 
+import com.feigong.baseball.MainActivity;
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.activity.BaseActivity;
 import com.feigong.baseball.base.common.MapUtil;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
+import com.feigong.baseball.beans.ReturnMSG;
+import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
+import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.information.InformationFragment;
 import com.feigong.baseball.myinfo.LoginFragment;
 import com.feigong.baseball.myinfo.MeFragment;
 import com.feigong.baseball.myinfo.SecurityAccountFragment;
 import com.feigong.baseball.myinfo.SettingFragment;
 import com.feigong.baseball.video.VideoFragment;
+import com.feigong.baseball.wxapi.ResultTokenWX;
+import com.feigong.baseball.wxapi.WXEntryActivity;
+import com.google.gson.Gson;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.Callback;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import okhttp3.Call;
+import okhttp3.Request;
 
 /**
  * 项目名称：baseball
@@ -125,14 +140,25 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initData() {
         String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
+
         L.e(TAG,token);
         if(TextUtils.isEmpty(token)){
-            Map<String,Object> map = new HashMap<String, Object>();
-            //
-            map.put(Constant.FLAG,Constant.FragmentTAG.login_fragment);
-            map.put(Constant.TAG,Constant.FragmentTAG.login_fragmentTAG);
-            //
-            this.setLayout(map);
+           /*
+            *尚未登陆
+            */
+            toLogin();
+        }else {
+            /*
+             *获取用户资料
+             */
+            String url = GetUrl.getUserInfoByToken();
+            OkHttpUtils
+                    .get()
+                    .url(url)
+                    .addHeader(Constant.TOKEN,token)
+                    .id(100)
+                    .build()
+                    .execute(new MyStringCallback());
         }
 
     }
@@ -232,6 +258,62 @@ public class HomeActivity extends BaseActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constant.FragmentTAG.login_fragmentTAG);
         if(fragment!=null){
             fragment.onActivityResult(requestCode,resultCode,data);
+        }
+    }
+
+    private void toLogin(){
+        Map<String,Object> map = new HashMap<String, Object>();
+        //
+        map.put(Constant.FLAG,Constant.FragmentTAG.login_fragment);
+        map.put(Constant.TAG,Constant.FragmentTAG.login_fragmentTAG);
+        //
+        this.setLayout(map);
+    }
+
+    public class MyStringCallback extends StringCallback
+    {
+        @Override
+        public void onBefore(Request request, int id)
+        {
+        }
+
+        @Override
+        public void onAfter(int id)
+        {
+
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id)
+        {
+            L.e(TAG,e.getMessage());
+        }
+
+        @Override
+        public void onResponse(String response, int id)
+        {
+            switch (id)
+            {
+                case 100:
+                    L.e(TAG,response);
+                    ReturnMSG_UserInfo returnMSG_userInfo =  new Gson().fromJson(response,ReturnMSG_UserInfo.class);
+                    if(returnMSG_userInfo!=null && returnMSG_userInfo.getCode()==Constant.FGCode.OpOk_code){
+                        ReturnMSG_UserInfo.DataBean dataBean= returnMSG_userInfo.getData();
+                        if(dataBean!=null){
+                            SPUtils.put(App.getContext(),Constant.USERINFO.NICKNAME,dataBean.getLoginInfo().getNickname());
+                            SPUtils.put(App.getContext(),Constant.USERINFO.AVATOR,dataBean.getLoginInfo().getAvator());
+
+                        }
+                    }else {
+                        toLogin();
+                    }
+                    break;
+            }
+        }
+
+        @Override
+        public void inProgress(float progress, long total, int id)
+        {
         }
     }
 }

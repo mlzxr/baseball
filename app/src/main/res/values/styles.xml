@@ -68,5 +68,17 @@
         <item name="android:layout_margin">10dp</item>
     </style>
 
+    <!--拍照-->
+    <style name="take_picture_bg">
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/orange</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
 
 </resources>

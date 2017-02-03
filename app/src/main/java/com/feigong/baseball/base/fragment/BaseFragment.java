@@ -38,7 +38,6 @@ public abstract class BaseFragment extends Fragment {
 
     protected Context context;
 
-    protected ExecutorService baseExecutorService;
     /********************************************************************************************/
 
     @Override
@@ -93,7 +92,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        shutdownAndAwaitTermination(baseExecutorService);
         System.gc();
     }
 

@@ -2,16 +2,21 @@ package com.feigong.baseball.myinfo;/**
  * Created by ruler on 16/12/5.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.feigong.baseball.MainActivity;
 import com.feigong.baseball.R;
 import com.feigong.baseball.activity.HomeActivity;
+import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.fgview.ViewTopBar;
 import com.feigong.baseball.fgview.View_ITI_Horizontal;
 import com.feigong.baseball.fgview.View_TTI_Horizontal;
+import com.feigong.baseball.wxapi.WXEntryActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,12 +84,28 @@ public class SettingFragment extends BaseFragment {
                 //
                 map.put(Constant.FLAG,Constant.FragmentTAG.security_account_fragment);
                 map.put(Constant.TAG,Constant.FragmentTAG.security_account_fragmentTAG);
-                //
+                 /*
+                打开主界面
+                 */
                 HomeActivity homeActivity = (HomeActivity)getActivity();
                 homeActivity.setLayout(map);
             }
         });
+        /*
+           退出登陆
+         */
+        view.findViewById(R.id.bt_login).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SPUtils.put(App.getContext(),Constant.TOKEN,Constant.EMPTY);
+                SPUtils.put(App.getContext(),Constant.USERINFO.NICKNAME,Constant.EMPTY);
+                SPUtils.put(App.getContext(),Constant.USERINFO.AVATOR,Constant.EMPTY);
+                getActivity().finish();
 
+                Intent intent =new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

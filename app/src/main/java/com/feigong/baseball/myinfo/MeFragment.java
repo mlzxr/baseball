@@ -38,8 +38,7 @@ public class MeFragment extends BaseFragment {
     private static final String TAG="MeFragment";
 
 
-    private ImageView iv_avatar;//头像
-
+    private ImageView iv_avator;//头像
 
     //
     public static MeFragment newInstance() {
@@ -60,7 +59,7 @@ public class MeFragment extends BaseFragment {
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
 
-        iv_avatar =(ImageView)view.findViewById(R.id.iv_avatar);
+        iv_avator =(ImageView)view.findViewById(R.id.iv_avator);
         //
         View_ITI_Horizontal myMessage_iti = (View_ITI_Horizontal)view.findViewById(R.id.my_message_iti);
         View_ITI_Horizontal myCollect_iti = (View_ITI_Horizontal)view.findViewById(R.id.my_collect_iti);
@@ -79,7 +78,14 @@ public class MeFragment extends BaseFragment {
         myAccount_iti.getCentreTextView().setText(getString(R.string.my_account));
         mySetting_iti.getCentreTextView().setText(getString(R.string.my_setting));
 
-        //
+        //设置头像
+        iv_avator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         mySetting_iti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +106,6 @@ public class MeFragment extends BaseFragment {
     protected void loadData() {
         String nickname = String.valueOf(SPUtils.get(App.getContext(),Constant.USERINFO.NICKNAME,""));
         String avator = String.valueOf(SPUtils.get(App.getContext(),Constant.USERINFO.AVATOR,""));
-        ImageLoader.getInstance().displayImage(avator, iv_avatar,ImageUtil.getImageOptionsCircle());
+        ImageLoader.getInstance().displayImage(avator, iv_avator,ImageUtil.getImageOptionsCircle());
     }
 }

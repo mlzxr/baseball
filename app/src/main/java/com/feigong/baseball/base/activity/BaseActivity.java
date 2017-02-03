@@ -32,12 +32,6 @@ public abstract class BaseActivity extends FragmentActivity {
     protected static final int OK=1;
     protected static final int EER=0;
 
-
-
-    protected ExecutorService baseExecutorService;
-
-    protected Runnable baseRunnable;
-
     protected Activity activity;
 
     @Override
@@ -74,7 +68,6 @@ public abstract class BaseActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        shutdownAndAwaitTermination(baseExecutorService);
         System.gc();
     }
 

@@ -15,6 +15,8 @@ package com.feigong.baseball.common;/**
 public class Constant {
 
     public static final String TOKEN="token";
+    public static final String EMPTY="";
+
     public interface USERINFO{
         public static final String NICKNAME="nickname";
         public static final String AVATOR="avator";

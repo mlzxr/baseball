@@ -1,1 +1,1 @@
-include ':app', ':baseUtil', ':imageLoader', ':okhttputils'
+include ':app', ':baseUtil', ':imageLoader', ':okhttputils', ':xrecyclerview'

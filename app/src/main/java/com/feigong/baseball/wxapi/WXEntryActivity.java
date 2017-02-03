@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.feigong.baseball.MainActivity;
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.common.JSONUtil;
@@ -108,11 +109,16 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         ReturnMSG_UserInfo.DataBean dataBean= returnMSG_userInfo.getData();
                         if(dataBean!=null){
 
-                            ReturnMSG_UserInfo.DataBean.LoginInfoBean loginInfoBean = dataBean.getLoginInfo();
                             SPUtils.put(App.getContext(),Constant.TOKEN,dataBean.getToken());
-                            SPUtils.put(App.getContext(),Constant.USERINFO.NICKNAME,loginInfoBean.getNickname());
-                            SPUtils.put(App.getContext(),Constant.USERINFO.AVATOR,loginInfoBean.getAvator());
+                            SPUtils.put(App.getContext(),Constant.USERINFO.NICKNAME,dataBean.getLoginInfo().getNickname());
+                            SPUtils.put(App.getContext(),Constant.USERINFO.AVATOR,dataBean.getLoginInfo().getAvator());
+
                             WXEntryActivity.this.finish();
+                            /*
+                            打开主界面
+                             */
+                            Intent intent =new Intent(WXEntryActivity.this, MainActivity.class);
+                            startActivity(intent);
                         }
                     }
 
@@ -211,28 +217,4 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     }
 
 
-    //注册第三方登陆信息
-    private void otherLogin(final String openId, final String nickname, final String avatar, final String sex, final int type) {
-        //
-        new Thread() {
-            @Override
-            public void run() {
-//                String val = NetworkTool.SocialLogin(openId, nickname, avatar, sex, type);
-//                try {
-//                    ReturnLoginInfo returnLoginInfo = new Gson().fromJson(val, ReturnLoginInfo.class);
-//                    if (returnLoginInfo != null && returnLoginInfo.getResult() != null) {
-//                        if (returnLoginInfo.getResult().getResultCode() == 200) {
-//                            otherHandler.obtainMessage(1, returnLoginInfo.getToken()).sendToTarget();
-//                        } else {
-//                            otherHandler.obtainMessage(0).sendToTarget();
-//                        }
-//                    } else {
-//                        otherHandler.obtainMessage(0).sendToTarget();
-//                    }
-//                } catch (Exception e) {
-//                    otherHandler.obtainMessage(0).sendToTarget();
-//                }
-            }
-        }.start();
-    }
 }

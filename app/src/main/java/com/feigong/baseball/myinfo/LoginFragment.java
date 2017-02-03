@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.feigong.baseball.MainActivity;
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.common.JSONUtil;
@@ -483,10 +484,16 @@ public class LoginFragment extends BaseFragment {
                     if(returnMSG_userInfo!=null && returnMSG_userInfo.getCode()==Constant.FGCode.OpOk_code){
                         ReturnMSG_UserInfo.DataBean dataBean= returnMSG_userInfo.getData();
                         if(dataBean!=null){
-                            ReturnMSG_UserInfo.DataBean.LoginInfoBean loginInfoBean = dataBean.getLoginInfo();
                             SPUtils.put(App.getContext(),Constant.TOKEN,dataBean.getToken());
-                            SPUtils.put(App.getContext(),Constant.USERINFO.NICKNAME,loginInfoBean.getNickname());
-                            SPUtils.put(App.getContext(),Constant.USERINFO.AVATOR,loginInfoBean.getAvator());
+                            SPUtils.put(App.getContext(),Constant.USERINFO.NICKNAME,dataBean.getLoginInfo().getNickname());
+                            SPUtils.put(App.getContext(),Constant.USERINFO.AVATOR,dataBean.getLoginInfo().getAvator());
+                            //
+                            getActivity().finish();
+                            /*
+                            打开主界面
+                             */
+                            Intent intent =new Intent(getActivity(), MainActivity.class);
+                            startActivity(intent);
                         }
                     }
                     break;
