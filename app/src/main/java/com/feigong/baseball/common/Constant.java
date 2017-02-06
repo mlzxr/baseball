@@ -34,6 +34,10 @@ public class Constant {
         //
         int login_fragment = 3;
         String login_fragmentTAG = "login_fragment";
+        //
+        int get_picture_fragment=4;
+        String get_picture_fragmentTAG="get_picture_fragment";
+
 
     }
 

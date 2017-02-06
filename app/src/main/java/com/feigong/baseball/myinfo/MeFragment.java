@@ -82,7 +82,12 @@ public class MeFragment extends BaseFragment {
         iv_avator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Map<String,Object> map = new HashMap<String, Object>();
+                //
+                map.put(Constant.FLAG,Constant.FragmentTAG.get_picture_fragment);
+                map.put(Constant.TAG,Constant.FragmentTAG.get_picture_fragmentTAG);
+                //
+                openFragment(map);
             }
         });
 
@@ -94,8 +99,7 @@ public class MeFragment extends BaseFragment {
                 map.put(Constant.FLAG,Constant.FragmentTAG.setting_fragment);
                 map.put(Constant.TAG,Constant.FragmentTAG.setting_fragmentTAG);
                 //
-                HomeActivity homeActivity = (HomeActivity)getActivity();
-                homeActivity.setLayout(map);
+                openFragment(map);
             }
         });
 
@@ -107,5 +111,10 @@ public class MeFragment extends BaseFragment {
         String nickname = String.valueOf(SPUtils.get(App.getContext(),Constant.USERINFO.NICKNAME,""));
         String avator = String.valueOf(SPUtils.get(App.getContext(),Constant.USERINFO.AVATOR,""));
         ImageLoader.getInstance().displayImage(avator, iv_avator,ImageUtil.getImageOptionsCircle());
+    }
+
+    private void openFragment(Map map){
+        HomeActivity homeActivity = (HomeActivity)getActivity();
+        homeActivity.setLayout(map);
     }
 }

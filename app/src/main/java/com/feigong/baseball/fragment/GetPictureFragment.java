@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.myinfo.LoginFragment;
 
 /**
  * 项目名称：baseball
@@ -21,6 +22,11 @@ import com.feigong.baseball.base.fragment.BaseFragment;
 public class GetPictureFragment extends BaseFragment {
 
     private static final String TAG= "GetPictureFragment";
+
+    public static GetPictureFragment newInstance() {
+        GetPictureFragment getPictureFragment = new GetPictureFragment();
+        return getPictureFragment;
+    }
 
     @Override
     protected int getLayout() {
