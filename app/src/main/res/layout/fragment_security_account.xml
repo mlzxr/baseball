@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:clickable="true"
-    android:background="@color/lightgray"
+    style="@style/layout_mm_fragment"
     >
 
     <com.feigong.baseball.fgview.ViewTopBar
@@ -22,10 +19,13 @@
     <com.feigong.baseball.fgview.View_TTI_Horizontal
         android:id="@+id/view_tti_nickname"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_TTI_Horizontal>
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        ></com.feigong.baseball.fgview.View_TTI_Horizontal>
 
     <com.feigong.baseball.fgview.View_TTI_Horizontal
         android:id="@+id/view_tti_sex"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_TTI_Horizontal>
 

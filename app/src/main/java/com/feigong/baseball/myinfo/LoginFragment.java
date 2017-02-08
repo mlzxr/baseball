@@ -123,7 +123,7 @@ public class LoginFragment extends BaseFragment {
                             @Override
                             public void onStart(View view) {//放大动画开始时的回调
 
-                                tv_title.setVisibility(View.VISIBLE);
+                                //tv_title.setVisibility(View.VISIBLE);
                                 AnimationSet fadeOutAnim = (AnimationSet) AnimationUtils.loadAnimation(App.getContext(), R.anim.fade_out_anim);
                                 fadeOutAnim.setDuration(1000);
                                 fadeOutAnim.setAnimationListener(new Animation.AnimationListener() {

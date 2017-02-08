@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         >
         <TextView
             android:id="@+id/left_textView"
@@ -30,7 +30,7 @@
         <ImageView
             android:id="@+id/right_imageView"
             style="@style/iti_right_image_width"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/iconmonstr_arrow"
             />
 
     </LinearLayout>

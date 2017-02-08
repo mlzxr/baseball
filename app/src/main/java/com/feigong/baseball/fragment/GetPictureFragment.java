@@ -4,9 +4,14 @@ package com.feigong.baseball.fragment;/**
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.feigong.baseball.R;
+import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.base.util.ScreenUtils;
+import com.feigong.baseball.fgview.ViewTopBar;
 import com.feigong.baseball.myinfo.LoginFragment;
 
 /**
@@ -21,7 +26,7 @@ import com.feigong.baseball.myinfo.LoginFragment;
  */
 public class GetPictureFragment extends BaseFragment {
 
-    private static final String TAG= "GetPictureFragment";
+    private static final String TAG = "GetPictureFragment";
 
     public static GetPictureFragment newInstance() {
         GetPictureFragment getPictureFragment = new GetPictureFragment();
@@ -35,18 +40,31 @@ public class GetPictureFragment extends BaseFragment {
 
     @Override
     protected void initVariables() {
-
+        context = getActivity();
     }
 
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
-
-
-
+        ViewTopBar viewTopBar =(ViewTopBar)view.findViewById(R.id.viewTopBar);
+        viewTopBar.getTv_title().setText(getString(R.string.my_setting));
+        viewTopBar.getIv_back().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
+        //
+        ImageView iv_avator = (ImageView) view.findViewById(R.id.iv_avator);
+        ViewGroup.LayoutParams layoutParams = iv_avator.getLayoutParams();
+        layoutParams.height = ScreenUtils.getScreenWidth(App.getContext());
+        iv_avator.setLayoutParams(layoutParams);
+        //
     }
 
     @Override
     protected void loadData() {
 
     }
+
+
 }

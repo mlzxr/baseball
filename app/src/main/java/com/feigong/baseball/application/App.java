@@ -50,8 +50,8 @@ public class App extends Application {
         JPushInterface.init(this);
 
         //获取屏幕相关属性
-        ScreenUtils.getScreenWidth(context);
-        ScreenUtils.getScreenHeight(context);
+        //ScreenUtils.getScreenWidth(context);
+        //ScreenUtils.getScreenHeight(context);
         ScreenUtils.getScreenDensity(context);
         //网络图片加载框架
         initImageLoader();

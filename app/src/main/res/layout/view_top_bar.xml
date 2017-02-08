@@ -9,7 +9,6 @@
         android:id="@+id/iv_back"
         style="@style/layout_ww"
         android:src="@mipmap/topbar_back_white"
-        android:layout_marginLeft="10dp"
         />
 
     <TextView
@@ -18,7 +17,9 @@
         android:layout_weight="1"
         android:textColor="@color/white"
         android:gravity="center_horizontal"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        />
 
     <ImageView
         android:id="@+id/iv_commit"
