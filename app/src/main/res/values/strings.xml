@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">非攻棒球</string>
 
+    <string name="qq">QQ</string>
+    <string name="wx">微信</string>
+    <string name="xl">新浪</string>
+
+    <string name="binding">绑定</string>
+    <string name="unbundle">解绑</string>
+
+    <string name="sure_unbundle_qq">确定取消绑定QQ?</string>
+    <string name="sure_unbundle_wx">确定取消绑定微信?</string>
+    <string name="sure_unbundle_wb">确定取消绑定微博?</string>
+
     <!--主页模块-->
     <string name="information">资讯</string>
     <string name="video">视频</string>
@@ -20,10 +31,20 @@
     <string name="security_account">账号与安全</string>
     <string name="push_notification">推送通知</string>
     <string name="clear_cache">清空缓存</string>
+    <string name="clear_cache_over">已清理缓存</string>
+    <string name="if_clear_cache">是否清理缓存？</string>
+    <string name="hint">提示</string>
+    <string name="the_cache_is_convenient_you_browse_content">缓存方便您浏览内容</string>
+
     <string name="share_friend">分享给好友</string>
     <string name="about_us">关于我们</string>
 
     <string name="go_out">退出登陆</string>
+
+    <string name="social_account">社交帐号绑定</string>
+
+    <string name="setting_failed">设置失败</string>
+    <string name="setting_success">设置成功</string>
 
     <!--账号安全-->
     <string name="avatar">头像</string>
@@ -32,7 +53,7 @@
     <string name="phone_binding">手机绑定</string>
     <string name="account_binding">社交账号绑定</string>
     <string name="register_time">注册时间</string>
-
+    <string name="setting_picture">设置图片</string>
 
     <!--登陆-->
     <string name="speediness_login">快速登陆</string>
@@ -54,5 +75,7 @@
     <string name="take_photo">拍照</string>
     <string name="form_picture">来自相簿</string>
     <string name="cancel">取消</string>
+    <string name="sure">确定</string>
+
 
 </resources>

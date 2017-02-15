@@ -10,17 +10,22 @@
         android:layout_height="wrap_content">
     </com.feigong.baseball.fgview.ViewTopBar>
 
+
+    <com.feigong.baseball.fgview.ViewTT_TB_Horizontal
+        android:id="@+id/view_tti_tb_push"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ></com.feigong.baseball.fgview.ViewTT_TB_Horizontal>
+
     <com.feigong.baseball.fgview.View_TTI_Horizontal
         android:id="@+id/view_tti_account"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_TTI_Horizontal>
 
-    <com.feigong.baseball.fgview.View_TTI_Horizontal
-        android:id="@+id/view_tti_push"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_TTI_Horizontal>
+
+
+
     <com.feigong.baseball.fgview.View_TTI_Horizontal
         android:id="@+id/view_tti_cache"
         android:layout_width="match_parent"

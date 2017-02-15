@@ -2,6 +2,8 @@ package com.feigong.baseball.myinfo;/**
  * Created by ruler on 16/9/7.
  */
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.feigong.baseball.base.fragment.BaseFragment;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.beans.ReturnMSG_UserInfo;
+import com.feigong.baseball.common.BitmapUtil;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.ImageUtil;
 import com.feigong.baseball.fgview.View_ITI_Horizontal;
@@ -113,8 +116,18 @@ public class MeFragment extends BaseFragment {
         ImageLoader.getInstance().displayImage(avator, iv_avator,ImageUtil.getImageOptionsCircle());
     }
 
+    public void loadAvator(){
+        ImageLoader.getInstance().displayImage("file://"+Constant.UPLOADFILEPATH, iv_avator,ImageUtil.getImageOptionsCircle());
+    }
+
     private void openFragment(Map map){
         HomeActivity homeActivity = (HomeActivity)getActivity();
         homeActivity.setLayout(map);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        L.e(TAG,"onActivityResult----"+",requestCode:"+requestCode+"-----"+",resultCode:"+resultCode);
     }
 }

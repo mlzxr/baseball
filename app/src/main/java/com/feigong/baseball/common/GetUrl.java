@@ -60,7 +60,24 @@ public class GetUrl {
         return url;
     }
 
+    /**
+     * 推送消息开关
+     * @param flag
+     * @return
+     */
+    public static String UpdatePushSwitch(int flag) {
+        String url =DOMAIN+"/userApi/push_switch/{push_flag}";
+        url = url.replace("{push_flag}",String.valueOf(flag));
+        return url;
+    }
 
-
-
+    /**
+     * 解绑社会化登陆
+     * @param type
+     * @return
+     */
+    public static String unbundleOther(String type) {
+        String url =DOMAIN+"/userApi/social_unbind/"+type;
+        return url;
+    }
 }

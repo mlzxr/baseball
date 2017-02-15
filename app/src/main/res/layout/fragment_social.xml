@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/layout_mm_fragment"
+    android:orientation="vertical">
+
+    <com.feigong.baseball.fgview.ViewTopBar
+        android:id="@+id/viewTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.feigong.baseball.fgview.ViewTopBar>
+
+    <com.feigong.baseball.fgview.View_ITTI_Horizontal
+        android:id="@+id/view_itti_qq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.feigong.baseball.fgview.View_ITTI_Horizontal>
+
+    <com.feigong.baseball.fgview.View_ITTI_Horizontal
+        android:id="@+id/view_itti_wx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.feigong.baseball.fgview.View_ITTI_Horizontal>
+
+    <com.feigong.baseball.fgview.View_ITTI_Horizontal
+        android:id="@+id/view_itti_sl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.feigong.baseball.fgview.View_ITTI_Horizontal>
+
+</LinearLayout>

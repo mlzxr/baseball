@@ -39,6 +39,13 @@ public class ViewUtil {
         return 0;
     }
 
+    public static boolean getTagBool(View view){
+        if(view!=null && view.getTag()!=null){
+            return (boolean)view.getTag();
+        }
+        return false;
+    }
+
     public static long getTagLong(View view){
         if(view!=null && view.getTag()!=null){
             return Long.parseLong(view.getTag().toString());

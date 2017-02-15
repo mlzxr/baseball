@@ -77,6 +77,12 @@
         <item name="android:layout_margin">10dp</item>
     </style>
 
+    <style name="ttiii_right_image_width">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_margin">3dp</item>
+    </style>
+
     <!--拍照-->
     <style name="take_picture_bg">
         <item name="android:layout_marginTop">20dp</item>

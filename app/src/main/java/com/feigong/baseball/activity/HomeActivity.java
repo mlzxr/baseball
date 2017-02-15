@@ -41,6 +41,7 @@ import com.feigong.baseball.myinfo.LoginFragment;
 import com.feigong.baseball.myinfo.MeFragment;
 import com.feigong.baseball.myinfo.SecurityAccountFragment;
 import com.feigong.baseball.myinfo.SettingFragment;
+import com.feigong.baseball.myinfo.SocialFragment;
 import com.feigong.baseball.video.VideoFragment;
 import com.feigong.baseball.wxapi.ResultTokenWX;
 import com.feigong.baseball.wxapi.WXEntryActivity;
@@ -140,9 +141,9 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        String userinfo = String.valueOf(SPUtils.get(App.getContext(),Constant.USERINFO.All,""));
+        L.e(TAG,"userinfo:"+userinfo);
         String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
-
-        L.e(TAG,token);
         if(TextUtils.isEmpty(token)){
            /*
             *尚未登陆
@@ -191,6 +192,13 @@ public class HomeActivity extends BaseActivity {
                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
                 if(fragment==null){
                     fragment = GetPictureFragment.newInstance();
+                }
+                break;
+
+            case Constant.FragmentTAG.social_fragment:
+                fragment = getSupportFragmentManager().findFragmentByTag(tag);
+                if(fragment==null){
+                    fragment = SocialFragment.newInstance();
                 }
                 break;
         }
@@ -255,12 +263,13 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        Fragment f = fragmentArrayList.get(home_viewPager.getCurrentItem());
-//        f.onActivityResult(requestCode, resultCode, data);
+        Fragment f = fragmentArrayList.get(home_viewPager.getCurrentItem());
+        f.onActivityResult(requestCode, resultCode, data);
+
+        L.e(TAG,"onActivityResult----"+",requestCode:"+requestCode+"-----"+",resultCode:"+resultCode);
 
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constant.FragmentTAG.login_fragmentTAG);
         if(fragment!=null){
@@ -276,6 +285,16 @@ public class HomeActivity extends BaseActivity {
         //
         this.setLayout(map);
     }
+
+    public void loadAvatar(int index){
+        Fragment fragment = fragmentArrayList.get(index);
+        if(fragment instanceof MeFragment){
+            MeFragment meFragment = (MeFragment)fragment;
+            meFragment.loadAvator();
+        }
+    }
+
+
 
     public class MyStringCallback extends StringCallback
     {
@@ -307,6 +326,7 @@ public class HomeActivity extends BaseActivity {
                     if(returnMSG_userInfo!=null && returnMSG_userInfo.getCode()==Constant.FGCode.OpOk_code){
                         ReturnMSG_UserInfo.DataBean dataBean= returnMSG_userInfo.getData();
                         if(dataBean!=null){
+                            SPUtils.put(App.getContext(),Constant.USERINFO.All,response);
                             SPUtils.put(App.getContext(),Constant.USERINFO.NICKNAME,dataBean.getLoginInfo().getNickname());
                             SPUtils.put(App.getContext(),Constant.USERINFO.AVATOR,dataBean.getLoginInfo().getAvator());
 

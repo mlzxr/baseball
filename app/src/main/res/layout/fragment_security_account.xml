@@ -34,10 +34,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_TTI_Horizontal>
 
-    <com.feigong.baseball.fgview.View_TTI_Horizontal
-        android:id="@+id/view_tti_account_binding"
+    <com.feigong.baseball.fgview.View_TTIII_Horizontal
+        android:id="@+id/view_ttiii_other_account"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_TTI_Horizontal>
+        android:layout_height="wrap_content"></com.feigong.baseball.fgview.View_TTIII_Horizontal>
 
     <com.feigong.baseball.fgview.View_TTI_Horizontal
         android:id="@+id/view_tti_register_time"

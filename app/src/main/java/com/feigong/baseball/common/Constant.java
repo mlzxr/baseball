@@ -2,6 +2,8 @@ package com.feigong.baseball.common;/**
  * Created by ruler on 16/12/6.
  */
 
+import android.os.Environment;
+
 /**
  * 项目名称：baseball
  * 类名称： Constant
@@ -15,9 +17,14 @@ package com.feigong.baseball.common;/**
 public class Constant {
 
     public static final String TOKEN="token";
+    public static final String PUSH_FLAG="push_flag";
+
     public static final String EMPTY="";
 
+    public static final String UPLOADFILEPATH = Environment.getExternalStorageDirectory().getPath() + "/temp.jpg";//指定默认照片存储路径
+
     public interface USERINFO{
+        public static final String All="userinfo";
         public static final String NICKNAME="nickname";
         public static final String AVATOR="avator";
     }
@@ -26,17 +33,21 @@ public class Constant {
     public static final String TAG = "tag";
 
     public interface FragmentTAG {
+        //系统设置
         int setting_fragment = 1;
         String setting_fragmentTAG = "setting_fragment";
-        //
+        //帐号安全
         int security_account_fragment = 2;
         String security_account_fragmentTAG = "security_account_fragment";
-        //
+        //登陆
         int login_fragment = 3;
         String login_fragmentTAG = "login_fragment";
-        //
+        //拍照
         int get_picture_fragment=4;
         String get_picture_fragmentTAG="get_picture_fragment";
+        //社会化登陆绑定
+        int social_fragment=5;
+        String social_fragmentTAG="social_fragment";
 
 
     }
