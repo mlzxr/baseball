@@ -14,22 +14,40 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.feigong.baseball.MainActivity;
 import com.feigong.baseball.R;
 import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.fragment.BaseFragment;
 import com.feigong.baseball.base.util.L;
+import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.base.util.ScreenUtils;
+import com.feigong.baseball.base.util.T;
+import com.feigong.baseball.beans.ReturnMSG;
+import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.BitmapUtil;
 import com.feigong.baseball.common.Constant;
+import com.feigong.baseball.common.GetUrl;
+import com.feigong.baseball.common.MethodsUtil;
 import com.feigong.baseball.fgview.ViewTopBar;
+import com.feigong.baseball.myinfo.LoginFragment;
+import com.google.gson.Gson;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.Request;
 
 /**
  * 项目名称：baseball
@@ -53,9 +71,63 @@ public class GetPictureFragment extends BaseFragment {
 
     private Uri photoUri;
 
-    public static GetPictureFragment newInstance() {
+    private int take_type=0;
+
+    public static GetPictureFragment newInstance(int take_type) {
+        L.e(TAG,"当前拍照类型："+take_type);
         GetPictureFragment getPictureFragment = new GetPictureFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constant.TAKE_PHONE_TYPE.TAKE_TYPE,Constant.TAKE_PHONE_TYPE.AVATOR);
+        getPictureFragment.setArguments(bundle);
         return getPictureFragment;
+    }
+
+    public class MyStringCallback extends StringCallback {
+        @Override
+        public void onBefore(Request request, int id) {
+            L.e(TAG, "onBefore...");
+        }
+
+        @Override
+        public void onAfter(int id) {
+            L.e(TAG, "onAfter...");
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id) {
+            T.showShort(App.getContext(),R.string.update_picture_error);
+        }
+
+        @Override
+        public void onResponse(String response, int id) {
+            L.e(TAG,response);
+            //
+            switch (id) {
+                case 100:
+                    ReturnMSG returnMSG = new Gson().fromJson(response,ReturnMSG.class);
+                    if(returnMSG!=null && returnMSG.getCode()==Constant.FGCode.OpOk_code){
+
+                        T.showShort(App.getContext(),returnMSG.getMsg());
+                        //更新头像
+                        Activity activity = getActivity();
+                        if(activity instanceof HomeActivity){
+                            HomeActivity homeActivity = (HomeActivity)activity;
+                            homeActivity.loadAvatar(2);
+                        }
+                    }
+                    break;
+
+                case 101:
+
+
+                    break;
+            }
+        }
+
+        @Override
+        public void inProgress(float progress, long total, int id) {
+            L.e(TAG, "inProgress:" + progress);
+        }
     }
 
     @Override
@@ -66,6 +138,10 @@ public class GetPictureFragment extends BaseFragment {
     @Override
     protected void initVariables() {
         context = getActivity();
+        Bundle bundle = getArguments();
+        if(bundle!=null){
+            take_type = bundle.getInt(Constant.TAKE_PHONE_TYPE.TAKE_TYPE);
+        }
     }
 
     @Override
@@ -123,7 +199,7 @@ public class GetPictureFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        L.e(TAG,"onActivityResult----"+",requestCode:"+requestCode+"-----"+",resultCode:"+resultCode);
+        //L.e(TAG,"onActivityResult----"+",requestCode:"+requestCode+"-----"+",resultCode:"+resultCode);
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == TAKE_PHOTO) {
@@ -156,17 +232,53 @@ public class GetPictureFragment extends BaseFragment {
             } else if (requestCode == CROP_PHOTO) {
                 //照片裁剪
                 Bitmap bitmap = BitmapUtil.getSmallBitmap(Constant.UPLOADFILEPATH, BitmapUtil.WIDTH, BitmapUtil.HEIGHT);
-                iv_avator.setImageBitmap(bitmap);
                 //
-                Activity activity = getActivity();
-                if(activity instanceof HomeActivity){
-                    HomeActivity homeActivity = (HomeActivity)activity;
-                    homeActivity.loadAvatar(2);
-                }
+
+                updateAvator(bitmap);
+
 
             }
         }
     }
+
+    /**
+     * 获取返回的图片
+     * @param bitmap
+     */
+    private void updateAvator(Bitmap bitmap){
+        if(bitmap!=null){
+            String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
+            String base64 = BitmapUtil.BitmapToBase64(bitmap);
+            //
+            if(!TextUtils.isEmpty(base64)){
+                base64 ="data:image/jpg;base64,"+base64;
+            }
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("image_base64", base64);
+            params.put("image_filename", MethodsUtil.getFileName()+".jpg");
+            String json = new Gson().toJson(params);
+           // L.e(TAG,token);
+           // L.e(TAG,json);
+            String url = GetUrl.AvatorModify();
+            OkHttpUtils
+                    .postString()
+                    .addHeader(Constant.TOKEN,token)
+                    .url(url)
+                    .id(100)
+                    .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                    .content(json)
+                    .build()
+                    .execute(new MyStringCallback());
+
+            //上传图片成功刷新本地图片
+            iv_avator.setImageBitmap(bitmap);
+
+        }else {
+
+            T.showShort(App.getContext(),R.string.get_picture_error);
+        }
+    }
+
 
 
     @TargetApi(Build.VERSION_CODES.KITKAT)

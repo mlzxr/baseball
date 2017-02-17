@@ -10,16 +10,23 @@ import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.fragment.BaseFragment;
 import com.feigong.baseball.base.util.DateUtil;
+import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
+import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.fgview.ViewTopBar;
 import com.feigong.baseball.fgview.View_TTIII_Horizontal;
 import com.feigong.baseball.fgview.View_TTI_Horizontal;
 import com.google.gson.Gson;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Request;
 
 /**
  * 项目名称：baseball
@@ -45,6 +52,52 @@ public class SecurityAccountFragment extends BaseFragment {
         SecurityAccountFragment securityAccountFragment = new SecurityAccountFragment();
         return securityAccountFragment;
     }
+
+    public class MyStringCallback extends StringCallback
+    {
+        @Override
+        public void onBefore(Request request, int id)
+        {
+        }
+
+        @Override
+        public void onAfter(int id)
+        {
+
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id)
+        {
+            L.e(TAG,e.getMessage());
+        }
+
+        @Override
+        public void onResponse(String response, int id)
+        {
+            switch (id)
+            {
+                case 100:
+                    L.e(TAG,response);
+                    ReturnMSG_UserInfo returnMSG_userInfo =  new Gson().fromJson(response,ReturnMSG_UserInfo.class);
+                    if(returnMSG_userInfo!=null && returnMSG_userInfo.getCode()==Constant.FGCode.OpOk_code){
+                        ReturnMSG_UserInfo.DataBean dataBean= returnMSG_userInfo.getData();
+                        if(dataBean!=null){
+                            view_tti_phone_binding.getCentreTextView().setText(dataBean.getLoginInfo().getMobileBind());
+                            String dateStr = DateUtil.GmtToDateStrByGmtStr(dataBean.getLoginInfo().getRegtime());
+                            view_tti_register_time.getCentreTextView().setText(dateStr);
+                        }
+                    }
+                    break;
+            }
+        }
+
+        @Override
+        public void inProgress(float progress, long total, int id)
+        {
+        }
+    }
+
 
     @Override
     protected int getLayout() {
@@ -101,16 +154,15 @@ public class SecurityAccountFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
-        String userinfo = String.valueOf(SPUtils.get(App.getContext(), Constant.USERINFO.All,""));
-        ReturnMSG_UserInfo returnMSG_userInfo =  new Gson().fromJson(userinfo,ReturnMSG_UserInfo.class);
-        if(returnMSG_userInfo!=null &&  returnMSG_userInfo.getData()!=null){
-           ReturnMSG_UserInfo.DataBean.LoginInfoBean loginInfoBean = returnMSG_userInfo.getData().getLoginInfo();
-           if(loginInfoBean!=null){
-               view_tti_phone_binding.getCentreTextView().setText(loginInfoBean.getMobileBind());
-               String dateStr = DateUtil.GmtToDateStrByGmtStr(loginInfoBean.getRegtime());
-               view_tti_register_time.getCentreTextView().setText(dateStr);
-           }
-        }
+        String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
+        String url = GetUrl.getUserInfoByToken();
+        OkHttpUtils
+                .get()
+                .url(url)
+                .addHeader(Constant.TOKEN,token)
+                .id(100)
+                .build()
+                .execute(new MyStringCallback());
     }
 
 

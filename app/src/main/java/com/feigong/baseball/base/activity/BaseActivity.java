@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
 import java.util.concurrent.ExecutorService;
@@ -21,9 +22,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @version 1.0
  */
-public abstract class BaseActivity extends FragmentActivity {
-
-    private static final String TAG = "BaseActivity";
+public abstract class BaseActivity extends AppCompatActivity {
 
     protected static final String CODE="code";
     protected static final String MSG="msg";
@@ -34,9 +33,12 @@ public abstract class BaseActivity extends FragmentActivity {
 
     protected Activity activity;
 
+    protected String TAG;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TAG = getComponentName().getShortClassName();
         //设置状态栏透明化
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();

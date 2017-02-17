@@ -24,9 +24,9 @@ public class Constant {
     public static final String UPLOADFILEPATH = Environment.getExternalStorageDirectory().getPath() + "/temp.jpg";//指定默认照片存储路径
 
     public interface USERINFO{
-        public static final String All="userinfo";
         public static final String NICKNAME="nickname";
         public static final String AVATOR="avator";
+
     }
 
     public static final String FLAG = "flag";
@@ -48,6 +48,16 @@ public class Constant {
         //社会化登陆绑定
         int social_fragment=5;
         String social_fragmentTAG="social_fragment";
+
+    }
+
+    /**
+     * 拍照类型
+     */
+    public interface TAKE_PHONE_TYPE{
+        public static final String TAKE_TYPE="take_type";
+        //头像
+        public static final int AVATOR=1;
 
 
     }

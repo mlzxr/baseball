@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -89,6 +90,7 @@ public class MeFragment extends BaseFragment {
                 //
                 map.put(Constant.FLAG,Constant.FragmentTAG.get_picture_fragment);
                 map.put(Constant.TAG,Constant.FragmentTAG.get_picture_fragmentTAG);
+                map.put(Constant.TAKE_PHONE_TYPE.TAKE_TYPE,Constant.TAKE_PHONE_TYPE.AVATOR);
                 //
                 openFragment(map);
             }
@@ -113,7 +115,9 @@ public class MeFragment extends BaseFragment {
     protected void loadData() {
         String nickname = String.valueOf(SPUtils.get(App.getContext(),Constant.USERINFO.NICKNAME,""));
         String avator = String.valueOf(SPUtils.get(App.getContext(),Constant.USERINFO.AVATOR,""));
-        ImageLoader.getInstance().displayImage(avator, iv_avator,ImageUtil.getImageOptionsCircle());
+        if(!TextUtils.isEmpty(avator)){
+            ImageLoader.getInstance().displayImage(avator, iv_avator,ImageUtil.getImageOptionsCircle());
+        }
     }
 
     public void loadAvator(){

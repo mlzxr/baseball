@@ -3,6 +3,7 @@ package com.feigong.baseball.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.feigong.baseball.MainActivity;
 import com.feigong.baseball.R;
@@ -92,10 +93,13 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         String openid = userInfoWX.getOpenid();
                         String nickname = userInfoWX.getNickname();
                         String avator = userInfoWX.getHeadimgurl();
-                        //获取新用户实例
-                        getFGUserInfo(openid,nickname,avator,Constant.Other.WX);
-
-
+                        String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
+                        if(TextUtils.isEmpty(token)){//新用户使用第三方登陆
+                            //获取新用户实例
+                            getFGUserInfo(openid,nickname,avator,Constant.Other.WX);
+                        }else {//绑定社会化第三方登陆
+                            WXEntryActivity.this.finish();
+                        }
                     }else {
                         T.showLong(App.getContext(), R.string.get_user_info_error);
                     }

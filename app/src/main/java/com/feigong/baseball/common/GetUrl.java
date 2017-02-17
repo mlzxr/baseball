@@ -80,4 +80,22 @@ public class GetUrl {
         String url =DOMAIN+"/userApi/social_unbind/"+type;
         return url;
     }
+
+    /**
+     * 修改用户头像
+     * @return
+     */
+    public static String AvatorModify() {
+        String url =DOMAIN+"/userApi/avator_modify";
+        return url;
+    }
+
+    /**
+     * 第三方绑定
+     * @return
+     */
+    public static String goSocialBind() {
+        String url =DOMAIN+"/userApi/social_bind";
+        return url;
+    }
 }

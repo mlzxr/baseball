@@ -43,11 +43,8 @@ import com.feigong.baseball.myinfo.SecurityAccountFragment;
 import com.feigong.baseball.myinfo.SettingFragment;
 import com.feigong.baseball.myinfo.SocialFragment;
 import com.feigong.baseball.video.VideoFragment;
-import com.feigong.baseball.wxapi.ResultTokenWX;
-import com.feigong.baseball.wxapi.WXEntryActivity;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import okhttp3.Call;
@@ -65,8 +62,6 @@ import okhttp3.Request;
  */
 public class HomeActivity extends BaseActivity {
 
-    private static final String TAG="HomeActivity";
-
     private ViewPager home_viewPager;
     private LinearLayout ll_information, ll_video, ll_me;
 
@@ -83,6 +78,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initVariables() {
+
         activity = HomeActivity.this;
         fragmentArrayList.add(InformationFragment.newInstance());
         fragmentArrayList.add(VideoFragment.newInstance());
@@ -141,8 +137,6 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        String userinfo = String.valueOf(SPUtils.get(App.getContext(),Constant.USERINFO.All,""));
-        L.e(TAG,"userinfo:"+userinfo);
         String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
         if(TextUtils.isEmpty(token)){
            /*
@@ -191,7 +185,8 @@ public class HomeActivity extends BaseActivity {
             case Constant.FragmentTAG.get_picture_fragment:
                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
                 if(fragment==null){
-                    fragment = GetPictureFragment.newInstance();
+                    int take_type= (int)map.get(Constant.TAKE_PHONE_TYPE.TAKE_TYPE);
+                    fragment = GetPictureFragment.newInstance(take_type);
                 }
                 break;
 
@@ -275,6 +270,10 @@ public class HomeActivity extends BaseActivity {
         if(fragment!=null){
             fragment.onActivityResult(requestCode,resultCode,data);
         }
+        fragment = getSupportFragmentManager().findFragmentByTag(Constant.FragmentTAG.social_fragmentTAG);
+        if(fragment!=null){
+            fragment.onActivityResult(requestCode,resultCode,data);
+        }
     }
 
     private void toLogin(){
@@ -293,8 +292,6 @@ public class HomeActivity extends BaseActivity {
             meFragment.loadAvator();
         }
     }
-
-
 
     public class MyStringCallback extends StringCallback
     {
@@ -326,10 +323,9 @@ public class HomeActivity extends BaseActivity {
                     if(returnMSG_userInfo!=null && returnMSG_userInfo.getCode()==Constant.FGCode.OpOk_code){
                         ReturnMSG_UserInfo.DataBean dataBean= returnMSG_userInfo.getData();
                         if(dataBean!=null){
-                            SPUtils.put(App.getContext(),Constant.USERINFO.All,response);
+
                             SPUtils.put(App.getContext(),Constant.USERINFO.NICKNAME,dataBean.getLoginInfo().getNickname());
                             SPUtils.put(App.getContext(),Constant.USERINFO.AVATOR,dataBean.getLoginInfo().getAvator());
-
                         }
                     }else {
                         toLogin();
