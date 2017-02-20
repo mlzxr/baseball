@@ -16,6 +16,7 @@ import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.myinfo.LoginFragment;
+import com.feigong.baseball.myinfo.SocialFragment;
 import com.google.gson.Gson;
 import com.tencent.mm.sdk.openapi.BaseReq;
 import com.tencent.mm.sdk.openapi.BaseResp;
@@ -75,7 +76,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
         @Override
         public void onResponse(String response, int id) {
-            L.e(TAG,response);
+            L.e(TAG,id+":"+response);
             //
             switch (id) {
                 case 100://通过code获取access_token
@@ -99,6 +100,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                             getFGUserInfo(openid,nickname,avator,Constant.Other.WX);
                         }else {//绑定社会化第三方登陆
                             WXEntryActivity.this.finish();
+                            socialBind(openid,Constant.Other.WX);
                         }
                     }else {
                         T.showLong(App.getContext(), R.string.get_user_info_error);
@@ -128,6 +130,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
                     break;
 
+                case 103:
+
+
+                     break;
+
             }
         }
 
@@ -135,6 +142,30 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         public void inProgress(float progress, long total, int id) {
             L.e(TAG, "inProgress:" + progress);
         }
+    }
+
+    /**
+     * 第三方绑定
+     * @param openid
+     * @param type
+     */
+    private void socialBind(String openid,String type){
+        String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
+        String url = GetUrl.goSocialBind();
+        L.e(TAG,url);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("openid", openid);
+        params.put("identity_type", type);
+        String json = new Gson().toJson(params);
+        OkHttpUtils
+                .postString()
+                .url(url)
+                .addHeader(Constant.TOKEN,token)
+                .id(103)
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .content(json)
+                .build()
+                .execute(new MyStringCallback());
     }
 
     private void getFGUserInfo(String openid, String nickname, String avator, String type) {

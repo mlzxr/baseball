@@ -115,7 +115,7 @@ public class SocialFragment extends BaseFragment {
             switch (id)
             {
 
-                case 101:
+                case 5001:
                     ReturnMSG_UserInfo returnMSG_userInfo =  new Gson().fromJson(response,ReturnMSG_UserInfo.class);
                     if(returnMSG_userInfo!=null && returnMSG_userInfo.getCode()==Constant.FGCode.OpOk_code){
                         ReturnMSG_UserInfo.DataBean dataBean= returnMSG_userInfo.getData();
@@ -145,7 +145,7 @@ public class SocialFragment extends BaseFragment {
                     break;
 
 
-                case 102:
+                case 5002:
                     ReturnMSG returnMSG = new Gson().fromJson(response,ReturnMSG.class);
                     if(returnMSG!=null&& returnMSG.getMsg()!=null){
                         T.showShort(App.getContext(),returnMSG.getMsg());
@@ -154,7 +154,7 @@ public class SocialFragment extends BaseFragment {
                     }
                     break;
 
-                case 103:
+                case 5003:
 
 
                     break;
@@ -171,7 +171,6 @@ public class SocialFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
             L.e(TAG,"显示界面");
-
 
     }
 
@@ -243,7 +242,7 @@ public class SocialFragment extends BaseFragment {
                 .get()
                 .url(url)
                 .addHeader(Constant.TOKEN,token)
-                .id(101)
+                .id(5001)
                 .build()
                 .execute(new MyStringCallback());
     }
@@ -281,7 +280,7 @@ public class SocialFragment extends BaseFragment {
                             .get()
                             .url(url)
                             .addHeader(Constant.TOKEN,token)
-                            .id(102)
+                            .id(5002)
                             .build()
                             .execute(new MyStringCallback());
                     dialog.dismiss();
@@ -369,7 +368,7 @@ public class SocialFragment extends BaseFragment {
                 .postString()
                 .url(url)
                 .addHeader(Constant.TOKEN,token)
-                .id(103)
+                .id(5003)
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .content(json)
                 .build()
