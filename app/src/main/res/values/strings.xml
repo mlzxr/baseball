@@ -67,6 +67,7 @@
     <string name="check_wx">检测是否安装微信</string>
     <string name="auth_canceled">取消授权</string>
     <string name="auth_failed">授权失败</string>
+    <string name="handler_error">处理失败</string>
     <string name="auth_success">授权成功</string>
 
     <string name="get_user_info_error">获取用户信息失败</string>

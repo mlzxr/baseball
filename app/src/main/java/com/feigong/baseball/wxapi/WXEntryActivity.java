@@ -12,6 +12,7 @@ import com.feigong.baseball.base.common.JSONUtil;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.base.util.T;
+import com.feigong.baseball.beans.ReturnMSG;
 import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
@@ -79,7 +80,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             L.e(TAG,id+":"+response);
             //
             switch (id) {
-                case 100://通过code获取access_token
+                case 200://通过code获取access_token
                     ResultTokenWX resultTokenWX = new Gson().fromJson(response, ResultTokenWX.class);
                     if(resultTokenWX!=null){
                         getWXUserInfo(resultTokenWX);
@@ -88,7 +89,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     }
                     break;
 
-                case 101://通过access_token调用接口,返回用户数据
+                case 201://通过access_token调用接口,返回用户数据
                     UserInfoWX userInfoWX = new Gson().fromJson(response, UserInfoWX.class);
                     if(userInfoWX!=null){
                         String openid = userInfoWX.getOpenid();
@@ -99,7 +100,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                             //获取新用户实例
                             getFGUserInfo(openid,nickname,avator,Constant.Other.WX);
                         }else {//绑定社会化第三方登陆
-                            WXEntryActivity.this.finish();
+
                             socialBind(openid,Constant.Other.WX);
                         }
                     }else {
@@ -108,7 +109,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
                     break;
 
-                case 102:
+                case 202:
                     //
                     ReturnMSG_UserInfo returnMSG_userInfo =  new Gson().fromJson(response,ReturnMSG_UserInfo.class);
                     if(returnMSG_userInfo!=null && returnMSG_userInfo.getCode()==Constant.FGCode.OpOk_code){
@@ -130,9 +131,17 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
                     break;
 
-                case 103:
-
-
+                case 203:
+                    ReturnMSG returnMSG = new Gson().fromJson(response,ReturnMSG.class);
+                    if(returnMSG!=null && returnMSG.getMsg()!=null){
+                        if(returnMSG.getCode()==Constant.FGCode.OpOk_code){//本地保存微信绑定状态
+                            SPUtils.put(App.getContext(),Constant.USERINFO.IS_BINDING_WX,1);
+                        }
+                        T.showShort(App.getContext(),returnMSG.getMsg());
+                    }else {
+                        T.showShort(App.getContext(),R.string.handler_error);
+                    }
+                    WXEntryActivity.this.finish();
                      break;
 
             }
@@ -152,7 +161,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     private void socialBind(String openid,String type){
         String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
         String url = GetUrl.goSocialBind();
-        L.e(TAG,url);
         Map<String, String> params = new HashMap<String, String>();
         params.put("openid", openid);
         params.put("identity_type", type);
@@ -161,7 +169,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 .postString()
                 .url(url)
                 .addHeader(Constant.TOKEN,token)
-                .id(103)
+                .id(203)
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .content(json)
                 .build()
@@ -182,7 +190,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         OkHttpUtils
                 .postString()
                 .url(url)
-                .id(102)
+                .id(202)
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .content(json)
                 .build()
@@ -191,7 +199,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     private void getWXUserInfo(ResultTokenWX resultTokenWX){
         String url = GetUrl.getWXUserInfo(resultTokenWX.getAccess_token(),resultTokenWX.getOpenid());
-        OkHttpUtils.get().url(url).id(101).build().execute(new MyStringCallback());
+        OkHttpUtils.get().url(url).id(201).build().execute(new MyStringCallback());
 
     }
 
@@ -234,7 +242,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 SendAuth.Resp resp = (SendAuth.Resp) baseResp;
 
                 String url = GetUrl.getAccessToken(resp.token);
-                OkHttpUtils.get().url(url).id(100).build().execute(new MyStringCallback());
+                OkHttpUtils.get().url(url).id(200).build().execute(new MyStringCallback());
 
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:

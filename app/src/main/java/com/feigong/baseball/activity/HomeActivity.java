@@ -138,6 +138,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initData() {
         String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
+        L.e(TAG,token);
         if(TextUtils.isEmpty(token)){
            /*
             *尚未登陆

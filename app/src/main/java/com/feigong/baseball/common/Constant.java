@@ -2,6 +2,7 @@ package com.feigong.baseball.common;/**
  * Created by ruler on 16/12/6.
  */
 
+import android.app.Activity;
 import android.os.Environment;
 
 /**
@@ -24,6 +25,7 @@ public class Constant {
     public static final String UPLOADFILEPATH = Environment.getExternalStorageDirectory().getPath() + "/temp.jpg";//指定默认照片存储路径
 
     public interface USERINFO{
+        public static final String IS_BINDING_WX="is_binding_wx";
         public static final String NICKNAME="nickname";
         public static final String AVATOR="avator";
 
@@ -50,6 +52,15 @@ public class Constant {
         String social_fragmentTAG="social_fragment";
 
     }
+
+    public interface ActivityTAG{
+
+        int home_activity=1;
+
+        int wx_entry_activity=2;
+
+    }
+
 
     /**
      * 拍照类型

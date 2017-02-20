@@ -111,7 +111,7 @@ public class SocialFragment extends BaseFragment {
         @Override
         public void onResponse(String response, int id)
         {
-            L.e(TAG,response);
+            L.e(TAG,id+":"+response);
             switch (id)
             {
 
@@ -144,19 +144,16 @@ public class SocialFragment extends BaseFragment {
                     }
                     break;
 
-
                 case 5002:
                     ReturnMSG returnMSG = new Gson().fromJson(response,ReturnMSG.class);
                     if(returnMSG!=null&& returnMSG.getMsg()!=null){
+                        if(returnMSG.getCode()==Constant.FGCode.OpOk_code){
+                            loadData();
+                        }
                         T.showShort(App.getContext(),returnMSG.getMsg());
                     }else {
                         T.showShort(App.getContext(),R.string.operation_failed_please_try_again_later);
                     }
-                    break;
-
-                case 5003:
-
-
                     break;
             }
         }
@@ -164,14 +161,17 @@ public class SocialFragment extends BaseFragment {
         @Override
         public void inProgress(float progress, long total, int id)
         {
+
         }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-            L.e(TAG,"显示界面");
-
+        int is_binding_wx = (int)SPUtils.get(App.getContext(),Constant.USERINFO.IS_BINDING_WX,0);
+        if(view_itti_wx!=null){//获取微信的绑定状态
+            setBindingText(view_itti_wx,is_binding_wx);
+        }
     }
 
     @Override
@@ -181,7 +181,7 @@ public class SocialFragment extends BaseFragment {
 
     @Override
     protected void initVariables() {
-        T.showShort(App.getContext(),"wx");
+
     }
 
     @Override
@@ -236,6 +236,7 @@ public class SocialFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
+        L.e(TAG,"loadData");
         String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
         String url = GetUrl.getUserInfoByToken();
         OkHttpUtils
@@ -275,7 +276,6 @@ public class SocialFragment extends BaseFragment {
 
                     String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
                     String url = GetUrl.unbundleOther(type);
-                    L.e(TAG,url);
                     OkHttpUtils
                             .get()
                             .url(url)
@@ -368,7 +368,7 @@ public class SocialFragment extends BaseFragment {
                 .postString()
                 .url(url)
                 .addHeader(Constant.TOKEN,token)
-                .id(5003)
+                .id(5002)
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .content(json)
                 .build()
