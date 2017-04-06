@@ -50,6 +50,10 @@ public class Constant {
         //社会化登陆绑定
         int social_fragment=5;
         String social_fragmentTAG="social_fragment";
+        //资讯
+        int information_fragment = 6;
+        String InformationFragmentTAG="information_fragment";
+
 
     }
 
@@ -84,6 +88,7 @@ public class Constant {
     }
 
     // 微信
+
     public interface WX {
         public static final String APP_ID = "wx03acd4dc4205b6f2";
         public static final String APP_SECRET = "4a70b851767dcb9b896468aaf43f086e";

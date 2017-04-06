@@ -98,4 +98,13 @@ public class GetUrl {
         String url =DOMAIN+"/userApi/social_bind";
         return url;
     }
+
+    /**
+     * 获取频道数据
+     * @return
+     */
+    public static String fetchChannel() {
+        String url =DOMAIN+"/channelApi/fetch_channel";
+        return url;
+    }
 }
