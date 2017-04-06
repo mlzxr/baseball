@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion 23
@@ -18,6 +19,20 @@ android {
     }
 
 
+}
+
+//上传aar到私服
+uploadArchives{
+    repositories.mavenDeployer{
+        //地址，用户名称，密码
+        repository(url: 'http://localhost:8081/repository/com.feigong.baseball.baseUtil/'){
+            authentication(userName:'zyj',password:'zyj')
+        }
+        //上传项目标志
+        pom.groupId = 'com.feigong.baseball'
+        pom.artifactId = 'baseUtil'
+        pom.version = '0.0.0.2'
+    }
 }
 
 dependencies {
