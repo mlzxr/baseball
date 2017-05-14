@@ -2,6 +2,7 @@ package com.feigong.baseball.base.fragment;/**
  * Created by ruler on 16/7/15.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -38,16 +39,22 @@ public abstract class BaseFragment extends Fragment {
 
     protected Context context;
 
-    /********************************************************************************************/
+
+
+    //************************************************
+    //*********** fragment 生命周期
+    //************************************************
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if(checkPass()){
-            initVariables();
-            initViews(view, savedInstanceState);
-            loadData();
-        }
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        L.e(TAG,"onAttach");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        L.e(TAG,"onCreate");
     }
 
     @Nullable
@@ -56,6 +63,73 @@ public abstract class BaseFragment extends Fragment {
         L.e(TAG,"onCreateView");
         return inflater.inflate(getLayout(), null);
     }
+
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        L.e(TAG,"onViewCreated");
+        //
+        if(checkPass()){
+            initVariables();
+            initViews(view, savedInstanceState);
+            loadData();
+        }
+    }
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        L.e(TAG,"onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        L.e(TAG,"onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        L.e(TAG,"onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        L.e(TAG,"onStop");
+        //  ImageLoader.getInstance().clearMemoryCache();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        L.e(TAG,"onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        L.e(TAG,"onDestroy");
+        System.gc();
+    }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        L.e(TAG,"onDetach");
+
+    }
+
+
+
+    //************************************************
+    //*********** 基本方法
+    //************************************************
     //
     protected abstract int getLayout();
 
@@ -72,45 +146,6 @@ public abstract class BaseFragment extends Fragment {
 
 
 
-
-    /********************************************************************************************/
-
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        L.e(TAG,"onStart");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-      //  ImageLoader.getInstance().clearMemoryCache();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        System.gc();
-    }
-
-    //释放线程
-    void shutdownAndAwaitTermination(ExecutorService pool) {
-        if(pool!=null){
-            pool.shutdownNow();
-            try {
-                if (!pool.awaitTermination(1, TimeUnit.SECONDS)) {
-                    pool.shutdownNow();
-                    if (!pool.awaitTermination(1, TimeUnit.SECONDS))
-                        System.err.println("Pool did not terminate");
-                }
-            } catch (InterruptedException ie) {
-                pool.shutdownNow();
-                Thread.currentThread().interrupt();
-            }
-        }
-    }
 
 
 }

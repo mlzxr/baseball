@@ -103,8 +103,8 @@ public class GetUrl {
      * 获取频道数据
      * @return
      */
-    public static String fetchChannel() {
-        String url =DOMAIN+"/channelApi/fetch_channel";
+    public static String infoChannel() {
+        String url =DOMAIN+"/channelApi/info_channel";
         return url;
     }
 }

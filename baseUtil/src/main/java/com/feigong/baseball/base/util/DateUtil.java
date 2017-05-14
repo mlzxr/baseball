@@ -48,6 +48,17 @@ public class DateUtil {
     }
 
     /**
+     * 返回格式化的日期字符串
+     * @return
+     */
+    public static String getDateLong(){
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_YYYY_MM_DD_HH_MM_SS);
+        return sdf.format(new Date());
+    }
+
+
+
+    /**
      * 格林威治时间字符串转日期
      * @param gmt
      * @return

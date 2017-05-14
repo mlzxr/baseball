@@ -31,7 +31,7 @@ uploadArchives{
         //上传项目标志
         pom.groupId = 'com.feigong.baseball'
         pom.artifactId = 'baseUtil'
-        pom.version = '0.0.0.2'
+        pom.version = '0.0.0.3'
     }
 }
 

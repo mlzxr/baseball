@@ -125,7 +125,7 @@ public class InformationFragment extends BaseFragment {
     @Override
     protected void initVariables() {
         context = getActivity();
-        String url = GetUrl.fetchChannel();
+        String url = GetUrl.infoChannel();
         OkHttpUtils
                 .get()
                 .url(url)
