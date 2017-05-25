@@ -2,9 +2,5 @@
     {
         "merged": "/Users/ruler/AS/baseball/magicindicator/build/intermediates/res/merged/release/color-v23/abc_color_highlight_material.xml",
         "source": "/Users/ruler/AS/baseball/magicindicator/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/color-v23/abc_color_highlight_material.xml"
-    },
-    {
-        "merged": "/Users/ruler/Downloads/android源码/MagicIndicator-master/magicindicator/build/intermediates/res/merged/release/color-v23/abc_color_highlight_material.xml",
-        "source": "/Users/ruler/Downloads/android源码/MagicIndicator-master/magicindicator/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/color-v23/abc_color_highlight_material.xml"
     }
 ]

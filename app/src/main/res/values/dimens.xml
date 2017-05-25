@@ -4,6 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="post_media_height">200dp</dimen>
 
 
     <dimen name="iti_image_width">44dp</dimen>

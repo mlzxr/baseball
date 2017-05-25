@@ -107,4 +107,24 @@ public class GetUrl {
         String url =DOMAIN+"/channelApi/info_channel";
         return url;
     }
+
+    /**
+     * 获取视频频道数据
+     * @return
+     */
+    public static String vodChannel() {
+        String url =DOMAIN+"/channelApi/vod_channel";
+        return url;
+    }
+
+    /**
+     * 根据code获取视频列表
+     * @param code
+     * @return
+     */
+    public static String vodRefreshByCode(String code) {
+        String url= DOMAIN+"/vod/refresh/{channel_code}";
+        url = url.replace("{channel_code}",code);
+        return url;
+    }
 }

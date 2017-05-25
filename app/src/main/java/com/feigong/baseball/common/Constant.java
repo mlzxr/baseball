@@ -53,6 +53,9 @@ public class Constant {
         //资讯
         int information_fragment = 6;
         String InformationFragmentTAG="information_fragment";
+        //视频
+        int video_fragment = 7;
+        String VideoFragmentTAG="video_fragment";
 
 
     }

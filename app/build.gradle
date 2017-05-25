@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.feigong.baseball"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -43,4 +43,5 @@ dependencies {
     compile files('libs/open_sdk_r5778.jar')
     compile project(':magicindicator')
     compile project(path: ':magicindicator')
+    compile project(':gsyVideoPlayer')
 }
