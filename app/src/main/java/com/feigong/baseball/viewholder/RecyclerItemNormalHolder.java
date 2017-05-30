@@ -6,8 +6,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.feigong.baseball.R;
-import com.feigong.baseball.beans.VideoModel;
+import com.feigong.baseball.beans.ReturnMSG_VideoList;
+import com.feigong.baseball.common.ImageUtil;
 import com.feigong.baseball.listener.SampleListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -35,25 +37,21 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
         gsyVideoPlayer = (StandardGSYVideoPlayer)v.findViewById(R.id.video_item_player);
     }
 
-    public void onBind(final int position, VideoModel videoModel) {
+    public void onBind(final int position, ReturnMSG_VideoList.DataBean.VodListBean videoModel) {
 
         //增加封面
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        if (position % 2 == 0) {
-            imageView.setImageResource(R.mipmap.xxx1);
-        } else {
-            imageView.setImageResource(R.mipmap.xxx2);
-        }
+        ImageLoader.getInstance().displayImage(videoModel.getV_poster(), imageView, ImageUtil.getImageOptions());
         if (imageView.getParent() != null) {
             ViewGroup viewGroup = (ViewGroup)imageView.getParent();
             viewGroup.removeView(imageView);
         }
         gsyVideoPlayer.setThumbImageView(imageView);
 
-        final String url = "http://baobab.wdjcdn.com/14564977406580.mp4";
+        final String url = videoModel.getV_url();
 
         //默认缓存路径
-        gsyVideoPlayer.setUp(url, true , null, "这是title");
+        gsyVideoPlayer.setUp(url, true , null, videoModel.getTitle());
 
         //增加title
         gsyVideoPlayer.getTitleTextView().setVisibility(View.GONE);

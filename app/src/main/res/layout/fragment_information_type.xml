@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/black"
+    >
 
 
 
@@ -10,5 +12,14 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <com.feigong.baseball.fgview.GradientTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="非攻棒球"
+        android:textColor="#ffffffff"
+        android:textSize="60sp"
+        />
 
 </LinearLayout>

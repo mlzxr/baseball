@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.feigong.baseball.R;
+import com.feigong.baseball.beans.ReturnMSG_VideoList;
 import com.feigong.baseball.beans.VideoModel;
 import com.feigong.baseball.viewholder.RecyclerItemNormalHolder;
 
@@ -21,10 +22,10 @@ public class RecyclerNormalAdapter extends RecyclerView.Adapter {
 
     private final static String TAG = "RecyclerBaseAdapter";
 
-    private List<VideoModel> itemDataList = null;
+    private List<ReturnMSG_VideoList.DataBean.VodListBean> itemDataList = null;
     private Context context = null;
 
-    public RecyclerNormalAdapter(Context context, List<VideoModel> itemDataList) {
+    public RecyclerNormalAdapter(Context context, List<ReturnMSG_VideoList.DataBean.VodListBean> itemDataList) {
         this.itemDataList = itemDataList;
         this.context = context;
     }

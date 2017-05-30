@@ -44,6 +44,9 @@ import com.feigong.baseball.myinfo.SettingFragment;
 import com.feigong.baseball.myinfo.SocialFragment;
 import com.feigong.baseball.video.VideoFragment;
 import com.google.gson.Gson;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
+import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
+import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -340,4 +343,37 @@ public class HomeActivity extends BaseActivity {
         {
         }
     }
+
+
+    //
+    @Override
+    protected void onPause() {
+        super.onPause();
+        GSYVideoManager.onPause();
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GSYVideoManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GSYVideoPlayer.releaseAllVideos();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (StandardGSYVideoPlayer.backFromWindowFull(this)) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+
 }

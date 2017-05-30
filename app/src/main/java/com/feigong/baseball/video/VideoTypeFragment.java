@@ -24,6 +24,7 @@ import com.feigong.baseball.viewholder.RecyclerItemNormalHolder;
 import com.google.gson.Gson;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
+import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -53,10 +54,9 @@ public class VideoTypeFragment extends BaseFragment {
     LinearLayoutManager linearLayoutManager;
 
 
-    List<VideoModel> dataList=null;
+    List<ReturnMSG_VideoList.DataBean.VodListBean> dataList=null;
     boolean mFull = false;
     private RecyclerNormalAdapter recyclerNormalAdapter;
-
 
     public static VideoTypeFragment newInstance(String code) {
         VideoTypeFragment newFragment = new VideoTypeFragment();
@@ -65,6 +65,8 @@ public class VideoTypeFragment extends BaseFragment {
         newFragment.setArguments(bundle);
         return newFragment;
     }
+
+
 
 
     public class MyStringCallback extends StringCallback {
@@ -92,16 +94,7 @@ public class VideoTypeFragment extends BaseFragment {
                         ReturnMSG_VideoList.DataBean dataBean = returnMSG_videoList.getData();
                         if (dataBean != null && dataBean.getVod_list() != null && dataBean.getVod_list().size() > 0) {
                             //
-                            List<ReturnMSG_VideoList.DataBean.VodListBean> vodListBeanList = dataBean.getVod_list();
-                            if(vodListBeanList!=null && vodListBeanList.size()>0){
-                                for (ReturnMSG_VideoList.DataBean.VodListBean bean:vodListBeanList) {
-                                    if(bean!=null){
-
-
-
-                                    }
-                                }
-                            }
+                            dataList.addAll(dataBean.getVod_list());
                         }
                     }
                     recyclerNormalAdapter.notifyDataSetChanged();;
@@ -168,6 +161,8 @@ public class VideoTypeFragment extends BaseFragment {
         });
     }
 
+
+
     @Override
     protected void loadData() {
         String url = GetUrl.vodRefreshByCode(code);
@@ -192,5 +187,8 @@ public class VideoTypeFragment extends BaseFragment {
         }
 
     }
+
+
+
 
 }
