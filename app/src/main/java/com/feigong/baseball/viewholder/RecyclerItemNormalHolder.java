@@ -85,7 +85,7 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
                 Debuger.printfLog("onPrepared");
                 if (!gsyVideoPlayer.isIfCurrentIsFullscreen()) {
                     //静音
-                    GSYVideoManager.instance().setNeedMute(true);
+                    GSYVideoManager.instance().setNeedMute(false);
                 }
 
             }

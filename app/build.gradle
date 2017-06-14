@@ -44,4 +44,5 @@ dependencies {
     compile project(':magicindicator')
     compile project(path: ':magicindicator')
     compile project(':gsyVideoPlayer')
+    compile project(':xrecyclerview')
 }

@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.adapter.RecyclerNormalAdapter;
+import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.base.util.DensityUtils;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.beans.ReturnMSG_Channel;
 import com.feigong.baseball.beans.ReturnMSG_VideoList;
@@ -22,6 +24,8 @@ import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.viewholder.RecyclerItemNormalHolder;
 import com.google.gson.Gson;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -50,11 +54,11 @@ public class VideoTypeFragment extends BaseFragment {
 
     private String code;
 
-    private RecyclerView list_item_recycler;
-    LinearLayoutManager linearLayoutManager;
+    private XRecyclerView list_item_recycler;
+    private LinearLayoutManager linearLayoutManager;
 
 
-    List<ReturnMSG_VideoList.DataBean.VodListBean> dataList=null;
+    private List<ReturnMSG_VideoList.DataBean.VodListBean> dataList=null;
     boolean mFull = false;
     private RecyclerNormalAdapter recyclerNormalAdapter;
 
@@ -117,16 +121,47 @@ public class VideoTypeFragment extends BaseFragment {
         context = getActivity();
         code = getArguments().getString("code");
         dataList = new ArrayList<>();
+        L.e(TAG, "dp2px:"+DensityUtils.dp2px(App.getContext(), (float) 200.0));
     }
 
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
-        list_item_recycler = (RecyclerView) view.findViewById(R.id.list_item_recycler);
+        list_item_recycler = (XRecyclerView) view.findViewById(R.id.list_item_recycler);
         recyclerNormalAdapter = new RecyclerNormalAdapter(context, dataList);
         linearLayoutManager = new LinearLayoutManager(context);
         list_item_recycler.setLayoutManager(linearLayoutManager);
         list_item_recycler.setAdapter(recyclerNormalAdapter);
+        list_item_recycler.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        list_item_recycler.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
+        list_item_recycler.setArrowImageView(R.mipmap.iconfont_downgrey);
+        //
+        list_item_recycler.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable(){
+                    public void run() {
 
+                        recyclerNormalAdapter.notifyDataSetChanged();
+                        list_item_recycler.refreshComplete();
+                    }
+
+                }, 1000);
+            }
+
+            @Override
+            public void onLoadMore() {
+                new Handler().postDelayed(new Runnable(){
+                    public void run() {
+
+                        list_item_recycler.loadMoreComplete();
+                        recyclerNormalAdapter.notifyDataSetChanged();
+                    }
+                }, 1000);
+            }
+        });
+
+
+        //
         list_item_recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             int firstVisibleItem, lastVisibleItem;
@@ -141,10 +176,16 @@ public class VideoTypeFragment extends BaseFragment {
                 super.onScrolled(recyclerView, dx, dy);
                 firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                //
+                L.e(TAG,"firstVisibleItem:"+firstVisibleItem);
+                L.e(TAG,"lastVisibleItem:"+lastVisibleItem);
+
+
                 //大于0说明有播放
                 if (GSYVideoManager.instance().getPlayPosition() >= 0) {
                     //当前播放的位置
                     int position = GSYVideoManager.instance().getPlayPosition();
+                    L.e(TAG,"position:"+position);
                     //对应的播放列表TAG
                     if (GSYVideoManager.instance().getPlayTag().equals(RecyclerItemNormalHolder.TAG)
                             && (position < firstVisibleItem || position > lastVisibleItem)) {

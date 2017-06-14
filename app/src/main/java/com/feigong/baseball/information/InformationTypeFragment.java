@@ -48,8 +48,7 @@ public class InformationTypeFragment extends BaseFragment {
 
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
-        TextView textView = (TextView) view.findViewById(R.id.textView);
-        textView.setText(code);
+
 
     }
 

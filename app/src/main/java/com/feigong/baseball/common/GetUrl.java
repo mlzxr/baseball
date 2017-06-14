@@ -127,4 +127,13 @@ public class GetUrl {
         url = url.replace("{channel_code}",code);
         return url;
     }
+
+    /**
+     * 资讯－推荐列表
+     * @return
+     */
+    public static String informationRecommend() {
+        String url= DOMAIN+"/article/refresh";
+        return url;
+    }
 }

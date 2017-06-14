@@ -190,6 +190,14 @@ public class InformationFragment extends BaseFragment {
     }
     private  void asyncloadingfragment(){
         fragmentList.clear();
+        ReturnMSG_Channel.DataBean newwData = new ReturnMSG_Channel.DataBean();
+        newwData.setD_name("推荐");
+        newwData.setD_code("C00");
+        tablist.add(0,newwData);
+        //
+
+        fragmentList.add(InformationRecommendFragment.newInstance());
+        //
         for (int k =0;k<tablist.size();k++){
             ReturnMSG_Channel.DataBean data = tablist.get(k);
             fragmentList.add(InformationTypeFragment.newInstance(data.getD_code()));
