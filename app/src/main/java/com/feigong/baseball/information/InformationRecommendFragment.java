@@ -5,18 +5,21 @@ package com.feigong.baseball.information;/**
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.adapter.InformationRecommendAdaper;
 import com.feigong.baseball.base.fragment.BaseFragment;
-import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.beans.ReturnMSG_Recommend;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.google.gson.Gson;
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.mrw.wzmrecyclerview.Divider.BaseItemDecoration;
+import com.mrw.wzmrecyclerview.PullToLoad.OnLoadListener;
+import com.mrw.wzmrecyclerview.PullToLoad.PullToLoadRecyclerView;
+import com.mrw.wzmrecyclerview.PullToRefresh.OnRefreshListener;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -39,7 +42,7 @@ public class InformationRecommendFragment extends BaseFragment {
 
     private static final String TAG = "InformationRecommendFragment";
 
-    private XRecyclerView list_item_recycler;
+    private PullToLoadRecyclerView list_item_recycler;
     private LinearLayoutManager linearLayoutManager;
     private InformationRecommendAdaper informationRecommendAdaper;
 
@@ -66,12 +69,10 @@ public class InformationRecommendFragment extends BaseFragment {
                 case 610:
                     ReturnMSG_Recommend returnMSG_recommend = new Gson().fromJson(response,ReturnMSG_Recommend.class);
                     if(returnMSG_recommend!=null && returnMSG_recommend.getCode()== Constant.FGCode.OpOk_code){
-                        dataList = returnMSG_recommend.getData().getRecommand_list();
-
-
+                        List list = returnMSG_recommend.getData().getRecommand_list();
+                        dataList.addAll(list);
                     }
-
-
+                    informationRecommendAdaper.notifyDataSetChanged();
                     break;
             }
         }
@@ -87,45 +88,42 @@ public class InformationRecommendFragment extends BaseFragment {
     protected void initVariables() {
         dataList = new ArrayList();
         context = getActivity();
+        //
+        informationRecommendAdaper = new InformationRecommendAdaper(dataList, context);
 
     }
 
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
-        list_item_recycler = (XRecyclerView) view.findViewById(R.id.list_item_recycler);
-        informationRecommendAdaper = new InformationRecommendAdaper(dataList, context);
-        linearLayoutManager = new LinearLayoutManager(context);
-        list_item_recycler.setLayoutManager(linearLayoutManager);
+        list_item_recycler = (PullToLoadRecyclerView) view.findViewById(R.id.list_item_recycler);
+        list_item_recycler.setLayoutManager(new LinearLayoutManager(context));
+        //        设置分割线
+        list_item_recycler.addItemDecoration(new BaseItemDecoration(context,R.color.silver));
         list_item_recycler.setAdapter(informationRecommendAdaper);
-        list_item_recycler.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        list_item_recycler.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
-        list_item_recycler.setArrowImageView(R.mipmap.iconfont_downgrey);
-        //
-        list_item_recycler.setLoadingListener(new XRecyclerView.LoadingListener() {
+
+
+        list_item_recycler.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable(){
+            public void onStartRefreshing() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
                     public void run() {
-
-                        informationRecommendAdaper.notifyDataSetChanged();
-                        list_item_recycler.refreshComplete();
-                    }
-
-                }, 1000);
-            }
-
-            @Override
-            public void onLoadMore() {
-                new Handler().postDelayed(new Runnable(){
-                    public void run() {
-
-                        list_item_recycler.loadMoreComplete();
-                        informationRecommendAdaper.notifyDataSetChanged();
+                        list_item_recycler.completeRefresh();
                     }
                 }, 1000);
             }
         });
-
+        list_item_recycler.setOnLoadListener(new OnLoadListener() {
+            @Override
+            public void onStartLoading(int skip) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        list_item_recycler.completeLoad();
+                    }
+                }, 1000);
+            }
+        });
 
 
     }

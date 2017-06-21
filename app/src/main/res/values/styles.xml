@@ -97,5 +97,31 @@
         <item name="android:background">@color/white</item>
     </style>
 
+    <style name="item_one_image">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+
+    <style name="item_one_titie" parent="layout_ww">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+    <style name="item_title" parent="layout_mw">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+
+    </style>
+
+    <style name="item_video_play_image" >
+        <item name="android:layout_width">28sp</item>
+        <item name="android:layout_height">28sp</item>
+    </style>
+
+
 
 </resources>

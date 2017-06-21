@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/imageLoader/imageLoader.iml" filepath="$PROJECT_DIR$/imageLoader/imageLoader.iml" />
       <module fileurl="file://$PROJECT_DIR$/magicindicator/magicindicator.iml" filepath="$PROJECT_DIR$/magicindicator/magicindicator.iml" />
       <module fileurl="file://$PROJECT_DIR$/okhttputils/okhttputils.iml" filepath="$PROJECT_DIR$/okhttputils/okhttputils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wzmrecyclerview/wzmrecyclerview.iml" filepath="$PROJECT_DIR$/wzmrecyclerview/wzmrecyclerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/xrecyclerview/xrecyclerview.iml" filepath="$PROJECT_DIR$/xrecyclerview/xrecyclerview.iml" />
     </modules>
   </component>
