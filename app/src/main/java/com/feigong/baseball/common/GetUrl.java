@@ -136,4 +136,15 @@ public class GetUrl {
         String url= DOMAIN+"/article/refresh";
         return url;
     }
+
+    /**
+     * 资讯列表刷新
+     * @param code
+     * @return
+     */
+    public static String ArticleRefreshByCode(String code) {
+        String url= DOMAIN+"/article/refresh/{channel_code}";
+        url = url.replace("{channel_code}",code);
+        return url;
+    }
 }

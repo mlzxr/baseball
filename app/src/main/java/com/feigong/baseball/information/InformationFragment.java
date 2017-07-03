@@ -198,7 +198,7 @@ public class InformationFragment extends BaseFragment {
 
         fragmentList.add(InformationRecommendFragment.newInstance());
         //
-        for (int k =0;k<tablist.size();k++){
+        for (int k =1;k<tablist.size();k++){
             ReturnMSG_Channel.DataBean data = tablist.get(k);
             fragmentList.add(InformationTypeFragment.newInstance(data.getD_code()));
         }
