@@ -36,6 +36,7 @@ import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.fragment.GetPictureFragment;
+import com.feigong.baseball.information.InformationDetailFragment;
 import com.feigong.baseball.information.InformationFragment;
 import com.feigong.baseball.myinfo.LoginFragment;
 import com.feigong.baseball.myinfo.MeFragment;
@@ -199,6 +200,14 @@ public class HomeActivity extends BaseActivity {
                 if(fragment==null){
                     fragment = SocialFragment.newInstance();
                 }
+                break;
+            case Constant.FragmentTAG.informationDetail_fragment:
+
+                fragment = getSupportFragmentManager().findFragmentByTag(tag);
+                if(fragment==null){
+                    fragment = InformationDetailFragment.newInstance();
+                }
+
                 break;
         }
         //

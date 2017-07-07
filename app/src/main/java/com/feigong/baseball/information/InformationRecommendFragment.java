@@ -5,18 +5,19 @@ package com.feigong.baseball.information;/**
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.feigong.baseball.R;
+import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.adapter.InformationRecommendAdaper;
 import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.beans.ReturnMSG_Recommend;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.google.gson.Gson;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.mrw.wzmrecyclerview.Divider.BaseItemDecoration;
+import com.mrw.wzmrecyclerview.HeaderAndFooter.OnItemClickListener;
 import com.mrw.wzmrecyclerview.PullToLoad.OnLoadListener;
 import com.mrw.wzmrecyclerview.PullToLoad.PullToLoadRecyclerView;
 import com.mrw.wzmrecyclerview.PullToRefresh.OnRefreshListener;
@@ -24,7 +25,9 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 
@@ -124,6 +127,30 @@ public class InformationRecommendFragment extends BaseFragment {
                 }, 1000);
             }
         });
+        list_item_recycler.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
+                ReturnMSG_Recommend.DataBean.RecommandListBean bean = dataList.get(position);
+                L.e(TAG,bean.getTitle());
+                L.e(TAG,bean.get_id());
+                L.e(TAG,bean.getObjid_ref());
+
+                Map<String,Object> map = new HashMap<String, Object>();
+                //
+                map.put(Constant.FLAG,Constant.FragmentTAG.informationDetail_fragment);
+                map.put(Constant.TAG,Constant.FragmentTAG.InformationDetailFragmentTAG);
+                 /*
+                打开主界面
+                 */
+                HomeActivity homeActivity = (HomeActivity)getActivity();
+                homeActivity.setLayout(map);
+
+
+            }
+        });
+
+
+
 
 
     }

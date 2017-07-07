@@ -24,6 +24,10 @@ public class Constant {
 
     public static final String UPLOADFILEPATH = Environment.getExternalStorageDirectory().getPath() + "/temp.jpg";//指定默认照片存储路径
 
+
+    //http://m.baseballsay.com/article/show/5917f42bf07cee4b0d82bc9b
+
+
     public interface USERINFO{
         public static final String IS_BINDING_WX="is_binding_wx";
         public static final String NICKNAME="nickname";
@@ -56,9 +60,16 @@ public class Constant {
 
 
 
+
+
         //视频
         int video_fragment = 7;
         String VideoFragmentTAG="video_fragment";
+
+
+        //资讯详细页面
+        int informationDetail_fragment =8;
+        String InformationDetailFragmentTAG="informationDetail_fragment";
 
 
     }

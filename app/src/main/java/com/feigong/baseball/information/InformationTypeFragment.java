@@ -135,11 +135,12 @@ public class InformationTypeFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
+        L.e(TAG,code);
         String url = GetUrl.ArticleRefreshByCode(code);
         OkHttpUtils
                 .get()
                 .url(url)
-                .id(600)
+                .id(601)
                 .build()
                 .execute(new MyStringCallback());
     }
