@@ -36,6 +36,7 @@ import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.fragment.GetPictureFragment;
+import com.feigong.baseball.fragment.ShowWebVIewImagesFragment;
 import com.feigong.baseball.information.InformationDetailFragment;
 import com.feigong.baseball.information.InformationFragment;
 import com.feigong.baseball.myinfo.LoginFragment;
@@ -205,7 +206,14 @@ public class HomeActivity extends BaseActivity {
 
                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
                 if(fragment==null){
-                    fragment = InformationDetailFragment.newInstance();
+                    fragment = InformationDetailFragment.newInstance((String)map.get("objid_ref"));
+                }
+                break;
+            case Constant.FragmentTAG.showWebVIewImages_fragment:
+
+                fragment = getSupportFragmentManager().findFragmentByTag(tag);
+                if(fragment==null){
+                    fragment = ShowWebVIewImagesFragment.newInstance((String)map.get(DATA));
                 }
 
                 break;

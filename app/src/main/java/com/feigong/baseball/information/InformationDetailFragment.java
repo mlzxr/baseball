@@ -4,20 +4,28 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.widget.Button;
 
 import com.feigong.baseball.R;
+import com.feigong.baseball.activity.HomeActivity;
+import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.fragment.BaseFragment;
 import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.myinfo.SocialFragment;
+import com.feigong.baseball.base.util.T;
+import com.feigong.baseball.beans.ListImage;
+import com.feigong.baseball.common.Constant;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
 import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ruler on 17/7/5.
@@ -30,18 +38,15 @@ public class InformationDetailFragment extends BaseFragment {
 
     BridgeWebView webView;
 
-    Button button;
-
-    int result_code=0;
-
     ValueCallback<Uri> mUploadMessage;
 
+    private String objid_ref;
 
-
-
-
-    public static InformationDetailFragment newInstance() {
+    public static InformationDetailFragment newInstance(String objid_ref) {
         InformationDetailFragment informationDetailFragment = new InformationDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("objid_ref",objid_ref);
+        informationDetailFragment.setArguments(bundle);
         return informationDetailFragment;
     }
 
@@ -52,20 +57,15 @@ public class InformationDetailFragment extends BaseFragment {
 
     @Override
     protected void initVariables() {
+        Bundle bundle = getArguments();
+        objid_ref =  bundle.getString("objid_ref");
+
 
     }
 
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
         webView=(BridgeWebView) view.findViewById(R.id.webView);
-
-        button=(Button) view.findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         webView.setDefaultHandler(new DefaultHandler());
 
@@ -86,61 +86,36 @@ public class InformationDetailFragment extends BaseFragment {
             }
         });
 
-        webView.loadUrl("http://m.baseballsay.com/article?from=native");
+      //  webView.loadUrl("http://m.baseballsay.com/article?from=native");
+        webView.loadUrl(Constant.H5.ARTICLE+objid_ref+"/?from=native");
+
 
         webView.registerHandler("img_swipe", new BridgeHandler() {
+
             @Override
             public void handler(String data, CallBackFunction function) {
-                L.e(TAG,"handler = img_swipe, data from web = " + data);
-                function.onCallBack("img_swipe exe, response data 中文 from Java");
+                if(!TextUtils.isEmpty(data)){
+                    ListImage listImage = new Gson().fromJson(data,ListImage.class);
+                    if(listImage!=null && listImage.getImg_urls()!=null && listImage.getImg_urls().size()>0){
+
+                        Map<String,Object> map = new HashMap<String, Object>();
+                        //
+                        map.put(Constant.FLAG,Constant.FragmentTAG.showWebVIewImages_fragment);
+                        map.put(Constant.TAG,Constant.FragmentTAG.ShowWebVIewImagesFragmentTAG);
+                        map.put(DATA,data);
+                        //
+                        HomeActivity homeActivity = (HomeActivity) getActivity();
+                        homeActivity.setLayout(map);
+
+                    }
+                }
             }
         });
-
-        User user = new User();
-        Location location = new Location();
-        location.address = "SDU";
-        user.location = location;
-        user.name = "大头鬼";
-
-        webView.callHandler("functionInJs", new Gson().toJson(user), new CallBackFunction() {
-            @Override
-            public void onCallBack(String data) {
-
-            }
-        });
-
-        webView.send("hello");
-
-
     }
 
     @Override
     protected void loadData() {
 
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == result_code) {
-            if (null == mUploadMessage){
-                return;
-            }
-            Uri result = data == null || resultCode != Activity.RESULT_OK ? null : data.getData();
-            mUploadMessage.onReceiveValue(result);
-            mUploadMessage = null;
-        }
-    }
-
-
-    static class Location{
-        String address;
-    }
-
-    static class User{
-        String name;
-        Location location;
-        String testStr;
     }
 
 }

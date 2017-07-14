@@ -139,6 +139,7 @@ public class InformationRecommendFragment extends BaseFragment {
                 //
                 map.put(Constant.FLAG,Constant.FragmentTAG.informationDetail_fragment);
                 map.put(Constant.TAG,Constant.FragmentTAG.InformationDetailFragmentTAG);
+                map.put("objid_ref",bean.getObjid_ref());
                  /*
                 打开主界面
                  */

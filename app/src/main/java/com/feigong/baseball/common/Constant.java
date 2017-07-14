@@ -72,7 +72,18 @@ public class Constant {
         String InformationDetailFragmentTAG="informationDetail_fragment";
 
 
+
+        //H5详情页中的图片集
+        int showWebVIewImages_fragment =9;
+        String ShowWebVIewImagesFragmentTAG="ShowWebVIewImagesFragment";
+
     }
+
+
+    public interface H5{
+        public static final String ARTICLE="http://m.baseballsay.com/article/show/";
+    }
+
 
     public interface ActivityTAG{
 
