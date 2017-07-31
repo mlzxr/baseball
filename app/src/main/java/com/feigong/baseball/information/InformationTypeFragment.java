@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.feigong.baseball.R;
+import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.adapter.InformationTypeAdpter;
 import com.feigong.baseball.base.fragment.BaseFragment;
 import com.feigong.baseball.base.util.L;
@@ -16,6 +17,7 @@ import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.google.gson.Gson;
 import com.mrw.wzmrecyclerview.Divider.BaseItemDecoration;
+import com.mrw.wzmrecyclerview.HeaderAndFooter.OnItemClickListener;
 import com.mrw.wzmrecyclerview.PullToLoad.OnLoadListener;
 import com.mrw.wzmrecyclerview.PullToLoad.PullToLoadRecyclerView;
 import com.mrw.wzmrecyclerview.PullToRefresh.OnRefreshListener;
@@ -23,7 +25,9 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 
@@ -128,7 +132,26 @@ public class InformationTypeFragment extends BaseFragment {
                 }, 1000);
             }
         });
+        //
+        list_item_recycler.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
 
+                ReturnMSG_Information.DataBean.ArticleListBean articleListBean = datalist.get(position);
+                L.e(TAG,"getCover_mode:"+articleListBean.getCover_mode());
+
+
+                Map<String,Object> map = new HashMap<String, Object>();
+                //
+                map.put(Constant.FLAG,Constant.FragmentTAG.informationDetail_fragment);
+                map.put(Constant.TAG,Constant.FragmentTAG.InformationDetailFragmentTAG);
+                map.put("objid_ref",articleListBean.get_id());
+                //
+                HomeActivity homeActivity = (HomeActivity)getActivity();
+                homeActivity.setLayout(map);
+
+            }
+        });
 
 
     }

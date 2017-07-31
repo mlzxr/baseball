@@ -131,22 +131,30 @@ public class InformationRecommendFragment extends BaseFragment {
             @Override
             public void OnItemClick(int position) {
                 ReturnMSG_Recommend.DataBean.RecommandListBean bean = dataList.get(position);
-                L.e(TAG,bean.getTitle());
-                L.e(TAG,bean.get_id());
+                //L.e(TAG,bean.getTitle());
+                //L.e(TAG,bean.get_id());
                 L.e(TAG,bean.getObjid_ref());
 
+                L.e(TAG,"getCover_mode:"+bean.getCover_mode());
+                L.e(TAG,"getMtype:"+bean.getMtype());
                 Map<String,Object> map = new HashMap<String, Object>();
+                if(bean.getMtype()==2){//视频
+                    //
+                    map.put(Constant.FLAG,Constant.FragmentTAG.videoDetail_fragment);
+                    map.put(Constant.TAG,Constant.FragmentTAG.videoDetailFragmentTAG);
+                    map.put("objid_ref",bean.getObjid_ref());
+
+                }else{
+
+                    //
+                    map.put(Constant.FLAG,Constant.FragmentTAG.informationDetail_fragment);
+                    map.put(Constant.TAG,Constant.FragmentTAG.InformationDetailFragmentTAG);
+                    map.put("objid_ref",bean.getObjid_ref());
+
+                }
                 //
-                map.put(Constant.FLAG,Constant.FragmentTAG.informationDetail_fragment);
-                map.put(Constant.TAG,Constant.FragmentTAG.InformationDetailFragmentTAG);
-                map.put("objid_ref",bean.getObjid_ref());
-                 /*
-                打开主界面
-                 */
                 HomeActivity homeActivity = (HomeActivity)getActivity();
                 homeActivity.setLayout(map);
-
-
             }
         });
 

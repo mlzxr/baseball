@@ -44,6 +44,7 @@ import com.feigong.baseball.myinfo.MeFragment;
 import com.feigong.baseball.myinfo.SecurityAccountFragment;
 import com.feigong.baseball.myinfo.SettingFragment;
 import com.feigong.baseball.myinfo.SocialFragment;
+import com.feigong.baseball.video.VideoDetailFragment;
 import com.feigong.baseball.video.VideoFragment;
 import com.google.gson.Gson;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
@@ -166,6 +167,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void setLayout(Map<String,Object> map){
+        L.e(TAG,map.toString());
         Fragment fragment = null;
         int flag = MapUtil.getInt(map, Constant.FLAG);
         String tag = MapUtil.getValue(map, Constant.TAG);
@@ -217,6 +219,15 @@ public class HomeActivity extends BaseActivity {
                 }
 
                 break;
+
+            case Constant.FragmentTAG.videoDetail_fragment:
+                fragment = getSupportFragmentManager().findFragmentByTag(tag);
+                if(fragment==null){
+                    fragment = VideoDetailFragment.newInstance(map);
+                }
+
+                break;
+
         }
         //
         if (fragment != null) {

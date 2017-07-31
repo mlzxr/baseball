@@ -27,6 +27,7 @@ public class DefaultLoadFooterCreator extends LoadFooterCreator {
     private int rotationDuration = 200;
 
     private int loadingDuration = 1000;
+
     private ValueAnimator ivAnim;
 
 

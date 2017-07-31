@@ -15,6 +15,7 @@ import com.mrw.wzmrecyclerview.PullToRefresh.PullToRefreshRecyclerView;
  * Created by Administrator on 2016/9/19.
  */
 public class HeaderAndFooterRecyclerView extends RecyclerView {
+
     public HeaderAndFooterRecyclerView(Context context) {
         super(context);
     }
@@ -27,15 +28,17 @@ public class HeaderAndFooterRecyclerView extends RecyclerView {
         super(context, attrs, defStyle);
     }
 
+
     protected HeaderAndFooterAdapter mAdapter;
     protected Adapter mRealAdapter;
 
     private View mEmptyView;
-//    第一次加载时，如果有覆盖整块的加载中，第一次完成后就需要隐藏
+    //    第一次加载时，如果有覆盖整块的加载中，第一次完成后就需要隐藏
     private View mLoadingView;
-//   当有header和footer的时候，是否显示emptyview
+    //   当有header和footer的时候，是否显示emptyview
     private boolean showEmptyViewHasHF = false;
     private final DataObserver mDataObserver = new DataObserver();
+
 
     @Override
     public void setAdapter(Adapter adapter) {
@@ -47,9 +50,8 @@ public class HeaderAndFooterRecyclerView extends RecyclerView {
 
         if (adapter instanceof HeaderAndFooterAdapter) {
             mAdapter = (HeaderAndFooterAdapter) adapter;
-        }
-        else {
-            mAdapter = new HeaderAndFooterAdapter(getContext(),adapter);
+        } else {
+            mAdapter = new HeaderAndFooterAdapter(getContext(), adapter);
         }
         super.setAdapter(mAdapter);
         mRealAdapter.registerAdapterDataObserver(mDataObserver);
@@ -85,6 +87,7 @@ public class HeaderAndFooterRecyclerView extends RecyclerView {
             mAdapter.removeHeaderView(view);
         }
     }
+
     public void removeFooterView(View view) {
         if (null == view) {
             throw new IllegalArgumentException("the view to remove must not be null !");
@@ -112,19 +115,25 @@ public class HeaderAndFooterRecyclerView extends RecyclerView {
     }
 
 
-    /**获得真正的adapter*/
+    /**
+     * 获得真正的adapter
+     */
     public Adapter getRealAdapter() {
         return mRealAdapter;
     }
 
-    /**设置空白view*/
+    /**
+     * 设置空白view
+     */
     public void setEmptyView(View emptyView) {
         this.mEmptyView = emptyView;
         mDataObserver.onChanged();
     }
 
-    /**设置空白view*/
-    public void setEmptyView(View emptyView,boolean showEmptyViewHasHF) {
+    /**
+     * 设置空白view
+     */
+    public void setEmptyView(View emptyView, boolean showEmptyViewHasHF) {
         this.mEmptyView = emptyView;
         this.showEmptyViewHasHF = showEmptyViewHasHF;
         mDataObserver.onChanged();
@@ -139,8 +148,10 @@ public class HeaderAndFooterRecyclerView extends RecyclerView {
             mLoadingView.setVisibility(GONE);
     }
 
-    /**数据监听*/
-    private class DataObserver extends AdapterDataObserver{
+    /**
+     * 数据监听
+     */
+    private class DataObserver extends AdapterDataObserver {
 
         @Override
         public void onChanged() {
@@ -163,7 +174,7 @@ public class HeaderAndFooterRecyclerView extends RecyclerView {
             if (itemCount == 0) {
                 mEmptyView.setVisibility(VISIBLE);
                 if (getVisibility() != INVISIBLE)
-                     setVisibility(INVISIBLE);
+                    setVisibility(INVISIBLE);
             } else {
                 mEmptyView.setVisibility(GONE);
                 if (getVisibility() != VISIBLE)
@@ -172,9 +183,6 @@ public class HeaderAndFooterRecyclerView extends RecyclerView {
         }
 
     }
-
-
-
 
 
 }

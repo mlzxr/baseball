@@ -48,7 +48,7 @@ public class PullToRefreshRecyclerView extends HeaderAndFooterRecyclerView {
 
     private float mPullRatio = 0.5f;
 
-//   位于刷新View顶部的view，通过改变其高度来下拉
+    //   位于刷新View顶部的view，通过改变其高度来下拉
     private View topView;
 
     private View mRefreshView;
@@ -87,7 +87,7 @@ public class PullToRefreshRecyclerView extends HeaderAndFooterRecyclerView {
             setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 //            初始化默认的刷新头部
             mRefreshHeaderCreator = new DefaultRefreshHeaderCreator();
-            mRefreshView = mRefreshHeaderCreator.getRefreshView(context,this);
+            mRefreshView = mRefreshHeaderCreator.getRefreshView(context, this);
         }
     }
 
@@ -100,7 +100,7 @@ public class PullToRefreshRecyclerView extends HeaderAndFooterRecyclerView {
         if (mRefreshView != null && mRefreshViewHeight == 0) {
             mRefreshViewHeight = mRefreshView.getMeasuredHeight();
             ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) getLayoutParams();
-            marginLayoutParams.setMargins(marginLayoutParams.leftMargin, marginLayoutParams.topMargin-mRefreshViewHeight-1, marginLayoutParams.rightMargin, marginLayoutParams.bottomMargin);
+            marginLayoutParams.setMargins(marginLayoutParams.leftMargin, marginLayoutParams.topMargin - mRefreshViewHeight - 1, marginLayoutParams.rightMargin, marginLayoutParams.bottomMargin);
             setLayoutParams(marginLayoutParams);
         }
     }
@@ -127,7 +127,7 @@ public class PullToRefreshRecyclerView extends HeaderAndFooterRecyclerView {
                     else
                         break;
                 }
-                float distance = (int) ((e.getRawY() - mFirstY)*mPullRatio);
+                float distance = (int) ((e.getRawY() - mFirstY) * mPullRatio);
 //                若向上滑动(此时刷新头部已隐藏)，不处理
                 if (distance < 0) break;
                 mPulling = true;
@@ -159,8 +159,7 @@ public class PullToRefreshRecyclerView extends HeaderAndFooterRecyclerView {
 //        刷新中，状态不变
         if (mState == STATE_REFRESHING) {
 
-        }
-        else if (distance == 0) {
+        } else if (distance == 0) {
             mState = STATE_DEFAULT;
         }
 //        松手刷新
@@ -168,7 +167,7 @@ public class PullToRefreshRecyclerView extends HeaderAndFooterRecyclerView {
             int lastState = mState;
             mState = STATE_RELEASE_TO_REFRESH;
             if (mRefreshHeaderCreator != null)
-                if (!mRefreshHeaderCreator.onReleaseToRefresh(distance,lastState))
+                if (!mRefreshHeaderCreator.onReleaseToRefresh(distance, lastState))
                     return;
         }
 //        正在拖动
@@ -176,7 +175,7 @@ public class PullToRefreshRecyclerView extends HeaderAndFooterRecyclerView {
             int lastState = mState;
             mState = STATE_PULLING;
             if (mRefreshHeaderCreator != null)
-                if (!mRefreshHeaderCreator.onStartPull(distance,lastState))
+                if (!mRefreshHeaderCreator.onStartPull(distance, lastState))
                     return;
         }
         startPull(distance);
@@ -239,7 +238,9 @@ public class PullToRefreshRecyclerView extends HeaderAndFooterRecyclerView {
         valueAnimator.start();
     }
 
-    /**结束刷新*/
+    /**
+     * 结束刷新
+     */
     public void completeRefresh() {
         if (mRefreshHeaderCreator != null)
             mRefreshHeaderCreator.onStopRefresh();
@@ -250,19 +251,23 @@ public class PullToRefreshRecyclerView extends HeaderAndFooterRecyclerView {
         setLoadingViewGone();
     }
 
-    /**设置监听*/
+    /**
+     * 设置监听
+     */
     public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
         this.mOnRefreshListener = onRefreshListener;
     }
 
-    /**设置自定义的刷新头部*/
+    /**
+     * 设置自定义的刷新头部
+     */
     public void setRefreshViewCreator(RefreshHeaderCreator refreshHeaderCreator) {
         this.mRefreshHeaderCreator = refreshHeaderCreator;
         if (mRefreshView != null && mAdapter != null) {
             mAdapter.removeHeaderView(topView);
             mAdapter.removeHeaderView(mRefreshView);
         }
-        mRefreshView = refreshHeaderCreator.getRefreshView(getContext(),this);
+        mRefreshView = refreshHeaderCreator.getRefreshView(getContext(), this);
 //        若有适配器，添加到头部
         if (mAdapter != null) {
             addHeaderView(topView);
@@ -271,19 +276,25 @@ public class PullToRefreshRecyclerView extends HeaderAndFooterRecyclerView {
         mRealAdapter.notifyDataSetChanged();
     }
 
-    /**获得刷新View和顶部填充view的个数，用于绘制分割线*/
+    /**
+     * 获得刷新View和顶部填充view的个数，用于绘制分割线
+     */
     public int getRefreshViewCount() {
         if (mRefreshView != null)
             return 2;
         return 0;
     }
 
-    /**设置是否可以下拉*/
+    /**
+     * 设置是否可以下拉
+     */
     public void setRefreshEnable(boolean refreshEnable) {
         this.mRefreshEnable = refreshEnable;
     }
 
-    /**设置下拉阻尼系数*/
+    /**
+     * 设置下拉阻尼系数
+     */
     public void setPullRatio(float pullRatio) {
         this.mPullRatio = pullRatio;
     }

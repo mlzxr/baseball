@@ -16,6 +16,8 @@ import com.mrw.wzmrecyclerview.PullToRefresh.PullToRefreshRecyclerView;
 
 /**
  * Created by Administrator on 2016/9/21.
+ * 下拉刷新，上拉加载
+ *
  */
 public class PullToLoadRecyclerView extends PullToRefreshRecyclerView {
     public PullToLoadRecyclerView(Context context) {
@@ -33,7 +35,7 @@ public class PullToLoadRecyclerView extends PullToRefreshRecyclerView {
         init(context);
     }
 
-    private int mState = STATE_DEFAULT;
+    //监听状态位
     //    初始
     public final static int STATE_DEFAULT = 0;
     //    正在上拉
@@ -43,13 +45,16 @@ public class PullToLoadRecyclerView extends PullToRefreshRecyclerView {
     //    加载中
     public final static int STATE_LOADING = 3;
 
+    private int mState = STATE_DEFAULT;
+
     private float mLoadRatio = 0.5f;
 
 
     //   位于加载View底部的view，通过改变其高度来上拉
     private View bottomView;
-
     private View mLoadView;
+
+
     //    用于测量高度的加载View
     private int mLoadViewHeight = 0;
 

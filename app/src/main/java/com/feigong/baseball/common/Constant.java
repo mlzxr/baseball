@@ -77,6 +77,10 @@ public class Constant {
         int showWebVIewImages_fragment =9;
         String ShowWebVIewImagesFragmentTAG="ShowWebVIewImagesFragment";
 
+        //
+        int videoDetail_fragment =10;
+        String videoDetailFragmentTAG="VideoDetailFragment";
+
     }
 
 
