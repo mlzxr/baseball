@@ -121,19 +121,22 @@ public class PullToLoadRecyclerView extends PullToRefreshRecyclerView {
             removeHeaderView(mLoadView);
         }
 //        若数据不满一屏
-        if (getChildCount() >= getAdapter().getItemCount()) {
-            if (mLoadView.getVisibility() != GONE) {
-                mLoadView.setVisibility(GONE);
-                mState = STATE_DEFAULT;
-                replyPull();
-            }
-        } else {
-            if (mLoadView.getVisibility() != VISIBLE) {
-                mLoadView.setVisibility(VISIBLE);
-                mState = STATE_DEFAULT;
-                replyPull();
+        if(getAdapter()!=null){
+            if (getChildCount() >= getAdapter().getItemCount()) {
+                if (mLoadView.getVisibility() != GONE) {
+                    mLoadView.setVisibility(GONE);
+                    mState = STATE_DEFAULT;
+                    replyPull();
+                }
+            } else {
+                if (mLoadView.getVisibility() != VISIBLE) {
+                    mLoadView.setVisibility(VISIBLE);
+                    mState = STATE_DEFAULT;
+                    replyPull();
+                }
             }
         }
+
     }
 
     @Override

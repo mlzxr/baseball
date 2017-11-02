@@ -82,7 +82,7 @@ public class HeaderAndFooterRecyclerView extends RecyclerView {
         if (null == view) {
             throw new IllegalArgumentException("the view to remove must not be null !");
         } else if (mAdapter == null) {
-            throw new IllegalStateException("u must set a adapter first !");
+            Log.e("HeaderAndFooterRecyclerView","mAdapter is  null ");
         } else {
             mAdapter.removeHeaderView(view);
         }

@@ -17,6 +17,7 @@ import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.fragment.BaseFragment;
 import com.feigong.baseball.base.util.DensityUtils;
 import com.feigong.baseball.base.util.L;
+import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.ReturnMSG_Channel;
 import com.feigong.baseball.beans.ReturnMSG_VideoList;
 import com.feigong.baseball.beans.VideoModel;
@@ -122,6 +123,7 @@ public class VideoTypeFragment extends BaseFragment {
         code = getArguments().getString("code");
         dataList = new ArrayList<>();
         L.e(TAG, "dp2px:"+DensityUtils.dp2px(App.getContext(), (float) 200.0));
+        T.showShort(App.getContext(),TAG);
     }
 
     @Override

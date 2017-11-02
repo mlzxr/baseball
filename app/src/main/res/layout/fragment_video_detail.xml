@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_detail_player"
-    android:orientation="vertical"
     style="@style/layout_mm_fragment"
-    >
+    android:orientation="vertical">
+
     <com.feigong.baseball.fgview.ViewTopBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.feigong.baseball.fgview.ViewTopBar>
@@ -11,10 +11,16 @@
     <com.feigong.baseball.fgview.LandLayoutVideo
         android:id="@+id/detail_player"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/post_media_height"></com.feigong.baseball.fgview.LandLayoutVideo>
-    <TextView
+        android:layout_height="@dimen/post_media_height">
+
+    </com.feigong.baseball.fgview.LandLayoutVideo>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="dfasfasfasfasfasfasfasce俄出色 "
-        android:textSize="16sp" />
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+
 </LinearLayout>

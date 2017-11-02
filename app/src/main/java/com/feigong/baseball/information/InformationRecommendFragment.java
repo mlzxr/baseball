@@ -2,6 +2,7 @@ package com.feigong.baseball.information;/**
  * Created by ruler on 17/3/6.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.beans.ReturnMSG_Recommend;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
+import com.feigong.baseball.video.VideoDetailActivity;
 import com.google.gson.Gson;
 import com.mrw.wzmrecyclerview.Divider.BaseItemDecoration;
 import com.mrw.wzmrecyclerview.HeaderAndFooter.OnItemClickListener;
@@ -140,9 +142,13 @@ public class InformationRecommendFragment extends BaseFragment {
                 Map<String,Object> map = new HashMap<String, Object>();
                 if(bean.getMtype()==2){//视频
                     //
-                    map.put(Constant.FLAG,Constant.FragmentTAG.videoDetail_fragment);
-                    map.put(Constant.TAG,Constant.FragmentTAG.videoDetailFragmentTAG);
-                    map.put("objid_ref",bean.getObjid_ref());
+                    Bundle bundle =new Bundle();
+                    bundle.putString("objid_ref",bean.getObjid_ref());
+                    //
+                    Intent intent =new Intent();
+                    intent.putExtras(bundle);
+                    intent.setClass(context,VideoDetailActivity.class);
+                    startActivity(intent);
 
                 }else{
 

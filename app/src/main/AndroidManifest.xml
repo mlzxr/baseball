@@ -61,6 +61,12 @@
             android:screenOrientation="portrait" />
 
 
+        <activity android:name=".video.VideoDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
+
+
+
         <!--  第三方登陆 start  -->
         <activity
             android:name=".wxapi.WXEntryActivity"

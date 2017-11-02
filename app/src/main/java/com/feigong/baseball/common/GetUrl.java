@@ -14,16 +14,17 @@ package com.feigong.baseball.common;/**
  */
 public class GetUrl {
 
-    public static final String DOMAIN="http://api.baseballsay.com";
+    public static final String DOMAIN = "http://api.baseballsay.com";
 
 
-    public static String getUserInfoByToken(){
-        String url =DOMAIN+"/userApi/get_uinfo/";
+    public static String getUserInfoByToken() {
+        String url = DOMAIN + "/userApi/get_uinfo/";
         return url;
     }
 
     /**
-     *  微信登陆，获取验证
+     * 微信登陆，获取验证
+     *
      * @param code
      * @return
      */
@@ -39,11 +40,12 @@ public class GetUrl {
 
     /**
      * 获取微信用户信息
+     *
      * @param access_token
      * @param openid
      * @return
      */
-    public static String getWXUserInfo(String access_token,String openid) {
+    public static String getWXUserInfo(String access_token, String openid) {
         StringBuffer sb = new StringBuffer();
         sb.append("https://api.weixin.qq.com/sns/userinfo");
         sb.append("?access_token=" + access_token + "&openid=" + openid);
@@ -52,99 +54,122 @@ public class GetUrl {
 
     /**
      * 社会化登陆（第三方登录）
+     *
      * @param type
      * @return
      */
     public static String getSocialLogin(String type) {
-        String url =DOMAIN+"/userApi/social_login/"+type;
+        String url = DOMAIN + "/userApi/social_login/" + type;
         return url;
     }
 
     /**
      * 推送消息开关
+     *
      * @param flag
      * @return
      */
     public static String UpdatePushSwitch(int flag) {
-        String url =DOMAIN+"/userApi/push_switch/{push_flag}";
-        url = url.replace("{push_flag}",String.valueOf(flag));
+        String url = DOMAIN + "/userApi/push_switch/{push_flag}";
+        url = url.replace("{push_flag}", String.valueOf(flag));
         return url;
     }
 
     /**
      * 解绑社会化登陆
+     *
      * @param type
      * @return
      */
     public static String unbundleOther(String type) {
-        String url =DOMAIN+"/userApi/social_unbind/"+type;
+        String url = DOMAIN + "/userApi/social_unbind/" + type;
         return url;
     }
 
     /**
      * 修改用户头像
+     *
      * @return
      */
     public static String AvatorModify() {
-        String url =DOMAIN+"/userApi/avator_modify";
+        String url = DOMAIN + "/userApi/avator_modify";
         return url;
     }
 
     /**
      * 第三方绑定
+     *
      * @return
      */
     public static String goSocialBind() {
-        String url =DOMAIN+"/userApi/social_bind";
+        String url = DOMAIN + "/userApi/social_bind";
         return url;
     }
 
     /**
      * 获取频道数据
+     *
      * @return
      */
     public static String infoChannel() {
-        String url =DOMAIN+"/channelApi/info_channel";
+        String url = DOMAIN + "/channelApi/info_channel";
         return url;
     }
 
     /**
      * 获取视频频道数据
+     *
      * @return
      */
     public static String vodChannel() {
-        String url =DOMAIN+"/channelApi/vod_channel";
+        String url = DOMAIN + "/channelApi/vod_channel";
         return url;
     }
 
     /**
      * 根据code获取视频列表
+     *
      * @param code
      * @return
      */
     public static String vodRefreshByCode(String code) {
-        String url= DOMAIN+"/vod/refresh/{channel_code}";
-        url = url.replace("{channel_code}",code);
+        String url = DOMAIN + "/vod/refresh/{channel_code}";
+        url = url.replace("{channel_code}", code);
         return url;
     }
 
     /**
      * 资讯－推荐列表
+     *
      * @return
      */
     public static String informationRecommend() {
-        String url= DOMAIN+"/article/refresh";
+        String url = DOMAIN + "/article/refresh";
         return url;
     }
 
     /**
      * 资讯列表刷新
+     *
      * @param code
      * @return
      */
     public static String ArticleRefreshByCode(String code) {
-        String url= DOMAIN+"/article/refresh/{channel_code}";
-        url = url.replace("{channel_code}",code);
+        String url = DOMAIN + "/article/refresh/{channel_code}";
+        url = url.replace("{channel_code}", code);
         return url;
     }
+
+    /**
+     * 获取视频详细信息
+     * @param oid
+     * @return
+     */
+    public static String getVideoDetailById(String oid) {
+        String url = DOMAIN + "/vod/{oid}";
+        url = url.replace("{oid}", oid);
+        return url;
+    }
+
+
 }

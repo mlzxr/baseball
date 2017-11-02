@@ -5,6 +5,7 @@ package com.feigong.baseball.application;/**
 import android.app.Application;
 import android.content.Context;
 
+import com.feigong.baseball.base.crash.CrashHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -33,6 +34,8 @@ public class App extends Application {
 
 
     private static Context context;
+    private CrashHandler crashHandler;
+
 
     private RefWatcher refWatcher;
 
@@ -41,17 +44,21 @@ public class App extends Application {
         super.onCreate();
 
 
+
+
         //监听内存泄漏
         refWatcher = LeakCanary.install(this);
         //定义单列Context
         context = getApplicationContext();
+
+        crashHandler = CrashHandler.getInstance();
+        crashHandler.init(context);
+
         //
         JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);
 
         //获取屏幕相关属性
-        //ScreenUtils.getScreenWidth(context);
-        //ScreenUtils.getScreenHeight(context);
         ScreenUtils.getScreenDensity(context);
         //网络图片加载框架
         initImageLoader();

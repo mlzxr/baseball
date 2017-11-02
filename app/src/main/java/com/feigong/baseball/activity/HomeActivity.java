@@ -10,28 +10,22 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executors;
 
-import com.feigong.baseball.MainActivity;
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.activity.BaseActivity;
 import com.feigong.baseball.base.common.MapUtil;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
-import com.feigong.baseball.beans.ReturnMSG;
 import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
@@ -44,7 +38,7 @@ import com.feigong.baseball.myinfo.MeFragment;
 import com.feigong.baseball.myinfo.SecurityAccountFragment;
 import com.feigong.baseball.myinfo.SettingFragment;
 import com.feigong.baseball.myinfo.SocialFragment;
-import com.feigong.baseball.video.VideoDetailFragment;
+import com.feigong.baseball.video.VideoDetailActivity;
 import com.feigong.baseball.video.VideoFragment;
 import com.google.gson.Gson;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
@@ -216,14 +210,6 @@ public class HomeActivity extends BaseActivity {
                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
                 if(fragment==null){
                     fragment = ShowWebVIewImagesFragment.newInstance((String)map.get(DATA));
-                }
-
-                break;
-
-            case Constant.FragmentTAG.videoDetail_fragment:
-                fragment = getSupportFragmentManager().findFragmentByTag(tag);
-                if(fragment==null){
-                    fragment = VideoDetailFragment.newInstance(map);
                 }
 
                 break;

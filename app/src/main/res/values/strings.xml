@@ -82,4 +82,8 @@
 
     <string name="operation_failed_please_try_again_later">操作失败，请稍后再试</string>
 
+
+    <string name="issue">发布</string>
+    <string name="comment_content">评论内容</string>
+
 </resources>

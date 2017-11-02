@@ -66,5 +66,21 @@ public class AppUtils {
         return null;
     }
 
+    public static PackageInfo getPackageInfo(Context context)
+    {
+        try
+        {
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(
+                    context.getPackageName(), 0);
+            return  packageInfo;
+
+        } catch (PackageManager.NameNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }

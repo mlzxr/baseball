@@ -25,8 +25,8 @@ android {
 uploadArchives{
     repositories.mavenDeployer{
         //地址，用户名称，密码
-        repository(url: 'http://localhost:8081/repository/com.feigong.baseball.baseUtil/'){
-            authentication(userName:'zyj',password:'zyj')
+        repository(url: 'http://45.32.108.128:8081/nexus/content/repositories/com.feigong.baseball.baseUtil/'){
+            authentication(userName:'zyj',password:'123456')
         }
         //上传项目标志
         pom.groupId = 'com.feigong.baseball'
