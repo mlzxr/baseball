@@ -50,9 +50,9 @@ public class App extends Application {
         refWatcher = LeakCanary.install(this);
         //定义单列Context
         context = getApplicationContext();
-
-        crashHandler = CrashHandler.getInstance();
-        crashHandler.init(context);
+        //异常监听
+        //crashHandler = CrashHandler.getInstance();
+        //crashHandler.init(context);
 
         //
         JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志

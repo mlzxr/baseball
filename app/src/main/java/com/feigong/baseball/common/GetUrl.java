@@ -172,4 +172,37 @@ public class GetUrl {
     }
 
 
+    /**
+     * 发表评论
+     * @return
+     */
+    public static String postComment() {
+        String url = DOMAIN + "/userApi/u_comment";
+        return url;
+
+    }
+
+    /**
+     * 加载评论列表
+     * @param objid_ref
+     * @param time
+     * @return
+     */
+    public static String getCommentList(String objid_ref, long time) {
+        String url = DOMAIN+"/comment/load_logout/{refid}";
+        url = url.replace("{refid}", objid_ref);
+        return url;
+    }
+
+    /**
+     * 加载更多评论
+     * @param objid_ref
+     * @param time
+     * @return
+     */
+    public static String getCommentListMore(String objid_ref, long time) {
+        String url = DOMAIN+"/comment/load_login/{refid}";
+        url = url.replace("{refid}", objid_ref);
+        return url;
+    }
 }

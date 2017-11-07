@@ -48,19 +48,19 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        L.e(TAG,"onAttach");
+        //L.e(TAG,"onAttach");
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        L.e(TAG,"onCreate");
+        //L.e(TAG,"onCreate");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        L.e(TAG,"onCreateView");
+        //L.e(TAG,"onCreateView");
         return inflater.inflate(getLayout(), null);
     }
 
@@ -68,7 +68,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        L.e(TAG,"onViewCreated");
+        //L.e(TAG,"onViewCreated");
         //
         if(checkPass()){
             initVariables();
@@ -82,38 +82,38 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        L.e(TAG,"onStart");
+        //L.e(TAG,"onStart");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        L.e(TAG,"onResume");
+        //L.e(TAG,"onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        L.e(TAG,"onPause");
+        //L.e(TAG,"onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        L.e(TAG,"onStop");
+        //L.e(TAG,"onStop");
         //  ImageLoader.getInstance().clearMemoryCache();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        L.e(TAG,"onDestroyView");
+        ///L.e(TAG,"onDestroyView");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        L.e(TAG,"onDestroy");
+        //L.e(TAG,"onDestroy");
         System.gc();
     }
 

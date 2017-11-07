@@ -8,7 +8,8 @@
     <color name="tab_select_n">#989898</color>
 
     <color name="layout_bottom">#F9F9F9</color>
-
+    <color name="regard_container_bkg">#303030</color>
+    <color name="transparent">#00000000</color>
     <!-- 颜色表 -->
     <color name="pink">#ffc0cb</color><!--粉红色 -->
     <color name="lightpink">#ffb6c1</color><!--亮粉红色 -->

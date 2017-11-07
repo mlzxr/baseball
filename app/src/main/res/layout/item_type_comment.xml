@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        style="@style/item_comment"
+        >
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:src="@mipmap/ic_launcher"
+            style="@style/item_comment_avatar" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:text="名称"
+            style="@style/item_comment_title" />
+        <ImageView
+            android:id="@+id/iv_like"
+            style="@style/item_comment_title_img"
+            android:src="@drawable/ic_svg_like"
+            />
+        <TextView
+            android:id="@+id/tv_count"
+            style="@style/layout_ww"
+            android:text="1"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
 
+        <ImageView
+            android:id="@+id/iv_comment"
+            style="@style/item_comment_title_img"
+            android:src="@drawable/ic_svg_comment"
+            />
+    </LinearLayout>
+    <!--发布的内容-->
+    <TextView
+        android:id="@+id/tv_comment_text"
+        style="@style/item_comment_text"
+        android:text="我勒个去，碉堡了啊。。。求学习！大神"
+         />
+    <!--回复列表-->
+    <LinearLayout
+        android:id="@+id/ll_reply_list"
+        style="@style/item_comment_reply"
+        >
+
+    </LinearLayout>
 </LinearLayout>

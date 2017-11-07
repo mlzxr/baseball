@@ -85,5 +85,14 @@
 
     <string name="issue">发布</string>
     <string name="comment_content">评论内容</string>
+    <string name="comment_defeated">评论失败</string>
+    <string name="comment_succeed">评论成功</string>
+
+
+    <!--hint-->
+    <string name="input_not_null">输入不能为空！</string>
+    <string name="comments_to_failure_please_try_again_later">评论发表失败，请稍后再来！</string>
+
+
 
 </resources>

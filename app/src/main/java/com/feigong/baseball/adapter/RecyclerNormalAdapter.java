@@ -25,10 +25,20 @@ public class RecyclerNormalAdapter extends RecyclerView.Adapter {
     private List<ReturnMSG_VideoList.DataBean.VodListBean> itemDataList = null;
     private Context context = null;
 
+
+
+
+
+
     public RecyclerNormalAdapter(Context context, List<ReturnMSG_VideoList.DataBean.VodListBean> itemDataList) {
         this.itemDataList = itemDataList;
         this.context = context;
     }
+
+
+
+
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {

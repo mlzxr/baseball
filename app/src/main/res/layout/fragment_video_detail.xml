@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <com.feigong.baseball.fgview.ViewTopBar
+        android:id="@+id/viewTopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.feigong.baseball.fgview.ViewTopBar>
 

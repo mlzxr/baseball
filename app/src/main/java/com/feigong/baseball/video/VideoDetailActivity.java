@@ -19,6 +19,7 @@ import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.common.ImageUtil;
 import com.feigong.baseball.fgview.LandLayoutVideo;
+import com.feigong.baseball.fgview.ViewTopBar;
 import com.feigong.baseball.fragment.CommentFragment;
 import com.feigong.baseball.listener.SampleListener;
 import com.google.gson.Gson;
@@ -48,6 +49,8 @@ import okhttp3.Call;
 public class VideoDetailActivity extends BaseActivity {
 
     private static final String TAG="VideoDetailActivity";
+
+    private ViewTopBar viewTopBar;
 
 
     //推荐使用StandardGSYVideoPlayer，功能一致
@@ -114,8 +117,16 @@ public class VideoDetailActivity extends BaseActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        detailPlayer =(LandLayoutVideo)findViewById(R.id.detail_player);
+        viewTopBar =(ViewTopBar)findViewById(R.id.viewTopBar);
+        viewTopBar.getIv_back().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+
+        detailPlayer =(LandLayoutVideo)findViewById(R.id.detail_player);
 
         //
         String url = "http://baobab.wdjcdn.com/14564977406580.mp4";
@@ -186,12 +197,12 @@ public class VideoDetailActivity extends BaseActivity {
             }
         });
 
-
-        CommentFragment commentFragment = CommentFragment.newInstance();
+        //评论区域
+        CommentFragment commentFragment = CommentFragment.newInstance(objid_ref);
         //
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.frameLayout, commentFragment,"CommentFragment");
-        fragmentTransaction.addToBackStack(null);
+        //fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commitAllowingStateLoss();
 
 
@@ -239,6 +250,7 @@ public class VideoDetailActivity extends BaseActivity {
         if (StandardGSYVideoPlayer.backFromWindowFull(this)) {
             return;
         }
+
         super.onBackPressed();
     }
 
@@ -263,5 +275,8 @@ public class VideoDetailActivity extends BaseActivity {
             }
         }
     }
+
+
+
 
 }

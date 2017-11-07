@@ -25,18 +25,12 @@
         >
 
         <EditText
+            android:id="@+id/edit_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/shape_text_area"
-            android:hint="@string/comment_content" />
-
-        <TextView
-            android:id="@+id/tv_issue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/issue"
-            android:layout_marginLeft="7dp"
+            android:hint="@string/comment_content"
             />
 
     </LinearLayout>

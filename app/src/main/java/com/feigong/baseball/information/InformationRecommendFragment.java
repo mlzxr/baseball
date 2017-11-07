@@ -61,7 +61,6 @@ public class InformationRecommendFragment extends BaseFragment {
 
     public class MyStringCallback extends StringCallback{
 
-
         @Override
         public void onError(Call call, Exception e, int id) {
 
@@ -133,12 +132,10 @@ public class InformationRecommendFragment extends BaseFragment {
             @Override
             public void OnItemClick(int position) {
                 ReturnMSG_Recommend.DataBean.RecommandListBean bean = dataList.get(position);
-                //L.e(TAG,bean.getTitle());
-                //L.e(TAG,bean.get_id());
-                L.e(TAG,bean.getObjid_ref());
 
                 L.e(TAG,"getCover_mode:"+bean.getCover_mode());
                 L.e(TAG,"getMtype:"+bean.getMtype());
+
                 Map<String,Object> map = new HashMap<String, Object>();
                 if(bean.getMtype()==2){//视频
                     //
@@ -163,8 +160,6 @@ public class InformationRecommendFragment extends BaseFragment {
                 homeActivity.setLayout(map);
             }
         });
-
-
 
 
 

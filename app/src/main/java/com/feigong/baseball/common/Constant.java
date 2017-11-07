@@ -22,6 +22,9 @@ public class Constant {
 
     public static final String EMPTY="";
 
+    public static final String ID="id";
+
+
     public static final String UPLOADFILEPATH = Environment.getExternalStorageDirectory().getPath() + "/temp.jpg";//指定默认照片存储路径
 
 
