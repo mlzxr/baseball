@@ -48,6 +48,7 @@ public class CommentFragment extends BaseFragment {
 
     private static final String TAG = "CommentFragment";
 
+    private BottomDialogFragment bottomDialogFragment;
 
     private PullToLoadRecyclerView pullToLoadRecyclerView;
 
@@ -127,7 +128,7 @@ public class CommentFragment extends BaseFragment {
     }
 
 
-    private BottomDialogFragment bottomDialogFragment;
+
 
 
     @Override

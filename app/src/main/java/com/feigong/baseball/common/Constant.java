@@ -41,6 +41,8 @@ public class Constant {
     public static final String FLAG = "flag";
     public static final String TAG = "tag";
 
+
+
     public interface FragmentTAG {
         //系统设置
         int setting_fragment = 1;
