@@ -20,6 +20,7 @@ import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.BitmapUtil;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.ImageUtil;
+import com.feigong.baseball.common.TAGUitl;
 import com.feigong.baseball.fgview.View_ITI_Horizontal;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -38,9 +39,6 @@ import java.util.Objects;
  * @version 1.0
  */
 public class MeFragment extends BaseFragment {
-
-    private static final String TAG="MeFragment";
-
 
     private ImageView iv_avator;//头像
 
@@ -132,6 +130,6 @@ public class MeFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        L.e(TAG,"onActivityResult----"+",requestCode:"+requestCode+"-----"+",resultCode:"+resultCode);
+        L.e(TAGUitl.MEFRAGMENT,"onActivityResult----"+",requestCode:"+requestCode+"-----"+",resultCode:"+resultCode);
     }
 }

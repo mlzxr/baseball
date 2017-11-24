@@ -16,9 +16,7 @@ import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.beans.ReturnMSG_Channel;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
-import com.feigong.baseball.fgview.ViewTopBar;
-import com.feigong.baseball.information.InformationFragment;
-import com.feigong.baseball.information.InformationTypeFragment;
+import com.feigong.baseball.common.TAGUitl;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -50,9 +48,6 @@ import okhttp3.Request;
 public class VideoFragment extends BaseFragment {
 
 
-    private static final String TAG="VideoFragment";
-
-    private ViewTopBar viewTopBar;
     private ViewPager mViewPager;
     private MagicIndicator mMagicIndicator;
     private CommonNavigator mCommonNavigator;
@@ -83,13 +78,13 @@ public class VideoFragment extends BaseFragment {
         @Override
         public void onError(Call call, Exception e, int id)
         {
-            L.e(TAG,e.getMessage());
+            L.e(TAGUitl.VIDEOFRAGMENT,e.getMessage());
         }
 
         @Override
         public void onResponse(String response, int id)
         {
-            L.e(TAG,response);
+            L.e(TAGUitl.VIDEOFRAGMENT,response);
             switch (id)
             {
                 case 700:

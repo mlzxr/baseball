@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -22,6 +24,7 @@ import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.ListImage;
+import com.feigong.baseball.beans.ReturnMSG;
 import com.feigong.baseball.beans.ReturnMSGComment;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
@@ -77,23 +80,65 @@ public class InformationDetailFragment extends BaseFragment {
     public static InformationDetailFragment newInstance(String objid_ref) {
         InformationDetailFragment informationDetailFragment = new InformationDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("objid_ref", objid_ref);
+        bundle.putString(Constant.OBJID_REF, objid_ref);
         informationDetailFragment.setArguments(bundle);
         return informationDetailFragment;
     }
 
 
+    //获取评论返回状态码
+    class MyStringCallback extends StringCallback {
 
-
-    class MyStringCallback extends StringCallback{
         @Override
         public void onError(Call call, Exception e, int id) {
-
+            T.showShort(App.getContext(), R.string.comments_to_failure_please_try_again_later);
         }
 
         @Override
         public void onResponse(String response, int id) {
+            L.e(TAGUitl.INFORMATIONDETAILFRAGMENT, response);
+            switch (id) {
+                case 710:
+                    ReturnMSG returnMSG = new Gson().fromJson(response, ReturnMSG.class);
+                    if (returnMSG != null) {
+                        if (returnMSG.getCode() == Constant.FGCode.OpOk_code) {
+                            T.showShort(App.getContext(), R.string.comment_succeed);
+                            loading();
+                        } else {
+                            T.showShort(App.getContext(), returnMSG.getMsg());
+                        }
+                    } else {
+                        T.showShort(App.getContext(), R.string.comment_defeated);
+                    }
 
+                    break;
+
+                case 711://刷新评论
+                    returnMSGComment = new Gson().fromJson(response, ReturnMSGComment.class);
+                    if (returnMSGComment != null && returnMSGComment.getCode() == Constant.FGCode.OpOk_code) {
+                        if (returnMSGComment.getData() != null && returnMSGComment.getData().size() > 0) {
+                            datalist.clear();
+                            datalist.addAll(returnMSGComment.getData());
+                        }
+                        commentAdapter.notifyDataSetChanged();
+                        pullToLoadRecyclerView.completeRefresh();
+                    }
+
+                    break;
+
+                case 712:
+                    returnMSGComment = new Gson().fromJson(response, ReturnMSGComment.class);
+                    if (returnMSGComment != null && returnMSGComment.getCode() == Constant.FGCode.OpOk_code) {
+                        if (returnMSGComment.getData() != null && returnMSGComment.getData().size() > 0) {
+                            datalist.addAll(returnMSGComment.getData());
+                        }
+                        commentAdapter.notifyDataSetChanged();
+                        pullToLoadRecyclerView.completeLoad();
+                    }
+
+                    break;
+
+            }
         }
     }
 
@@ -112,9 +157,13 @@ public class InformationDetailFragment extends BaseFragment {
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            objid_ref = bundle.getString(Constant.ID);
+            objid_ref = bundle.getString(Constant.OBJID_REF);
         }
         commentAdapter = new CommentAdapter(context, datalist, R.layout.item_type_comment);
+        //
+        //View view = LayoutInflater.from(context).inflate(R.layout.web_view,null);
+        webView = new BridgeWebView(getActivity().getApplicationContext());
+        L.e(TAGUitl.INFORMATIONFRAGMENT, "objid_ref:" + objid_ref);
 
     }
 
@@ -128,9 +177,6 @@ public class InformationDetailFragment extends BaseFragment {
                 getFragmentManager().popBackStack();
             }
         });
-
-        webView = (BridgeWebView) view.findViewById(R.id.webView);
-        webView.setDefaultHandler(new DefaultHandler());
 
         webView.setWebChromeClient(new WebChromeClient() {
             @SuppressWarnings("unused")
@@ -176,16 +222,10 @@ public class InformationDetailFragment extends BaseFragment {
         });
 
 
-
-        pullToLoadRecyclerView = (PullToLoadRecyclerView)view.findViewById(R.id.list_item_recycler);
-
+        pullToLoadRecyclerView = (PullToLoadRecyclerView) view.findViewById(R.id.list_item_recycler);
 
 
-        EditText edit_text = (EditText) view.findViewById(R.id.edit_text);
-        edit_text.setFocusable(true);
-        edit_text.setFocusableInTouchMode(true);
-        edit_text.requestFocus();
-        edit_text.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.tv_comment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bottomDialogFragment = new BottomDialogFragment();
@@ -217,18 +257,15 @@ public class InformationDetailFragment extends BaseFragment {
             }
         });
 
+
     }
 
     @Override
     protected void loadData() {
 
-
-
         pullToLoadRecyclerView.setLayoutManager(new WZMLinearLayoutManager(WZMLinearLayoutManager.VERTICAL));
-        //        设置分割线
         pullToLoadRecyclerView.addItemDecoration(new BaseItemDecoration(context, R.color.tab_select_n));
         pullToLoadRecyclerView.setAdapter(commentAdapter);
-        //        设置刷新监听
         pullToLoadRecyclerView.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onStartRefreshing() {
@@ -236,7 +273,6 @@ public class InformationDetailFragment extends BaseFragment {
             }
 
         });
-//        设置加载监听
         pullToLoadRecyclerView.setOnLoadListener(new OnLoadListener() {
             @Override
             public void onStartLoading(int skip) {
@@ -244,31 +280,31 @@ public class InformationDetailFragment extends BaseFragment {
             }
         });
 
-        //
-        pullToLoadRecyclerView.addHeaderView(webView);
 
-
+        WebView web_view = new WebView(getActivity());
+        web_view.loadUrl("http://m.baseballsay.com/article?from=native");
+        pullToLoadRecyclerView.addHeaderView(web_view);
+        loading();
 
     }
 
 
-
-    private void loading(){
+    private void loading() {
         String url = GetUrl.getCommentList(objid_ref, new Date().getTime());
         OkHttpUtils.get().url(url).id(711).build().execute(new MyStringCallback());
 
     }
 
-    private void loadingMore(){
+    private void loadingMore() {
 
-        if(datalist!=null && datalist.size()>0){
-            ReturnMSGComment.DataBean  dataBean  =  datalist.get(datalist.size()-1);
-            if(dataBean!=null){
+        if (datalist != null && datalist.size() > 0) {
+            ReturnMSGComment.DataBean dataBean = datalist.get(datalist.size() - 1);
+            if (dataBean != null) {
                 String token = String.valueOf(SPUtils.get(App.getContext(), Constant.TOKEN, ""));
                 String url = GetUrl.getCommentListMore(objid_ref, dataBean.getReviewer_timestamp());
                 OkHttpUtils.get().url(url).id(712)
-                        .addParams("unix_stamp",String.valueOf(dataBean.getReviewer_timestamp()))
-                        .addHeader(Constant.TOKEN,token)
+                        .addParams("unix_stamp", String.valueOf(dataBean.getReviewer_timestamp()))
+                        .addHeader(Constant.TOKEN, token)
                         .build().execute(new MyStringCallback());
             }
         }

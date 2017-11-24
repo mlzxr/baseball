@@ -21,6 +21,7 @@ import com.feigong.baseball.beans.ReturnMSG_Channel;
 import com.feigong.baseball.beans.ReturnMSG_Push;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
+import com.feigong.baseball.common.TAGUitl;
 import com.feigong.baseball.fgview.ViewTopBar;
 import com.feigong.baseball.myinfo.SettingFragment;
 import com.google.gson.Gson;
@@ -54,8 +55,6 @@ import okhttp3.Request;
  */
 public class InformationFragment extends BaseFragment {
 
-    private static final String TAG="InformationFragment";
-
     private ViewTopBar viewTopBar;
     private ViewPager mViewPager;
     private MagicIndicator mMagicIndicator;
@@ -88,7 +87,7 @@ public class InformationFragment extends BaseFragment {
         @Override
         public void onError(Call call, Exception e, int id)
         {
-            L.e(TAG,e.getMessage());
+            L.e(TAGUitl.INFORMATIONFRAGMENT,e.getMessage());
         }
 
         @Override

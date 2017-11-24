@@ -20,9 +20,9 @@ public class ImageUtil {
 
     //返回原始图片样式
     private final static DisplayImageOptions  options = new DisplayImageOptions.Builder()
-            .showImageOnLoading(R.mipmap.ic_launcher)
-            .showImageForEmptyUri(R.mipmap.ic_launcher)
-            .showImageOnFail(R.mipmap.ic_launcher)
+            .showImageOnLoading(R.drawable.no_photo)
+            .showImageForEmptyUri(R.drawable.no_photo)
+            .showImageOnFail(R.drawable.no_photo)
             .cacheInMemory(true)
             .cacheOnDisk(true)
             .considerExifParams(true)
@@ -35,14 +35,15 @@ public class ImageUtil {
 
     //返回圆形图片样式
     private final static DisplayImageOptions  optionsCircle = new DisplayImageOptions.Builder()
-            .showImageOnLoading(R.mipmap.ic_launcher)
-            .showImageForEmptyUri(R.mipmap.ic_launcher)
-            .showImageOnFail(R.mipmap.ic_launcher)
+            .showImageOnLoading(R.drawable.no_photo)
+            .showImageForEmptyUri(R.drawable.no_photo)
+            .showImageOnFail(R.drawable.no_photo)
             .cacheInMemory(true)
             .cacheOnDisk(true)
             .considerExifParams(true)
             .displayer(new CircleBitmapDisplayer(Color.WHITE, 5))
             .build();
+
 
     public static DisplayImageOptions getImageOptionsCircle(){
 

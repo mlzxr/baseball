@@ -12,7 +12,6 @@ import com.feigong.baseball.activity.HomeActivity;
  */
 public class MainActivity extends BaseActivity {
 
-    private static final String TAG="MainActivity";
 
     @Override
     protected int getLayout() {

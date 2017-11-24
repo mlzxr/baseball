@@ -137,7 +137,9 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        SPUtils.put(App.getContext(),Constant.TOKEN,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJNVU01UWpJNE0wRTVRVVpGTkRZMk5EaEZOMFF4T1VNMVJFTTVRVFl3TUVNPSIsImlhdCI6MTUxMDcyNjQwNTgwN30.1fWYS0_B82ci39swt9ZAMMe8f0bDC3ZT10r0hVCCV7s");
         String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
+
         L.e(TAG,token);
         if(TextUtils.isEmpty(token)){
            /*
@@ -161,7 +163,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void setLayout(Map<String,Object> map){
-        L.e(TAG,map.toString());
+
         Fragment fragment = null;
         int flag = MapUtil.getInt(map, Constant.FLAG);
         String tag = MapUtil.getValue(map, Constant.TAG);

@@ -64,7 +64,7 @@ public class CommentFragment extends BaseFragment {
     public static CommentFragment newInstance(String objid_ref) {
         CommentFragment newFragment = new CommentFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(Constant.ID, objid_ref);
+        bundle.putString(Constant.OBJID_REF, objid_ref);
         newFragment.setArguments(bundle);
 
         return newFragment;
@@ -142,7 +142,7 @@ public class CommentFragment extends BaseFragment {
         datalist = new ArrayList<>();
         Bundle bundle = getArguments();
         if (bundle != null) {
-            objid_ref = bundle.getString(Constant.ID);
+            objid_ref = bundle.getString(Constant.OBJID_REF);
         }
         commentAdapter = new CommentAdapter(context, datalist, R.layout.item_type_comment);
 
@@ -152,11 +152,7 @@ public class CommentFragment extends BaseFragment {
     protected void initViews(View view, Bundle savedInstanceState) {
         pullToLoadRecyclerView = (PullToLoadRecyclerView) view.findViewById(R.id.list_item_recycler);
 
-        edit_text = (EditText) view.findViewById(R.id.edit_text);
-        edit_text.setFocusable(true);
-        edit_text.setFocusableInTouchMode(true);
-        edit_text.requestFocus();
-        edit_text.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.tv_comment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bottomDialogFragment = new BottomDialogFragment();
@@ -187,6 +183,7 @@ public class CommentFragment extends BaseFragment {
                 bottomDialogFragment.show(getChildFragmentManager(), TAG);
             }
         });
+
     }
 
     @Override

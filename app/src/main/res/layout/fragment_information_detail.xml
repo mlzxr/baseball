@@ -3,14 +3,6 @@
     style="@style/layout_mm_fragment"
     android:orientation="vertical">
 
-    <!-- webview 演示web调用Java -->
-    <com.github.lzyzsd.jsbridge.BridgeWebView
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"></com.github.lzyzsd.jsbridge.BridgeWebView>
-
-
     <com.feigong.baseball.fgview.ViewTopBar
         android:id="@+id/viewTopBar"
         android:layout_width="match_parent"
@@ -32,13 +24,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:background="@android:color/white"
         android:padding="7dp">
 
-        <EditText
-            android:id="@+id/edit_text"
+        <TextView
+            android:id="@+id/tv_comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
