@@ -8,16 +8,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import android.widget.Toast;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
@@ -45,6 +43,13 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import butterknife.Bind;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Request;
 
@@ -60,8 +65,23 @@ import okhttp3.Request;
  */
 public class HomeActivity extends BaseActivity {
 
-    private ViewPager home_viewPager;
-    private LinearLayout ll_information, ll_video, ll_me;
+    @Bind(R.id.home_viewPager)
+    ViewPager homeViewPager;
+
+    @Bind(R.id.ll_information)
+    LinearLayout llInformation;
+
+    @Bind(R.id.ll_video)
+    LinearLayout llVideo;
+
+    @Bind(R.id.ll_me)
+    LinearLayout llMe;
+
+    @Bind(R.id.ll_bottom)
+    LinearLayout llBottom;
+
+    @Bind(R.id.frameLayout)
+    FrameLayout frameLayout;
 
     private FragmentPagerAdapter fragmentPagerAdapter;
     private List<Fragment> fragmentArrayList = new ArrayList<>();
@@ -77,25 +97,16 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initVariables() {
 
-        activity = HomeActivity.this;
+
         fragmentArrayList.add(InformationFragment.newInstance());
         fragmentArrayList.add(VideoFragment.newInstance());
         fragmentArrayList.add(MeFragment.newInstance());
     }
 
+
     @Override
     protected void initViews(Bundle savedInstanceState) {
 
-        home_viewPager = (ViewPager) findViewById(R.id.home_viewPager);
-        //
-        ll_information = (LinearLayout) findViewById(R.id.ll_information);
-        ll_video = (LinearLayout) findViewById(R.id.ll_video);
-        ll_me = (LinearLayout) findViewById(R.id.ll_me);
-
-        //
-        ll_information.setOnClickListener(new CheckTag(0));
-        ll_video.setOnClickListener(new CheckTag(1));
-        ll_me.setOnClickListener(new CheckTag(2));
 
         //
         fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -110,8 +121,8 @@ public class HomeActivity extends BaseActivity {
             }
         };
         //
-        home_viewPager.setAdapter(fragmentPagerAdapter);
-        home_viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        homeViewPager.setAdapter(fragmentPagerAdapter);
+        homeViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
@@ -127,22 +138,20 @@ public class HomeActivity extends BaseActivity {
             }
         });
         //
-        home_viewPager.setCurrentItem(index);
         setTag(index);
-
     }
 
     @Override
     protected void initData() {
-        L.e(TAG,token);
-        if(!checkLogin()){
+
+        if (!checkLogin()) {
             toLogin();
-        }else {
+        } else {
             String url = GetUrl.getUserInfoByToken();
             OkHttpUtils
                     .get()
                     .url(url)
-                    .addHeader(Constant.TOKEN,token)
+                    .addHeader(Constant.TOKEN, token)
                     .id(100)
                     .build()
                     .execute(new MyStringCallback());
@@ -150,56 +159,56 @@ public class HomeActivity extends BaseActivity {
 
     }
 
-    public void setLayout(Map<String,Object> map){
+    public void setLayout(Map<String, Object> map) {
 
         Fragment fragment = null;
         int flag = MapUtil.getInt(map, Constant.FLAG);
         String tag = MapUtil.getValue(map, Constant.TAG);
-        switch (flag){
+        switch (flag) {
             case Constant.FragmentTAG.setting_fragment:
                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
-                if(fragment==null){
+                if (fragment == null) {
                     fragment = SettingFragment.newInstance();
                 }
                 break;
             case Constant.FragmentTAG.security_account_fragment:
                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
-                if(fragment==null){
+                if (fragment == null) {
                     fragment = SecurityAccountFragment.newInstance();
                 }
                 break;
             case Constant.FragmentTAG.login_fragment:
                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
-                if(fragment==null){
+                if (fragment == null) {
                     fragment = LoginFragment.newInstance();
                 }
                 break;
             case Constant.FragmentTAG.get_picture_fragment:
                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
-                if(fragment==null){
-                    int take_type= (int)map.get(Constant.TAKE_PHONE_TYPE.TAKE_TYPE);
+                if (fragment == null) {
+                    int take_type = (int) map.get(Constant.TAKE_PHONE_TYPE.TAKE_TYPE);
                     fragment = GetPictureFragment.newInstance(take_type);
                 }
                 break;
 
             case Constant.FragmentTAG.social_fragment:
                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
-                if(fragment==null){
+                if (fragment == null) {
                     fragment = SocialFragment.newInstance();
                 }
                 break;
             case Constant.FragmentTAG.informationDetail_fragment:
 
                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
-                if(fragment==null){
-                    fragment = InformationDetailFragment.newInstance((String)map.get("objid_ref"));
+                if (fragment == null) {
+                    fragment = InformationDetailFragment.newInstance((String) map.get("objid_ref"));
                 }
                 break;
             case Constant.FragmentTAG.showWebVIewImages_fragment:
 
                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
-                if(fragment==null){
-                    fragment = ShowWebVIewImagesFragment.newInstance((String)map.get(DATA));
+                if (fragment == null) {
+                    fragment = ShowWebVIewImagesFragment.newInstance((String) map.get(DATA));
                 }
 
                 break;
@@ -208,47 +217,55 @@ public class HomeActivity extends BaseActivity {
         //
         if (fragment != null) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.frameLayout, fragment,tag);
+            fragmentTransaction.add(R.id.frameLayout, fragment, tag);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commitAllowingStateLoss();
         }
     }
 
-    class CheckTag implements View.OnClickListener {
-        private int index;
 
-        public CheckTag(int index) {
-            this.index = index;
-        }
+    @OnClick({R.id.ll_information, R.id.ll_video, R.id.ll_me})
+    public void CheckIndex(View view) {
+        switch (view.getId()) {
+            case R.id.ll_information:
+                setTag(0);
+                break;
 
+            case R.id.ll_video:
+                setTag(1);
+                break;
 
-        @Override
-        public void onClick(View v) {
-            home_viewPager.setCurrentItem(index);
-            setTag(index);
+            case R.id.ll_me:
+                setTag(2);
+                break;
         }
     }
 
-    private void setTag(int index) {
-        resetTab();
 
+    /**
+     * 设置底部导航tab
+     * @param index
+     */
+    private void setTag(int index) {
+        homeViewPager.setCurrentItem(index);
+        resetTab();
         switch (index) {
             case 0:
-                ((ImageView) ll_information.getChildAt(0)).setImageResource(R.mipmap.tab_information_s);
-                ((TextView) ll_information.getChildAt(1)).setTextColor(Color.parseColor("#E13437"));
+                ((ImageView) llInformation.getChildAt(0)).setImageResource(R.mipmap.tab_information_s);
+                ((TextView) llInformation.getChildAt(1)).setTextColor(Color.parseColor("#E13437"));
                 break;
 
             case 1:
 
-                ((ImageView) ll_video.getChildAt(0)).setImageResource(R.mipmap.tab_video_s);
-                ((TextView) ll_video.getChildAt(1)).setTextColor(Color.parseColor("#E13437"));
+                ((ImageView) llVideo.getChildAt(0)).setImageResource(R.mipmap.tab_video_s);
+                ((TextView) llVideo.getChildAt(1)).setTextColor(Color.parseColor("#E13437"));
 
                 break;
 
             case 2:
 
-                ((ImageView) ll_me.getChildAt(0)).setImageResource(R.mipmap.tab_my_s);
-                ((TextView) ll_me.getChildAt(1)).setTextColor(Color.parseColor("#E13437"));
+                ((ImageView) llMe.getChildAt(0)).setImageResource(R.mipmap.tab_my_s);
+                ((TextView) llMe.getChildAt(1)).setTextColor(Color.parseColor("#E13437"));
 
                 break;
         }
@@ -256,86 +273,80 @@ public class HomeActivity extends BaseActivity {
 
     //重置底部状态栏
     private void resetTab() {
-        ((ImageView) ll_information.getChildAt(0)).setImageResource(R.mipmap.tab_information_n);
-        ((ImageView) ll_video.getChildAt(0)).setImageResource(R.mipmap.tab_video_n);
-        ((ImageView) ll_me.getChildAt(0)).setImageResource(R.mipmap.tab_my_n);
+        ((ImageView) llInformation.getChildAt(0)).setImageResource(R.mipmap.tab_information_n);
+        ((ImageView) llVideo.getChildAt(0)).setImageResource(R.mipmap.tab_video_n);
+        ((ImageView) llMe.getChildAt(0)).setImageResource(R.mipmap.tab_my_n);
         //
-        ((TextView) ll_information.getChildAt(1)).setTextColor(Color.parseColor("#989898"));
-        ((TextView) ll_video.getChildAt(1)).setTextColor(Color.parseColor("#989898"));
-        ((TextView) ll_me.getChildAt(1)).setTextColor(Color.parseColor("#989898"));
+
+        ((TextView) llInformation.getChildAt(1)).setTextColor(ContextCompat.getColor(App.getContext(), R.color.tab_select_n));
+        ((TextView) llVideo.getChildAt(1)).setTextColor(ContextCompat.getColor(App.getContext(), R.color.tab_select_n));
+        ((TextView) llMe.getChildAt(1)).setTextColor(ContextCompat.getColor(App.getContext(), R.color.tab_select_n));
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Fragment f = fragmentArrayList.get(home_viewPager.getCurrentItem());
+        Fragment f = fragmentArrayList.get(homeViewPager.getCurrentItem());
         f.onActivityResult(requestCode, resultCode, data);
 
-        L.e(TAG,"onActivityResult----"+",requestCode:"+requestCode+"-----"+",resultCode:"+resultCode);
 
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constant.FragmentTAG.login_fragmentTAG);
-        if(fragment!=null){
-            fragment.onActivityResult(requestCode,resultCode,data);
+        if (fragment != null) {
+            fragment.onActivityResult(requestCode, resultCode, data);
         }
         fragment = getSupportFragmentManager().findFragmentByTag(Constant.FragmentTAG.social_fragmentTAG);
-        if(fragment!=null){
-            fragment.onActivityResult(requestCode,resultCode,data);
+        if (fragment != null) {
+            fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    private void toLogin(){
-        Map<String,Object> map = new HashMap<String, Object>();
+    private void toLogin() {
+        Map<String, Object> map = new HashMap<String, Object>();
         //
-        map.put(Constant.FLAG,Constant.FragmentTAG.login_fragment);
-        map.put(Constant.TAG,Constant.FragmentTAG.login_fragmentTAG);
+        map.put(Constant.FLAG, Constant.FragmentTAG.login_fragment);
+        map.put(Constant.TAG, Constant.FragmentTAG.login_fragmentTAG);
         //
         this.setLayout(map);
     }
 
-    public void loadAvatar(int index){
+    public void loadAvatar(int index) {
         Fragment fragment = fragmentArrayList.get(index);
-        if(fragment instanceof MeFragment){
-            MeFragment meFragment = (MeFragment)fragment;
+        if (fragment instanceof MeFragment) {
+            MeFragment meFragment = (MeFragment) fragment;
             meFragment.loadAvator();
         }
     }
 
-    public class MyStringCallback extends StringCallback
-    {
+    public class MyStringCallback extends StringCallback {
         @Override
-        public void onBefore(Request request, int id)
-        {
+        public void onBefore(Request request, int id) {
         }
 
         @Override
-        public void onAfter(int id)
-        {
+        public void onAfter(int id) {
 
         }
 
         @Override
-        public void onError(Call call, Exception e, int id)
-        {
-            L.e(TAG,e.getMessage());
+        public void onError(Call call, Exception e, int id) {
+            L.e(TAG, e.getMessage());
         }
 
         @Override
-        public void onResponse(String response, int id)
-        {
-            switch (id)
-            {
+        public void onResponse(String response, int id) {
+            switch (id) {
                 case 100:
-                    L.e(TAG,response);
-                    ReturnMSG_UserInfo returnMSG_userInfo =  new Gson().fromJson(response,ReturnMSG_UserInfo.class);
-                    if(returnMSG_userInfo!=null && returnMSG_userInfo.getCode()==Constant.FGCode.OpOk_code){
-                        ReturnMSG_UserInfo.DataBean dataBean= returnMSG_userInfo.getData();
-                        if(dataBean!=null){
+                    L.e(TAG, response);
+                    ReturnMSG_UserInfo returnMSG_userInfo = new Gson().fromJson(response, ReturnMSG_UserInfo.class);
+                    if (returnMSG_userInfo != null && returnMSG_userInfo.getCode() == Constant.FGCode.OpOk_code) {
+                        ReturnMSG_UserInfo.DataBean dataBean = returnMSG_userInfo.getData();
+                        if (dataBean != null) {
 
-                            SPUtils.put(App.getContext(),Constant.USERINFO.NICKNAME,dataBean.getLoginInfo().getNickname());
-                            SPUtils.put(App.getContext(),Constant.USERINFO.AVATOR,dataBean.getLoginInfo().getAvator());
+                            SPUtils.put(App.getContext(), Constant.USERINFO.NICKNAME, dataBean.getLoginInfo().getNickname());
+                            SPUtils.put(App.getContext(), Constant.USERINFO.AVATOR, dataBean.getLoginInfo().getAvator());
                         }
-                    }else {
+                    } else {
                         toLogin();
                     }
                     break;
@@ -343,8 +354,7 @@ public class HomeActivity extends BaseActivity {
         }
 
         @Override
-        public void inProgress(float progress, long total, int id)
-        {
+        public void inProgress(float progress, long total, int id) {
         }
     }
 
@@ -355,7 +365,6 @@ public class HomeActivity extends BaseActivity {
         super.onPause();
         GSYVideoManager.onPause();
     }
-
 
 
     @Override

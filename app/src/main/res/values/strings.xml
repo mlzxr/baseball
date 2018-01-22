@@ -93,6 +93,7 @@
     <string name="input_not_null">输入不能为空！</string>
     <string name="comments_to_failure_please_try_again_later">评论发表失败，请稍后再来！</string>
 
+    <string name="not_get_more_data">未获取到更多数据</string>
 
 
 </resources>

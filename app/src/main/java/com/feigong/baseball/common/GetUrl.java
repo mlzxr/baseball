@@ -137,16 +137,32 @@ public class GetUrl {
         url = url.replace("{channel_code}", code);
         return url;
     }
+    public static String vodPullByCode(String code,int stamp) {
+        String url = DOMAIN + "/vod/pull/{channel_code}/{unix_stamp}";
+        url = url.replace("{channel_code}", code);
+        url = url.replace("{unix_stamp}", String.valueOf(stamp));
+        return url;
+    }
+
 
     /**
      * 资讯－推荐列表
      *
      * @return
      */
-    public static String informationRecommend() {
+    public static String ArticleRefresh() {
         String url = DOMAIN + "/article/refresh";
         return url;
     }
+    public static String ArticlePull(int stamp) {
+        String url = DOMAIN + "/article/pull/{unix_stamp}";
+        url = url.replace("{unix_stamp}", String.valueOf(stamp));
+        return url;
+    }
+
+
+
+
 
     /**
      * 资讯列表刷新
@@ -159,6 +175,14 @@ public class GetUrl {
         url = url.replace("{channel_code}", code);
         return url;
     }
+    public static String ArticlePullByCode(String code,int stamp) {
+        String url = DOMAIN + "/article/pull/{channel_code}/{unix_stamp}";
+        url = url.replace("{channel_code}", code);
+        url = url.replace("{unix_stamp}", String.valueOf(stamp));
+        return url;
+    }
+
+
 
     /**
      * 获取视频详细信息
@@ -205,4 +229,5 @@ public class GetUrl {
         url = url.replace("{refid}", objid_ref);
         return url;
     }
+
 }

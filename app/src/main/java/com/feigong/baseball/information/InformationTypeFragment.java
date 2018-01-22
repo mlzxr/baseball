@@ -10,8 +10,10 @@ import android.view.View;
 import com.feigong.baseball.R;
 import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.adapter.InformationTypeAdpter;
+import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
+import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.ReturnMSG_Information;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
@@ -70,18 +72,36 @@ public class InformationTypeFragment extends BaseFragment {
 
         @Override
         public void onResponse(String response, int id) {
-            L.e(TAG,response);
             switch (id)
             {
-                case 601:
+                case 601://刷新资讯列表
                     ReturnMSG_Information returnMSG_information = new Gson().fromJson(response,ReturnMSG_Information.class);
                     if(returnMSG_information!=null && returnMSG_information.getCode()== Constant.FGCode.OpOk_code){
                         List list = returnMSG_information.getData().getArticle_list();
+                        datalist.clear();
                         datalist.addAll(list);
                     }
                     informationTypeAdpter.notifyDataSetChanged();
+                    list_item_recycler.completeRefresh();
+                    break;
+
+                case 602://加载更多资讯
+
+                    returnMSG_information = new Gson().fromJson(response,ReturnMSG_Information.class);
+                    if(returnMSG_information!=null && returnMSG_information.getCode()== Constant.FGCode.OpOk_code){
+                        List list = returnMSG_information.getData().getArticle_list();
+                        if(list!=null && list.size()>0){
+                            datalist.addAll(list);
+                            informationTypeAdpter.notifyDataSetChanged();
+                        }else {
+                            T.showShort(App.getContext(),R.string.not_get_more_data);
+                        }
+                    }
+                    list_item_recycler.completeLoad();
+
                     break;
             }
+
         }
     }
 
@@ -108,28 +128,16 @@ public class InformationTypeFragment extends BaseFragment {
         list_item_recycler.addItemDecoration(new BaseItemDecoration(context,R.color.silver));
         list_item_recycler.setAdapter(informationTypeAdpter);
 
-
-
         list_item_recycler.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onStartRefreshing() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        list_item_recycler.completeRefresh();
-                    }
-                }, 1000);
+                loadData();
             }
         });
         list_item_recycler.setOnLoadListener(new OnLoadListener() {
             @Override
             public void onStartLoading(int skip) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        list_item_recycler.completeLoad();
-                    }
-                }, 1000);
+                moreData();
             }
         });
         //
@@ -153,12 +161,10 @@ public class InformationTypeFragment extends BaseFragment {
             }
         });
 
-
     }
 
     @Override
     protected void loadData() {
-        L.e(TAG,code);
         String url = GetUrl.ArticleRefreshByCode(code);
         OkHttpUtils
                 .get()
@@ -166,6 +172,20 @@ public class InformationTypeFragment extends BaseFragment {
                 .id(601)
                 .build()
                 .execute(new MyStringCallback());
+    }
+
+
+    private void moreData(){
+        if(datalist!=null && datalist.size()>0){
+            ReturnMSG_Information.DataBean.ArticleListBean articleListBean =   datalist.get(datalist.size()-1);
+            String url = GetUrl.ArticlePullByCode(code,articleListBean.getPublish_timestamp());
+            OkHttpUtils
+                    .get()
+                    .url(url)
+                    .id(602)
+                    .build()
+                    .execute(new MyStringCallback());
+        }
     }
 
 

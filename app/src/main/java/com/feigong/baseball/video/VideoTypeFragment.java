@@ -12,8 +12,10 @@ import android.view.View;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.adapter.RecyclerNormalAdapter;
+import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
+import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.ReturnMSG_VideoList;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
@@ -90,16 +92,31 @@ public class VideoTypeFragment extends BaseFragment {
         public void onResponse(String response, int id) {
             switch (id) {
                 case 799://刷新列表
-                    L.e(TAG,"799:"+response);
                     ReturnMSG_VideoList returnMSG_videoList = new Gson().fromJson(response, ReturnMSG_VideoList.class);
                     if (returnMSG_videoList != null && returnMSG_videoList.getCode() == Constant.FGCode.OpOk_code) {
                         ReturnMSG_VideoList.DataBean dataBean = returnMSG_videoList.getData();
                         if (dataBean != null && dataBean.getVod_list() != null && dataBean.getVod_list().size() > 0) {
                             //
+                            dataList.clear();
                             dataList.addAll(dataBean.getVod_list());
                         }
                     }
-                    recyclerNormalAdapter.notifyDataSetChanged();;
+                    recyclerNormalAdapter.notifyDataSetChanged();
+                    list_item_recycler.completeRefresh();
+                    break;
+                case 798://
+                    returnMSG_videoList = new Gson().fromJson(response, ReturnMSG_VideoList.class);
+                    if (returnMSG_videoList != null && returnMSG_videoList.getCode() == Constant.FGCode.OpOk_code) {
+                        ReturnMSG_VideoList.DataBean dataBean = returnMSG_videoList.getData();
+                        if (dataBean != null && dataBean.getVod_list() != null && dataBean.getVod_list().size() > 0) {
+                            //
+                            dataList.addAll(dataBean.getVod_list());
+                            recyclerNormalAdapter.notifyDataSetChanged();;
+                        }else {
+                            T.showShort(App.getContext(),R.string.not_get_more_data);
+                        }
+                    }
+                    list_item_recycler.completeLoad();
                     break;
             }
         }
@@ -136,23 +153,13 @@ public class VideoTypeFragment extends BaseFragment {
         list_item_recycler.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onStartRefreshing() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        list_item_recycler.completeRefresh();
-                    }
-                }, 1000);
+               loadData();
             }
         });
         list_item_recycler.setOnLoadListener(new OnLoadListener() {
             @Override
             public void onStartLoading(int skip) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        list_item_recycler.completeLoad();
-                    }
-                }, 1000);
+               moreData();
             }
         });
 
@@ -215,13 +222,26 @@ public class VideoTypeFragment extends BaseFragment {
     @Override
     protected void loadData() {
         String url = GetUrl.vodRefreshByCode(code);
-        L.e(TAG,url);
         OkHttpUtils
                 .get()
                 .url(url)
                 .id(799)
                 .build()
                 .execute(new MyStringCallback());
+    }
+
+
+    private void moreData(){
+        if(dataList!=null && dataList.size()>0){
+            ReturnMSG_VideoList.DataBean.VodListBean  vodListBean  =  dataList.get(dataList.size()-1);
+            String url = GetUrl.vodPullByCode(code,vodListBean.getPublish_timestamp());
+            OkHttpUtils
+                    .get()
+                    .url(url)
+                    .id(798)
+                    .build()
+                    .execute(new MyStringCallback());
+        }
     }
 
 
@@ -236,8 +256,6 @@ public class VideoTypeFragment extends BaseFragment {
         }
 
     }
-
-
 
 
 }

@@ -16,7 +16,10 @@ public class TAGUitl {
      */
     public static final String HOMEACTIVITY="HomeActivity";
     //资讯
+
     public static final String INFORMATIONFRAGMENT="InformationFragment";
+    public static final String INFORMATIONTYPEFRAGMENT="InformationTypeFragment";
+
     //视频
     public static final String VIDEOFRAGMENT="VideoFragment";
     //个人中心

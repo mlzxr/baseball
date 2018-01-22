@@ -11,8 +11,10 @@ import android.view.View;
 import com.feigong.baseball.R;
 import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.adapter.InformationRecommendAdaper;
+import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
+import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.ReturnMSG_Recommend;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
@@ -74,9 +76,25 @@ public class InformationRecommendFragment extends BaseFragment {
                     ReturnMSG_Recommend returnMSG_recommend = new Gson().fromJson(response,ReturnMSG_Recommend.class);
                     if(returnMSG_recommend!=null && returnMSG_recommend.getCode()== Constant.FGCode.OpOk_code){
                         List list = returnMSG_recommend.getData().getRecommand_list();
+                        dataList.clear();
                         dataList.addAll(list);
                     }
                     informationRecommendAdaper.notifyDataSetChanged();
+                    list_item_recycler.completeRefresh();
+                    break;
+
+                case 611:
+                    returnMSG_recommend = new Gson().fromJson(response,ReturnMSG_Recommend.class);
+                    if(returnMSG_recommend!=null && returnMSG_recommend.getCode()== Constant.FGCode.OpOk_code){
+                        List list = returnMSG_recommend.getData().getRecommand_list();
+                        if(list!=null  && list.size()>0){
+                            dataList.addAll(list);
+                            informationRecommendAdaper.notifyDataSetChanged();
+                        }else {
+                            T.showShort(App.getContext(),R.string.not_get_more_data);
+                        }
+                    }
+                    list_item_recycler.completeLoad();
                     break;
             }
         }
@@ -109,23 +127,13 @@ public class InformationRecommendFragment extends BaseFragment {
         list_item_recycler.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onStartRefreshing() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        list_item_recycler.completeRefresh();
-                    }
-                }, 1000);
+                loadData();
             }
         });
         list_item_recycler.setOnLoadListener(new OnLoadListener() {
             @Override
             public void onStartLoading(int skip) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        list_item_recycler.completeLoad();
-                    }
-                }, 1000);
+                moreData();
             }
         });
         list_item_recycler.setOnItemClickListener(new OnItemClickListener() {
@@ -167,7 +175,7 @@ public class InformationRecommendFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
-        String url = GetUrl.informationRecommend();
+        String url = GetUrl.ArticleRefresh();
         OkHttpUtils
                 .get()
                 .url(url)
@@ -175,4 +183,19 @@ public class InformationRecommendFragment extends BaseFragment {
                 .build()
                 .execute(new MyStringCallback());
     }
+
+    private void moreData(){
+        if(dataList!=null && dataList.size()>0){
+            ReturnMSG_Recommend.DataBean.RecommandListBean  recommandListBean =   dataList.get(dataList.size()-1);
+            String url = GetUrl.ArticlePull(recommandListBean.getPub_time());
+            OkHttpUtils
+                    .get()
+                    .url(url)
+                    .id(611)
+                    .build()
+                    .execute(new MyStringCallback());
+        }
+    }
+
+
 }
