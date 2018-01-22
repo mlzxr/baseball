@@ -4,16 +4,20 @@ package com.feigong.baseball.application;/**
 
 import android.app.Application;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.feigong.baseball.base.crash.CrashHandler;
+import com.feigong.baseball.dto.DaoMaster;
+import com.feigong.baseball.dto.DaoSession;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import cn.jpush.android.api.JPushInterface;
 
-import com.feigong.baseball.base.util.ScreenUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+
+import org.greenrobot.greendao.database.Database;
 
 /**
  * 项目名称：cqt_app
@@ -27,43 +31,64 @@ import com.squareup.leakcanary.RefWatcher;
  */
 public class App extends Application {
 
-    public static RefWatcher getRefWatcher(Context context) {
-        App application = (App) context.getApplicationContext();
-        return application.refWatcher;
-    }
-
 
     private static Context context;
+
     private CrashHandler crashHandler;
 
+    public static final boolean ENCRYPTED = true;
 
     private RefWatcher refWatcher;
+
+    private static DaoSession daoSession;
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-
+        //定义单列Context
+        context = getApplicationContext();
 
 
         //监听内存泄漏
         refWatcher = LeakCanary.install(this);
-        //定义单列Context
-        context = getApplicationContext();
+
+
+
+
+
+
         //异常监听
         //crashHandler = CrashHandler.getInstance();
         //crashHandler.init(context);
+
+
+
 
         //
         JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);
 
-        //获取屏幕相关属性
-        ScreenUtils.getScreenDensity(context);
         //网络图片加载框架
         initImageLoader();
+        //加载orm框架
+        initGreenDao();
 
 
+
+    }
+
+    private void initGreenDao(){
+
+        DaoMaster.DevOpenHelper helper = new  DaoMaster.DevOpenHelper(this, ENCRYPTED ? "users-db-encrypted" : "users-db");
+        Database db =  helper.getWritableDb();
+        daoSession = new DaoMaster(db).newSession();
+
+
+    }
+
+
+    public static DaoSession getDaoInstant() {
+        return daoSession;
     }
 
     private void initImageLoader() {
@@ -71,8 +96,18 @@ public class App extends Application {
         ImageLoader.getInstance().init(config);
     }
 
+
+
+
     public static Context getContext() {
         return context;
     }
+
+
+    public static RefWatcher getRefWatcher(Context context) {
+        App application = (App) context.getApplicationContext();
+        return application.refWatcher;
+    }
+
 
 }

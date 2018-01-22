@@ -90,14 +90,6 @@ public class Constant {
     }
 
 
-    public interface ActivityTAG{
-
-        int home_activity=1;
-
-        int wx_entry_activity=2;
-
-    }
-
 
     /**
      * 拍照类型

@@ -1,1 +1,1 @@
-include ':app', ':baseUtil', ':imageLoader', ':okhttputils', ':xrecyclerview', ':magicindicator', ':gsyVideoPlayer', ':wzmrecyclerview'
+include ':app', ':baseUtil', ':okhttputils', ':magicindicator', ':gsyVideoPlayer', ':wzmrecyclerview'

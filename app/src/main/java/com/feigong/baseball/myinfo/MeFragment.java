@@ -3,9 +3,7 @@ package com.feigong.baseball.myinfo;/**
  */
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,11 +11,9 @@ import android.widget.ImageView;
 import com.feigong.baseball.R;
 import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
-import com.feigong.baseball.beans.ReturnMSG_UserInfo;
-import com.feigong.baseball.common.BitmapUtil;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.ImageUtil;
 import com.feigong.baseball.common.TAGUitl;
@@ -26,7 +22,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * 项目名称：baseball

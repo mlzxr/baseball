@@ -12,9 +12,7 @@ import android.view.View;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.common.JSONUtil;
-import com.feigong.baseball.base.fragment.BaseFragment;
-import com.feigong.baseball.base.util.DateUtil;
+import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.base.util.T;

@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.feigong.baseball.base.activity.BaseActivity;
+import com.feigong.baseball.base.BaseActivity;
 import com.feigong.baseball.activity.HomeActivity;
 
 /**
  * 应用主入口
+ *
+ *
  */
 public class MainActivity extends BaseActivity {
 

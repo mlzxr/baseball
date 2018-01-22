@@ -1,25 +1,19 @@
 package com.feigong.baseball.information;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.feigong.baseball.Interface.BaseInterFaceListenerText;
 import com.feigong.baseball.R;
 import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.adapter.CommentAdapter;
 import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.base.util.T;
@@ -31,18 +25,15 @@ import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.common.TAGUitl;
 import com.feigong.baseball.dialog.BottomDialogFragment;
 import com.feigong.baseball.fgview.ViewTopBar;
-import com.feigong.baseball.fragment.CommentFragment;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
-import com.github.lzyzsd.jsbridge.DefaultHandler;
 import com.google.gson.Gson;
 import com.mrw.wzmrecyclerview.Divider.BaseItemDecoration;
 import com.mrw.wzmrecyclerview.LayoutManager.WZMLinearLayoutManager;
 import com.mrw.wzmrecyclerview.PullToLoad.OnLoadListener;
 import com.mrw.wzmrecyclerview.PullToLoad.PullToLoadRecyclerView;
 import com.mrw.wzmrecyclerview.PullToRefresh.OnRefreshListener;
-import com.mrw.wzmrecyclerview.PullToRefresh.PullToRefreshRecyclerView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 

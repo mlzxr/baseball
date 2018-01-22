@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/ruler/AS/baseball/imageLoader/src/main/assets"/><source path="/Users/ruler/AS/baseball/imageLoader/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/Users/ruler/AS/baseball/imageLoader/src/release/assets"/></dataSet></merger>

@@ -11,7 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.feigong.baseball.R;
-import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.beans.ReturnMSG_Channel;
 import com.feigong.baseball.common.Constant;
@@ -52,7 +52,7 @@ public class VideoFragment extends BaseFragment {
     private MagicIndicator mMagicIndicator;
     private CommonNavigator mCommonNavigator;
 
-    private List<ReturnMSG_Channel.DataBean> tablist = new ArrayList<>();
+    private List<ReturnMSG_Channel.DataBean.ChannelsBean> tablist = new ArrayList<>();
 
     private List<Fragment> fragmentList = new ArrayList<>();
 
@@ -91,7 +91,7 @@ public class VideoFragment extends BaseFragment {
 
                     ReturnMSG_Channel returnMSG_channel = new Gson().fromJson(response,ReturnMSG_Channel.class);
                     if(returnMSG_channel!=null &&returnMSG_channel.getCode()== Constant.FGCode.OpOk_code){
-                        tablist = returnMSG_channel.getData();
+                        tablist = returnMSG_channel.getData().getChannels();
                         if(tablist!=null && tablist.size()>0){
                             asyncloadingfragment();
                             asyncLoadingTab();
@@ -181,7 +181,7 @@ public class VideoFragment extends BaseFragment {
     private  void asyncloadingfragment(){
         fragmentList.clear();
         for (int k =0;k<tablist.size();k++){
-            ReturnMSG_Channel.DataBean data = tablist.get(k);
+            ReturnMSG_Channel.DataBean.ChannelsBean data = tablist.get(k);
             fragmentList.add(VideoTypeFragment.newInstance(data.getD_code()));
         }
         mViewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {

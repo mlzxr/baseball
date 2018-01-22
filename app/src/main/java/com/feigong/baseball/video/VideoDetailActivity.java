@@ -1,17 +1,15 @@
 package com.feigong.baseball.video;
 
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.activity.BaseActivity;
+import com.feigong.baseball.base.BaseActivity;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.ReturnMSG_VideoDetail;
@@ -23,13 +21,6 @@ import com.feigong.baseball.fgview.ViewTopBar;
 import com.feigong.baseball.fragment.CommentFragment;
 import com.feigong.baseball.listener.SampleListener;
 import com.google.gson.Gson;
-import com.mrw.wzmrecyclerview.Divider.BaseItemDecoration;
-import com.mrw.wzmrecyclerview.LayoutManager.WZMLinearLayoutManager;
-import com.mrw.wzmrecyclerview.PullToLoad.OnLoadListener;
-import com.mrw.wzmrecyclerview.PullToLoad.PullToLoadRecyclerView;
-import com.mrw.wzmrecyclerview.PullToRefresh.OnRefreshListener;
-import com.mrw.wzmrecyclerview.SimpleAdapter.SimpleAdapter;
-import com.mrw.wzmrecyclerview.SimpleAdapter.ViewHolder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
@@ -37,8 +28,6 @@ import com.shuyu.gsyvideoplayer.listener.LockClickListener;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.zhy.http.okhttp.callback.StringCallback;
-
-import java.util.ArrayList;
 
 import okhttp3.Call;
 

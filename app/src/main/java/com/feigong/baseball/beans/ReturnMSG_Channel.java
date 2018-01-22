@@ -17,44 +17,75 @@ import java.util.List;
 public class ReturnMSG_Channel extends ReturnMSG{
 
 
-    private List<DataBean> data;
+    /**
+     * data : {"channels":[{"d_code":"c01","d_name":"推荐"},{"d_code":"c02","d_name":"娱乐"},{"d_code":"c03","d_name":"MLB"},{"d_code":"c04","d_name":"教学"},{"d_code":"c06","d_name":"动漫"},{"d_code":"c07","d_name":"器材"}],"version":1}
+     */
 
-    public List<DataBean> getData() {
+    private DataBean data;
+
+    public DataBean getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(DataBean data) {
         this.data = data;
     }
 
     public static class DataBean {
         /**
-         * d_code : c01
-         * d_name : 推荐
+         * channels : [{"d_code":"c01","d_name":"推荐"},{"d_code":"c02","d_name":"娱乐"},{"d_code":"c03","d_name":"MLB"},{"d_code":"c04","d_name":"教学"},{"d_code":"c06","d_name":"动漫"},{"d_code":"c07","d_name":"器材"}]
+         * version : 1
          */
 
-        private String d_code;
-        private String d_name;
+        private int version;
+        private List<ChannelsBean> channels;
 
-        public String getD_code() {
-            return d_code;
+        public int getVersion() {
+            return version;
         }
 
-        public void setD_code(String d_code) {
-            this.d_code = d_code;
+        public void setVersion(int version) {
+            this.version = version;
         }
 
-        public String getD_name() {
-            return d_name;
+        public List<ChannelsBean> getChannels() {
+            return channels;
         }
 
-        public void setD_name(String d_name) {
-            this.d_name = d_name;
+        public void setChannels(List<ChannelsBean> channels) {
+            this.channels = channels;
         }
 
-        @Override
-        public String toString() {
-            return d_name;
+        public static class ChannelsBean {
+            /**
+             * d_code : c01
+             * d_name : 推荐
+             */
+
+            private String d_code;
+            private String d_name;
+
+            public String getD_code() {
+                return d_code;
+            }
+
+            public void setD_code(String d_code) {
+                this.d_code = d_code;
+            }
+
+            public String getD_name() {
+                return d_name;
+            }
+
+            public void setD_name(String d_name) {
+                this.d_name = d_name;
+            }
+
+
+            @Override
+            public String toString() {
+                return d_name;
+            }
         }
     }
 }

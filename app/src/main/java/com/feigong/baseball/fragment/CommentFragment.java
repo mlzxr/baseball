@@ -1,17 +1,14 @@
 package com.feigong.baseball.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
 import com.feigong.baseball.Interface.BaseInterFaceListenerText;
-import com.feigong.baseball.Interface.BaseInterFaceListenerView;
 import com.feigong.baseball.R;
 import com.feigong.baseball.adapter.CommentAdapter;
 import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.fragment.BaseFragment;
-import com.feigong.baseball.base.util.DateUtil;
+import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.base.util.T;
@@ -20,22 +17,18 @@ import com.feigong.baseball.beans.ReturnMSGComment;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.dialog.BottomDialogFragment;
-import com.feigong.baseball.information.InformationRecommendFragment;
 import com.google.gson.Gson;
 import com.mrw.wzmrecyclerview.Divider.BaseItemDecoration;
 import com.mrw.wzmrecyclerview.LayoutManager.WZMLinearLayoutManager;
 import com.mrw.wzmrecyclerview.PullToLoad.OnLoadListener;
 import com.mrw.wzmrecyclerview.PullToLoad.PullToLoadRecyclerView;
 import com.mrw.wzmrecyclerview.PullToRefresh.OnRefreshListener;
-import com.mrw.wzmrecyclerview.SimpleAdapter.SimpleAdapter;
-import com.mrw.wzmrecyclerview.SimpleAdapter.ViewHolder;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.MediaType;

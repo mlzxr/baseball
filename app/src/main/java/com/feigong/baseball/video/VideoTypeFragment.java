@@ -9,27 +9,22 @@ import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.adapter.RecyclerNormalAdapter;
-import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.fragment.BaseFragment;
-import com.feigong.baseball.base.util.DensityUtils;
+import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.T;
-import com.feigong.baseball.beans.ReturnMSG_Channel;
 import com.feigong.baseball.beans.ReturnMSG_VideoList;
-import com.feigong.baseball.beans.VideoModel;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.viewholder.RecyclerItemNormalHolder;
 import com.google.gson.Gson;
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.mrw.wzmrecyclerview.Divider.BaseItemDecoration;
+import com.mrw.wzmrecyclerview.PullToLoad.OnLoadListener;
+import com.mrw.wzmrecyclerview.PullToLoad.PullToLoadRecyclerView;
+import com.mrw.wzmrecyclerview.PullToRefresh.OnRefreshListener;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -55,7 +50,9 @@ public class VideoTypeFragment extends BaseFragment {
 
     private String code;
 
-    private XRecyclerView list_item_recycler;
+    private PullToLoadRecyclerView list_item_recycler;
+
+
     private LinearLayoutManager linearLayoutManager;
 
 
@@ -122,43 +119,52 @@ public class VideoTypeFragment extends BaseFragment {
         context = getActivity();
         code = getArguments().getString("code");
         dataList = new ArrayList<>();
-        L.e(TAG, "dp2px:"+DensityUtils.dp2px(App.getContext(), (float) 200.0));
-        T.showShort(App.getContext(),TAG);
+        recyclerNormalAdapter = new RecyclerNormalAdapter(context, dataList);
     }
 
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
-        list_item_recycler = (XRecyclerView) view.findViewById(R.id.list_item_recycler);
-        recyclerNormalAdapter = new RecyclerNormalAdapter(context, dataList);
+        list_item_recycler = (PullToLoadRecyclerView) view.findViewById(R.id.list_item_recycler);
         linearLayoutManager = new LinearLayoutManager(context);
         list_item_recycler.setLayoutManager(linearLayoutManager);
+        //        设置分割线
+        list_item_recycler.addItemDecoration(new BaseItemDecoration(context,R.color.silver));
         list_item_recycler.setAdapter(recyclerNormalAdapter);
-        list_item_recycler.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        list_item_recycler.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
-        list_item_recycler.setArrowImageView(R.mipmap.iconfont_downgrey);
-        //
-        list_item_recycler.setLoadingListener(new XRecyclerView.LoadingListener() {
+
+
+
+        list_item_recycler.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable(){
+            public void onStartRefreshing() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
                     public void run() {
-
-                        recyclerNormalAdapter.notifyDataSetChanged();
-                        list_item_recycler.refreshComplete();
+                        list_item_recycler.completeRefresh();
                     }
-
                 }, 1000);
+            }
+        });
+        list_item_recycler.setOnLoadListener(new OnLoadListener() {
+            @Override
+            public void onStartLoading(int skip) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        list_item_recycler.completeLoad();
+                    }
+                }, 1000);
+            }
+        });
+
+        list_item_recycler.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
+            @Override
+            public void onChildViewAttachedToWindow(View view) {
+
             }
 
             @Override
-            public void onLoadMore() {
-                new Handler().postDelayed(new Runnable(){
-                    public void run() {
+            public void onChildViewDetachedFromWindow(View view) {
 
-                        list_item_recycler.loadMoreComplete();
-                        recyclerNormalAdapter.notifyDataSetChanged();
-                    }
-                }, 1000);
             }
         });
 
@@ -178,16 +184,16 @@ public class VideoTypeFragment extends BaseFragment {
                 super.onScrolled(recyclerView, dx, dy);
                 firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-                //
+
                 L.e(TAG,"firstVisibleItem:"+firstVisibleItem);
                 L.e(TAG,"lastVisibleItem:"+lastVisibleItem);
-
 
                 //大于0说明有播放
                 if (GSYVideoManager.instance().getPlayPosition() >= 0) {
                     //当前播放的位置
                     int position = GSYVideoManager.instance().getPlayPosition();
                     L.e(TAG,"position:"+position);
+
                     //对应的播放列表TAG
                     if (GSYVideoManager.instance().getPlayTag().equals(RecyclerItemNormalHolder.TAG)
                             && (position < firstVisibleItem || position > lastVisibleItem)) {

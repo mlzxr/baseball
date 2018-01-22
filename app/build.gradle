@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'org.greenrobot.greendao'
+
 android {
     compileSdkVersion 23
     buildToolsVersion '25.0.3'
@@ -21,21 +23,44 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    greendao {
+        schemaVersion 1
+        //daoPackage 'com.jian.greendao.gen'//这个是生成代码保存的包名
+        //targetGenDir 'src/main/java'//保存到java代码路径
+    }
 }
 
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile project(':baseUtil')
-    compile project(':imageLoader')
-    compile files('libs/jcore-android_v1.0.0.jar')
-    compile files('libs/jpush-android_v3.0.0.jar')
-    //    测试
+
+
+    //    测试内存泄漏
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+
+
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'org.greenrobot:greendao:3.2.0'
+    compile 'org.greenrobot:greendao-generator:3.2.0'
+
+
+
+    compile 'com.github.lzyzsd:jsbridge:1.0.4'
+
+
+
+    compile project(':baseUtil')
+    compile files('libs/jcore-android_v1.0.0.jar')
+    compile files('libs/jpush-android_v3.0.0.jar')
+
+
     compile project(':okhttputils')
     compile files('libs/libammsdk.jar')
     compile files('libs/weibosdkcore_release.jar')
@@ -44,7 +69,7 @@ dependencies {
     compile project(':magicindicator')
     compile project(path: ':magicindicator')
     compile project(':gsyVideoPlayer')
-    compile project(':xrecyclerview')
     compile project(':wzmrecyclerview')
-    compile 'com.github.lzyzsd:jsbridge:1.0.4'
+
+
 }

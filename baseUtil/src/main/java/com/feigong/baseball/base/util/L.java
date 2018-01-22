@@ -15,6 +15,9 @@ import android.util.Log;
  * @version 1.0
  */
 public class L {
+
+    private static final String TAG="L";
+
     private L(){
 
         throw new UnsupportedOperationException("cannot be instantiated");
@@ -39,6 +42,12 @@ public class L {
     {
         if (isDebug)
             Log.e(tag, msg);
+    }
+
+    public static void e(String msg)
+    {
+        if (isDebug)
+            Log.e(TAG, msg);
     }
 
     public static void v(String tag, String msg)

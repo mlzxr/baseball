@@ -11,19 +11,13 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.feigong.baseball.R;
-import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.SPUtils;
-import com.feigong.baseball.base.util.T;
-import com.feigong.baseball.beans.ReturnMSG;
 import com.feigong.baseball.beans.ReturnMSG_Channel;
-import com.feigong.baseball.beans.ReturnMSG_Push;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.common.TAGUitl;
 import com.feigong.baseball.fgview.ViewTopBar;
-import com.feigong.baseball.myinfo.SettingFragment;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -37,7 +31,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.Call;
@@ -60,7 +53,7 @@ public class InformationFragment extends BaseFragment {
     private MagicIndicator mMagicIndicator;
     private CommonNavigator mCommonNavigator;
 
-    private List<ReturnMSG_Channel.DataBean> tablist = new ArrayList<>();
+    private List<ReturnMSG_Channel.DataBean.ChannelsBean> tablist = new ArrayList<>();
 
     private List<Fragment> fragmentList = new ArrayList<>();
 
@@ -93,13 +86,14 @@ public class InformationFragment extends BaseFragment {
         @Override
         public void onResponse(String response, int id)
         {
+            L.e(TAGUitl.INFORMATIONFRAGMENT,response);
             switch (id)
             {
                 case 600:
 
                     ReturnMSG_Channel returnMSG_channel = new Gson().fromJson(response,ReturnMSG_Channel.class);
                     if(returnMSG_channel!=null &&returnMSG_channel.getCode()==Constant.FGCode.OpOk_code){
-                        tablist = returnMSG_channel.getData();
+                        tablist = returnMSG_channel.getData().getChannels();
                         if(tablist!=null && tablist.size()>0){
                             asyncloadingfragment();
                             asyncLoadingTab();
@@ -189,7 +183,7 @@ public class InformationFragment extends BaseFragment {
     }
     private  void asyncloadingfragment(){
         fragmentList.clear();
-        ReturnMSG_Channel.DataBean newwData = new ReturnMSG_Channel.DataBean();
+        ReturnMSG_Channel.DataBean.ChannelsBean newwData = new ReturnMSG_Channel.DataBean.ChannelsBean();
         newwData.setD_name("推荐");
         newwData.setD_code("C00");
         tablist.add(0,newwData);
@@ -198,7 +192,7 @@ public class InformationFragment extends BaseFragment {
         fragmentList.add(InformationRecommendFragment.newInstance());
         //
         for (int k =1;k<tablist.size();k++){
-            ReturnMSG_Channel.DataBean data = tablist.get(k);
+            ReturnMSG_Channel.DataBean.ChannelsBean data = tablist.get(k);
             fragmentList.add(InformationTypeFragment.newInstance(data.getD_code()));
         }
         mViewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {

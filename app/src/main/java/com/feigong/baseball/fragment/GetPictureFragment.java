@@ -16,27 +16,21 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.feigong.baseball.MainActivity;
 import com.feigong.baseball.R;
 import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.fragment.BaseFragment;
+import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
-import com.feigong.baseball.base.util.ScreenUtils;
 import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.ReturnMSG;
-import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.BitmapUtil;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.common.MethodsUtil;
 import com.feigong.baseball.fgview.ViewTopBar;
-import com.feigong.baseball.myinfo.LoginFragment;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -157,9 +151,9 @@ public class GetPictureFragment extends BaseFragment {
         viewTopBar.getTv_title().setText(R.string.setting_picture);
         //
         iv_avator = (ImageView) view.findViewById(R.id.iv_avator);
-        ViewGroup.LayoutParams layoutParams = iv_avator.getLayoutParams();
-        layoutParams.height = ScreenUtils.getScreenWidth(App.getContext());
-        iv_avator.setLayoutParams(layoutParams);
+       // ViewGroup.LayoutParams layoutParams = iv_avator.getLayoutParams();
+       // layoutParams.height = ScreenUtils.getScreenWidth(App.getContext());
+       // iv_avator.setLayoutParams(layoutParams);
 
         //拍照
         view.findViewById(R.id.tv_take_photo).setOnClickListener(new View.OnClickListener() {

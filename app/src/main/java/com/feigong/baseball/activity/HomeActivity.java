@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,7 +21,7 @@ import java.util.Map;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.activity.BaseActivity;
+import com.feigong.baseball.base.BaseActivity;
 import com.feigong.baseball.base.common.MapUtil;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
@@ -38,7 +37,6 @@ import com.feigong.baseball.myinfo.MeFragment;
 import com.feigong.baseball.myinfo.SecurityAccountFragment;
 import com.feigong.baseball.myinfo.SettingFragment;
 import com.feigong.baseball.myinfo.SocialFragment;
-import com.feigong.baseball.video.VideoDetailActivity;
 import com.feigong.baseball.video.VideoFragment;
 import com.google.gson.Gson;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
@@ -116,7 +114,6 @@ public class HomeActivity extends BaseActivity {
         home_viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -137,19 +134,10 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        SPUtils.put(App.getContext(),Constant.TOKEN,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJNVU01UWpJNE0wRTVRVVpGTkRZMk5EaEZOMFF4T1VNMVJFTTVRVFl3TUVNPSIsImlhdCI6MTUxMDcyNjQwNTgwN30.1fWYS0_B82ci39swt9ZAMMe8f0bDC3ZT10r0hVCCV7s");
-        String token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
-
         L.e(TAG,token);
-        if(TextUtils.isEmpty(token)){
-           /*
-            *尚未登陆
-            */
+        if(!checkLogin()){
             toLogin();
         }else {
-            /*
-             *获取用户资料
-             */
             String url = GetUrl.getUserInfoByToken();
             OkHttpUtils
                     .get()
