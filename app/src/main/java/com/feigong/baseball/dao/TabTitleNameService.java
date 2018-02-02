@@ -26,16 +26,11 @@ public class TabTitleNameService {
         App.getDaoInstant().getTabTitleNameDao().insert(dto);
     }
 
-    /**
-     * 删除数据
-     *
-     * @param id
-     */
-    public static void delete(long id) {
-        App.getDaoInstant().getUserDao().deleteByKey(id);
-    }
     public static void delete(TabTitleName dto){
         App.getDaoInstant().delete(dto);
+    }
+    public static void deleteAll(){
+        App.getDaoInstant().getTabTitleNameDao().deleteAll();
     }
 
 

@@ -21,9 +21,11 @@ import com.feigong.baseball.common.CodeConstant;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.DBConstant;
 import com.feigong.baseball.common.GetUrl;
+import com.feigong.baseball.common.MethodsUtil;
 import com.feigong.baseball.common.TAGUitl;
 import com.feigong.baseball.dao.TabTitleNameService;
 import com.feigong.baseball.dto.TabTitleName;
+import com.feigong.baseball.information.InformationFragment;
 import com.feigong.baseball.information.InformationRecommendFragment;
 import com.feigong.baseball.information.InformationTypeFragment;
 import com.google.gson.Gson;
@@ -87,6 +89,17 @@ public class VideoFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
+        String url = GetUrl.vodChannel();
+        OkHttpUtils
+                .get()
+                .url(url)
+                .id(CodeConstant.Request.vod_channel)
+                .build()
+                .execute(new MyStringCallback());
+    }
+
+
+    private void setTitleTab(){
         //获取本地数据
         tabTitleNames = TabTitleNameService.query(DBConstant.VOD_CHANNEL);
         //
@@ -139,9 +152,8 @@ public class VideoFragment extends BaseFragment {
                     return fragmentList.size();
                 }
             });
-        }else {
-            loadData();
         }
+
     }
 
 
@@ -159,6 +171,11 @@ public class VideoFragment extends BaseFragment {
 
         @Override
         public void onError(Call call, Exception e, int id) {
+            switch (id) {
+                case CodeConstant.Request.vod_channel:
+                    setTitleTab();
+                    break;
+            }
         }
 
         @Override
@@ -173,9 +190,12 @@ public class VideoFragment extends BaseFragment {
                         if(tablist!=null && tablist.size()>0){
                             int version = returnMSG_channel.getData().getVersion();
                             //获取本地数据
-                            List<TabTitleName>  tabTitleNames = TabTitleNameService.query(DBConstant.VOD_CHANNEL);
+                            tabTitleNames = TabTitleNameService.query(DBConstant.VOD_CHANNEL);
                             if(tabTitleNames!=null && tabTitleNames.size()>0){
                                 for (TabTitleName tabTitleName: tabTitleNames){
+//                                    if(tabTitleName.getTitleVersion()<version){
+//                                        TabTitleNameService.delete(tabTitleName);
+//                                    }
                                     TabTitleNameService.delete(tabTitleName);
                                 }
                             }
@@ -184,6 +204,7 @@ public class VideoFragment extends BaseFragment {
                             //
                             for(ReturnMSG_Channel.DataBean.ChannelsBean bean :tablist){
                                 tabTitleName = new TabTitleName();
+                                tabTitleName.setId(MethodsUtil.GUID());
                                 tabTitleName.setTitleVersion(version);
                                 tabTitleName.setTitleType(DBConstant.VOD_CHANNEL);
                                 tabTitleName.setTitleCode(bean.getD_code());
@@ -192,7 +213,7 @@ public class VideoFragment extends BaseFragment {
                             }
                         }
                     }
-                    loadData();
+                    setTitleTab();
                     break;
 
             }

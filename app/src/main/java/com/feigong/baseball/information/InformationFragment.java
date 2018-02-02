@@ -19,6 +19,7 @@ import com.feigong.baseball.common.CodeConstant;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.DBConstant;
 import com.feigong.baseball.common.GetUrl;
+import com.feigong.baseball.common.MethodsUtil;
 import com.feigong.baseball.common.TAGUitl;
 import com.feigong.baseball.dao.TabTitleNameService;
 import com.feigong.baseball.dto.TabTitleName;
@@ -87,6 +88,19 @@ public class InformationFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
+        String url = GetUrl.infoChannel();
+        OkHttpUtils
+                .get()
+                .url(url)
+                .id(CodeConstant.Request.info_channel)
+                .build()
+                .execute(new MyStringCallback());
+
+    }
+
+
+    private void setTitleTab(){
+
         //获取本地数据
         tabTitleNames = TabTitleNameService.query(DBConstant.INFO_CHANNEL);
         //判断本地是否有离线数据
@@ -143,18 +157,8 @@ public class InformationFragment extends BaseFragment {
                 }
 
             });
-        }else {//加载网络数据
-            String urlInfo = GetUrl.infoChannel();
-            OkHttpUtils
-                    .get()
-                    .url(urlInfo)
-                    .id(CodeConstant.Request.info_channel)
-                    .build()
-                    .execute(new MyStringCallback());
-
         }
     }
-
 
 
     public class MyStringCallback extends StringCallback {
@@ -169,6 +173,11 @@ public class InformationFragment extends BaseFragment {
 
         @Override
         public void onError(Call call, Exception e, int id) {
+            switch (id){
+                case CodeConstant.Request.info_channel:
+                     setTitleTab();
+                    break;
+            }
 
         }
 
@@ -184,15 +193,19 @@ public class InformationFragment extends BaseFragment {
                         if(tablist!=null && tablist.size()>0){
                             int version = returnMSG_channel.getData().getVersion();
                             //获取本地数据
-                            List<TabTitleName>  tabTitleNames = TabTitleNameService.query(DBConstant.INFO_CHANNEL);
+                            tabTitleNames = TabTitleNameService.query(DBConstant.INFO_CHANNEL);
                             if(tabTitleNames!=null && tabTitleNames.size()>0){
                                 for (TabTitleName tabTitleName: tabTitleNames){
+//                                    if(tabTitleName.getTitleVersion()<version){
+//                                        TabTitleNameService.delete(tabTitleName);
+//                                    }
                                     TabTitleNameService.delete(tabTitleName);
                                 }
                             }
                             //插入刚刚获取的数据
                             TabTitleName tabTitleName = new TabTitleName();
                             //
+                            tabTitleName.setId(MethodsUtil.GUID());
                             tabTitleName.setTitleVersion(version);
                             tabTitleName.setTitleType(DBConstant.INFO_CHANNEL);
                             tabTitleName.setTitleCode("C00");
@@ -201,6 +214,7 @@ public class InformationFragment extends BaseFragment {
                             //
                             for(ReturnMSG_Channel.DataBean.ChannelsBean bean :tablist){
                                 tabTitleName = new TabTitleName();
+                                tabTitleName.setId(MethodsUtil.GUID());
                                 tabTitleName.setTitleVersion(version);
                                 tabTitleName.setTitleType(DBConstant.INFO_CHANNEL);
                                 tabTitleName.setTitleCode(bean.getD_code());
@@ -209,7 +223,7 @@ public class InformationFragment extends BaseFragment {
                             }
                         }
                     }
-                    loadData();
+                    setTitleTab();
                     break;
             }
         }

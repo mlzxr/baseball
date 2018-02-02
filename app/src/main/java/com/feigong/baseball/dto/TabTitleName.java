@@ -13,14 +13,18 @@ import org.greenrobot.greendao.annotation.Id;
 @Entity
 public class TabTitleName {
 
+    @Id
+    private String id;
+
     private String titleType;
     private String titleName;
-    @Id
+
     private String titleCode;
     private int titleVersion;
-    @Generated(hash = 522390529)
-    public TabTitleName(String titleType, String titleName, String titleCode,
-            int titleVersion) {
+    @Generated(hash = 799656839)
+    public TabTitleName(String id, String titleType, String titleName,
+            String titleCode, int titleVersion) {
+        this.id = id;
         this.titleType = titleType;
         this.titleName = titleName;
         this.titleCode = titleCode;
@@ -28,6 +32,12 @@ public class TabTitleName {
     }
     @Generated(hash = 2102576007)
     public TabTitleName() {
+    }
+    public String getId() {
+        return this.id;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
     public String getTitleType() {
         return this.titleType;

@@ -3,6 +3,7 @@ package com.feigong.baseball.common;/**
  */
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * 项目名称：baseball
@@ -27,5 +28,12 @@ public class MethodsUtil {
         }
         return new Date().getTime() + "" + n;
     }
+
+    public static final String GUID()
+    {
+        UUID uuid= UUID.randomUUID();
+        return uuid.toString().replaceAll("-","");
+    }
+
 
 }
