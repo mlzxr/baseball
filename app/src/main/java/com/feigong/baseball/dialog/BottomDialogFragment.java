@@ -1,6 +1,7 @@
 package com.feigong.baseball.dialog;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -9,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -25,8 +27,6 @@ import com.feigong.baseball.base.view.util.ViewUtil;
  */
 
 public class BottomDialogFragment extends DialogFragment {
-
-    private Button bt_commit;
 
     private EditText edit_text;
 
@@ -50,10 +50,8 @@ public class BottomDialogFragment extends DialogFragment {
         lp.width = WindowManager.LayoutParams.MATCH_PARENT; // 宽度持平
         window.setAttributes(lp);
 
-
-
-        bt_commit = (Button) dialog.findViewById(R.id.bt_comment);
-        bt_commit.setOnClickListener(new View.OnClickListener() {
+        //
+        dialog.findViewById(R.id.bt_comment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String text = ViewUtil.getEditText(edit_text);
@@ -66,6 +64,9 @@ public class BottomDialogFragment extends DialogFragment {
             }
         });
         edit_text =(EditText)dialog.findViewById(R.id.edit_text);
+        edit_text.setFocusable(true);
+
+
         return dialog;
 
     }

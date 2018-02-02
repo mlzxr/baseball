@@ -11,12 +11,21 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.feigong.baseball.R;
+import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
+import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.beans.ReturnMSG_Channel;
+import com.feigong.baseball.beans.ReturnMSG_UserInfo;
+import com.feigong.baseball.common.CodeConstant;
 import com.feigong.baseball.common.Constant;
+import com.feigong.baseball.common.DBConstant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.common.TAGUitl;
+import com.feigong.baseball.dao.TabTitleNameService;
+import com.feigong.baseball.dto.TabTitleName;
+import com.feigong.baseball.information.InformationRecommendFragment;
+import com.feigong.baseball.information.InformationTypeFragment;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -52,61 +61,10 @@ public class VideoFragment extends BaseFragment {
     private MagicIndicator mMagicIndicator;
     private CommonNavigator mCommonNavigator;
 
-    private List<ReturnMSG_Channel.DataBean.ChannelsBean> tablist = new ArrayList<>();
-
+    //
     private List<Fragment> fragmentList = new ArrayList<>();
 
-    //
-    public static VideoFragment newInstance() {
-        VideoFragment newFragment = new VideoFragment();
-        return newFragment;
-    }
-
-    public class MyStringCallback extends StringCallback
-    {
-        @Override
-        public void onBefore(Request request, int id)
-        {
-        }
-
-        @Override
-        public void onAfter(int id)
-        {
-
-        }
-
-        @Override
-        public void onError(Call call, Exception e, int id)
-        {
-            L.e(TAGUitl.VIDEOFRAGMENT,e.getMessage());
-        }
-
-        @Override
-        public void onResponse(String response, int id)
-        {
-            L.e(TAGUitl.VIDEOFRAGMENT,response);
-            switch (id)
-            {
-                case 700:
-
-                    ReturnMSG_Channel returnMSG_channel = new Gson().fromJson(response,ReturnMSG_Channel.class);
-                    if(returnMSG_channel!=null &&returnMSG_channel.getCode()== Constant.FGCode.OpOk_code){
-                        tablist = returnMSG_channel.getData().getChannels();
-                        if(tablist!=null && tablist.size()>0){
-                            asyncloadingfragment();
-                            asyncLoadingTab();
-                        }
-                    }
-                    break;
-            }
-        }
-
-        @Override
-        public void inProgress(float progress, long total, int id)
-        {
-        }
-    }
-
+    private List<TabTitleName> tabTitleNames;
 
     @Override
     protected int getLayout() {
@@ -116,10 +74,9 @@ public class VideoFragment extends BaseFragment {
     @Override
     protected void initVariables() {
         context = getActivity();
-
-
-
     }
+
+
 
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
@@ -130,71 +87,129 @@ public class VideoFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
-        String url = GetUrl.vodChannel();
-        OkHttpUtils
-                .get()
-                .url(url)
-                .id(700)
-                .build()
-                .execute(new MyStringCallback());
+        //获取本地数据
+        tabTitleNames = TabTitleNameService.query(DBConstant.VOD_CHANNEL);
         //
-    }
+        if(tabTitleNames!=null && tabTitleNames.size()>0){
+            fragmentList.clear();
+            //
+            mCommonNavigator = new CommonNavigator(context);
+            mCommonNavigator.setSkimOver(true);
+            mCommonNavigator.setAdapter(new CommonNavigatorAdapter() {
+                @Override
+                public int getCount() {
+                    return tabTitleNames.size();
+                }
 
+                @Override
+                public IPagerTitleView getTitleView(Context context, final int index) {
+                    ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
+                    clipPagerTitleView.setText(tabTitleNames.get(index).getTitleName());
+                    clipPagerTitleView.setTextColor(Color.BLACK);
+                    clipPagerTitleView.setClipColor(Color.RED);
+                    clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mViewPager.setCurrentItem(index);
+                        }
+                    });
+                    return clipPagerTitleView;
+                }
+                @Override
+                public IPagerIndicator getIndicator(Context context) {
+                    return null;
+                }
+            });
+            mMagicIndicator.setNavigator(mCommonNavigator);
+            ViewPagerHelper.bind(mMagicIndicator, mViewPager);
 
-
-    /**
-     * 获取频道
-     */
-    private void asyncLoadingTab(){
-        mCommonNavigator = new CommonNavigator(context);
-        mCommonNavigator.setSkimOver(true);
-        mCommonNavigator.setAdapter(new CommonNavigatorAdapter() {
-            @Override
-            public int getCount() {
-                return tablist.size();
+            //
+            for (int k =0;k<tabTitleNames.size();k++){
+                TabTitleName tabTitleName = tabTitleNames.get(k);
+                fragmentList.add(VideoTypeFragment.newInstance(tabTitleName.getTitleCode()));
             }
+            mViewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+                @Override
+                public Fragment getItem(int position) {
+                    return fragmentList.get(position);
+                }
 
-            @Override
-            public IPagerTitleView getTitleView(Context context, final int index) {
-                ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
-                clipPagerTitleView.setText(tablist.get(index).toString());
-                clipPagerTitleView.setTextColor(Color.BLACK);
-                clipPagerTitleView.setClipColor(Color.RED);
-                clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mViewPager.setCurrentItem(index);
-                    }
-                });
-                return clipPagerTitleView;
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                return null;
-            }
-        });
-        mMagicIndicator.setNavigator(mCommonNavigator);
-        ViewPagerHelper.bind(mMagicIndicator, mViewPager);
-
-    }
-    private  void asyncloadingfragment(){
-        fragmentList.clear();
-        for (int k =0;k<tablist.size();k++){
-            ReturnMSG_Channel.DataBean.ChannelsBean data = tablist.get(k);
-            fragmentList.add(VideoTypeFragment.newInstance(data.getD_code()));
+                @Override
+                public int getCount() {
+                    return fragmentList.size();
+                }
+            });
+        }else {
+            loadData();
         }
-        mViewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return fragmentList.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                return fragmentList.size();
-            }
-
-        });
     }
+
+
+
+
+    public class MyStringCallback extends StringCallback {
+        @Override
+        public void onBefore(Request request, int id) {
+        }
+
+        @Override
+        public void onAfter(int id) {
+
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id) {
+        }
+
+        @Override
+        public void onResponse(String response, int id) {
+            switch (id) {
+
+                case CodeConstant.Request.vod_channel:
+
+                    ReturnMSG_Channel returnMSG_channel = new Gson().fromJson(response,ReturnMSG_Channel.class);
+                    if(returnMSG_channel!=null &&returnMSG_channel.getCode()== Constant.FGCode.OpOk_code){
+                        List<ReturnMSG_Channel.DataBean.ChannelsBean> tablist = returnMSG_channel.getData().getChannels();
+                        if(tablist!=null && tablist.size()>0){
+                            int version = returnMSG_channel.getData().getVersion();
+                            //获取本地数据
+                            List<TabTitleName>  tabTitleNames = TabTitleNameService.query(DBConstant.VOD_CHANNEL);
+                            if(tabTitleNames!=null && tabTitleNames.size()>0){
+                                for (TabTitleName tabTitleName: tabTitleNames){
+                                    TabTitleNameService.delete(tabTitleName);
+                                }
+                            }
+                            //插入刚刚获取的数据
+                            TabTitleName tabTitleName =null;
+                            //
+                            for(ReturnMSG_Channel.DataBean.ChannelsBean bean :tablist){
+                                tabTitleName = new TabTitleName();
+                                tabTitleName.setTitleVersion(version);
+                                tabTitleName.setTitleType(DBConstant.VOD_CHANNEL);
+                                tabTitleName.setTitleCode(bean.getD_code());
+                                tabTitleName.setTitleName(bean.getD_name());
+                                TabTitleNameService.insert(tabTitleName);
+                            }
+                        }
+                    }
+                    loadData();
+                    break;
+
+            }
+        }
+
+        @Override
+        public void inProgress(float progress, long total, int id) {
+        }
+    }
+
+
+
+
+    //初始化
+    public static VideoFragment newInstance() {
+        VideoFragment newFragment = new VideoFragment();
+        return newFragment;
+    }
+
 }

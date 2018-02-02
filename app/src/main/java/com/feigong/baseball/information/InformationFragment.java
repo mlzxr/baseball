@@ -11,12 +11,17 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.feigong.baseball.R;
+import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.beans.ReturnMSG_Channel;
+import com.feigong.baseball.common.CodeConstant;
 import com.feigong.baseball.common.Constant;
+import com.feigong.baseball.common.DBConstant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.common.TAGUitl;
+import com.feigong.baseball.dao.TabTitleNameService;
+import com.feigong.baseball.dto.TabTitleName;
 import com.feigong.baseball.fgview.ViewTopBar;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -53,61 +58,10 @@ public class InformationFragment extends BaseFragment {
     private MagicIndicator mMagicIndicator;
     private CommonNavigator mCommonNavigator;
 
-    private List<ReturnMSG_Channel.DataBean.ChannelsBean> tablist = new ArrayList<>();
+    //获取本地数据
+    List<TabTitleName>  tabTitleNames;
 
     private List<Fragment> fragmentList = new ArrayList<>();
-
-    //
-    public static InformationFragment newInstance() {
-        InformationFragment newFragment = new InformationFragment();
-        return newFragment;
-    }
-
-
-    public class MyStringCallback extends StringCallback
-    {
-        @Override
-        public void onBefore(Request request, int id)
-        {
-        }
-
-        @Override
-        public void onAfter(int id)
-        {
-
-        }
-
-        @Override
-        public void onError(Call call, Exception e, int id)
-        {
-            L.e(TAGUitl.INFORMATIONFRAGMENT,e.getMessage());
-        }
-
-        @Override
-        public void onResponse(String response, int id)
-        {
-            L.e(TAGUitl.INFORMATIONFRAGMENT,response);
-            switch (id)
-            {
-                case 600:
-
-                    ReturnMSG_Channel returnMSG_channel = new Gson().fromJson(response,ReturnMSG_Channel.class);
-                    if(returnMSG_channel!=null &&returnMSG_channel.getCode()==Constant.FGCode.OpOk_code){
-                        tablist = returnMSG_channel.getData().getChannels();
-                        if(tablist!=null && tablist.size()>0){
-                            asyncloadingfragment();
-                            asyncLoadingTab();
-                        }
-                    }
-                    break;
-            }
-        }
-
-        @Override
-        public void inProgress(float progress, long total, int id)
-        {
-        }
-    }
 
 
     @Override
@@ -118,15 +72,6 @@ public class InformationFragment extends BaseFragment {
     @Override
     protected void initVariables() {
         context = getActivity();
-        String url = GetUrl.infoChannel();
-        OkHttpUtils
-                .get()
-                .url(url)
-                .id(600)
-                .build()
-                .execute(new MyStringCallback());
-        //
-
     }
 
     @Override
@@ -142,71 +87,148 @@ public class InformationFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
+        //获取本地数据
+        tabTitleNames = TabTitleNameService.query(DBConstant.INFO_CHANNEL);
+        //判断本地是否有离线数据
+        if(tabTitleNames!=null && tabTitleNames.size()>0){
+            fragmentList.clear();
+            //
+            mCommonNavigator = new CommonNavigator(context);
+            mCommonNavigator.setSkimOver(true);
+            mCommonNavigator.setAdapter(new CommonNavigatorAdapter() {
+                @Override
+                public int getCount() {
+                    return tabTitleNames.size();
+                }
 
-    }
+                @Override
+                public IPagerTitleView getTitleView(Context context, final int index) {
+                    ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
+                    clipPagerTitleView.setText(tabTitleNames.get(index).getTitleName());
+                    clipPagerTitleView.setTextColor(Color.BLACK);
+                    clipPagerTitleView.setClipColor(Color.RED);
+                    clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mViewPager.setCurrentItem(index);
+                        }
+                    });
+                    return clipPagerTitleView;
+                }
+                @Override
+                public IPagerIndicator getIndicator(Context context) {
+                    return null;
+                }
+            });
+            mMagicIndicator.setNavigator(mCommonNavigator);
+            ViewPagerHelper.bind(mMagicIndicator, mViewPager);
 
-    /**
-     * 获取频道
-     */
-    private void asyncLoadingTab(){
-        mCommonNavigator = new CommonNavigator(context);
-        mCommonNavigator.setSkimOver(true);
-        mCommonNavigator.setAdapter(new CommonNavigatorAdapter() {
-            @Override
-            public int getCount() {
-                return tablist.size();
+            //
+            for (int k =0;k<tabTitleNames.size();k++){
+                if(k==0){
+                    fragmentList.add(InformationRecommendFragment.newInstance());
+                }else {
+                    fragmentList.add(InformationTypeFragment.newInstance(tabTitleNames.get(k).getTitleCode()));
+                }
             }
+            mViewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+                @Override
+                public Fragment getItem(int position) {
+                    return fragmentList.get(position);
+                }
 
-            @Override
-            public IPagerTitleView getTitleView(Context context, final int index) {
-                ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
-                clipPagerTitleView.setText(tablist.get(index).toString());
-                clipPagerTitleView.setTextColor(Color.BLACK);
-                clipPagerTitleView.setClipColor(Color.RED);
-                clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mViewPager.setCurrentItem(index);
-                    }
-                });
-                return clipPagerTitleView;
-            }
+                @Override
+                public int getCount() {
+                    return fragmentList.size();
+                }
 
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                return null;
-            }
-        });
-        mMagicIndicator.setNavigator(mCommonNavigator);
-        ViewPagerHelper.bind(mMagicIndicator, mViewPager);
+            });
+        }else {//加载网络数据
+            String urlInfo = GetUrl.infoChannel();
+            OkHttpUtils
+                    .get()
+                    .url(urlInfo)
+                    .id(CodeConstant.Request.info_channel)
+                    .build()
+                    .execute(new MyStringCallback());
 
-    }
-    private  void asyncloadingfragment(){
-        fragmentList.clear();
-        ReturnMSG_Channel.DataBean.ChannelsBean newwData = new ReturnMSG_Channel.DataBean.ChannelsBean();
-        newwData.setD_name("推荐");
-        newwData.setD_code("C00");
-        tablist.add(0,newwData);
-        //
-
-        fragmentList.add(InformationRecommendFragment.newInstance());
-        //
-        for (int k =1;k<tablist.size();k++){
-            ReturnMSG_Channel.DataBean.ChannelsBean data = tablist.get(k);
-            fragmentList.add(InformationTypeFragment.newInstance(data.getD_code()));
         }
-        mViewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return fragmentList.get(position);
-            }
+    }
 
-            @Override
-            public int getCount() {
-                return fragmentList.size();
-            }
 
-        });
+
+    public class MyStringCallback extends StringCallback {
+        @Override
+        public void onBefore(Request request, int id) {
+        }
+
+        @Override
+        public void onAfter(int id) {
+
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id) {
+
+        }
+
+        @Override
+        public void onResponse(String response, int id) {
+            switch (id) {
+
+                case CodeConstant.Request.info_channel:
+
+                    ReturnMSG_Channel returnMSG_channel = new Gson().fromJson(response,ReturnMSG_Channel.class);
+                    if(returnMSG_channel!=null &&returnMSG_channel.getCode()== Constant.FGCode.OpOk_code){
+                        List<ReturnMSG_Channel.DataBean.ChannelsBean> tablist = returnMSG_channel.getData().getChannels();
+                        if(tablist!=null && tablist.size()>0){
+                            int version = returnMSG_channel.getData().getVersion();
+                            //获取本地数据
+                            List<TabTitleName>  tabTitleNames = TabTitleNameService.query(DBConstant.INFO_CHANNEL);
+                            if(tabTitleNames!=null && tabTitleNames.size()>0){
+                                for (TabTitleName tabTitleName: tabTitleNames){
+                                    TabTitleNameService.delete(tabTitleName);
+                                }
+                            }
+                            //插入刚刚获取的数据
+                            TabTitleName tabTitleName = new TabTitleName();
+                            //
+                            tabTitleName.setTitleVersion(version);
+                            tabTitleName.setTitleType(DBConstant.INFO_CHANNEL);
+                            tabTitleName.setTitleCode("C00");
+                            tabTitleName.setTitleName("推荐");
+                            TabTitleNameService.insert(tabTitleName);
+                            //
+                            for(ReturnMSG_Channel.DataBean.ChannelsBean bean :tablist){
+                                tabTitleName = new TabTitleName();
+                                tabTitleName.setTitleVersion(version);
+                                tabTitleName.setTitleType(DBConstant.INFO_CHANNEL);
+                                tabTitleName.setTitleCode(bean.getD_code());
+                                tabTitleName.setTitleName(bean.getD_name());
+                                TabTitleNameService.insert(tabTitleName);
+                            }
+                        }
+                    }
+                    loadData();
+                    break;
+            }
+        }
+
+        @Override
+        public void inProgress(float progress, long total, int id) {
+        }
+    }
+
+
+
+
+
+
+
+    //
+    public static InformationFragment newInstance() {
+        InformationFragment newFragment = new InformationFragment();
+        return newFragment;
     }
 
 

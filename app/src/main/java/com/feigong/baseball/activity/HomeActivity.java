@@ -15,17 +15,23 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.feigong.baseball.MainActivity;
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseActivity;
 import com.feigong.baseball.base.common.MapUtil;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
+import com.feigong.baseball.base.util.T;
+import com.feigong.baseball.beans.ReturnMSG_Channel;
 import com.feigong.baseball.beans.ReturnMSG_UserInfo;
+import com.feigong.baseball.common.CodeConstant;
 import com.feigong.baseball.common.Constant;
+import com.feigong.baseball.common.DBConstant;
 import com.feigong.baseball.common.GetUrl;
+import com.feigong.baseball.dao.TabTitleNameService;
+import com.feigong.baseball.dto.TabTitleName;
 import com.feigong.baseball.fragment.GetPictureFragment;
 import com.feigong.baseball.fragment.ShowWebVIewImagesFragment;
 import com.feigong.baseball.information.InformationDetailFragment;
@@ -350,6 +356,7 @@ public class HomeActivity extends BaseActivity {
                         toLogin();
                     }
                     break;
+
             }
         }
 

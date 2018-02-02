@@ -9,7 +9,7 @@ import java.util.List;
  * Created by ruler on 18/1/19.
  */
 
-public class UserDao {
+public class UserService {
 
     /**
      * 添加数据
