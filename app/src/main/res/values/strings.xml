@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">章鱼棒球</string>
 
+    <string name="skip">跳过</string>
+
     <string name="qq">QQ</string>
     <string name="wx">微信</string>
     <string name="xl">新浪</string>
@@ -96,5 +98,7 @@
     <string name="not_get_more_data">未获取到更多数据</string>
 
     <string name="loading_data_error">数据加载失败</string>
+
+
 
 </resources>

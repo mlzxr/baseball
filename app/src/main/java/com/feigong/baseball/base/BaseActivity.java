@@ -63,7 +63,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
         //测试
-        //SPUtils.put(App.getContext(), Constant.TOKEN,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJNVU01UWpJNE0wRTVRVVpGTkRZMk5EaEZOMFF4T1VNMVJFTTVRVFl3TUVNPSIsImlhdCI6MTUxMDcyNjQwNTgwN30.1fWYS0_B82ci39swt9ZAMMe8f0bDC3ZT10r0hVCCV7s");
+        SPUtils.put(App.getContext(), Constant.TOKEN,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJNVU01UWpJNE0wRTVRVVpGTkRZMk5EaEZOMFF4T1VNMVJFTTVRVFl3TUVNPSIsImlhdCI6MTUxOTE5MTI2OTk0N30.3cpabXASYdepk96B2_9uZ7B1Pa45Ky57DJAGwNnuzLA");
+
         token = String.valueOf(SPUtils.get(App.getContext(),Constant.TOKEN,""));
 
         if(checkNetWork()){

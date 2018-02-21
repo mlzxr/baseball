@@ -11,23 +11,15 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.feigong.baseball.R;
-import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
-import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.beans.ReturnMSG_Channel;
-import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.CodeConstant;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.DBConstant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.common.MethodsUtil;
-import com.feigong.baseball.common.TAGUitl;
 import com.feigong.baseball.dao.TabTitleNameService;
 import com.feigong.baseball.dto.TabTitleName;
-import com.feigong.baseball.information.InformationFragment;
-import com.feigong.baseball.information.InformationRecommendFragment;
-import com.feigong.baseball.information.InformationTypeFragment;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -57,6 +49,8 @@ import okhttp3.Request;
  * @version 1.0
  */
 public class VideoFragment extends BaseFragment {
+
+    private static final String TAG="VideoFragment";
 
 
     private ViewPager mViewPager;

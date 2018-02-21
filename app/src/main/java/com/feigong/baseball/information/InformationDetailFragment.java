@@ -22,7 +22,6 @@ import com.feigong.baseball.beans.ReturnMSG;
 import com.feigong.baseball.beans.ReturnMSGComment;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
-import com.feigong.baseball.common.TAGUitl;
 import com.feigong.baseball.dialog.BottomDialogFragment;
 import com.feigong.baseball.fgview.ViewTopBar;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
@@ -51,6 +50,9 @@ import okhttp3.MediaType;
  */
 
 public class InformationDetailFragment extends BaseFragment {
+
+
+    private static final String TAG="InformationDetailFragment";
 
     private ViewTopBar viewTopBar;
 
@@ -87,7 +89,7 @@ public class InformationDetailFragment extends BaseFragment {
 
         @Override
         public void onResponse(String response, int id) {
-            L.e(TAGUitl.INFORMATIONDETAILFRAGMENT, response);
+            L.e(TAG, response);
             switch (id) {
                 case 710:
                     ReturnMSG returnMSG = new Gson().fromJson(response, ReturnMSG.class);
@@ -154,7 +156,7 @@ public class InformationDetailFragment extends BaseFragment {
         //
         //View view = LayoutInflater.from(context).inflate(R.layout.web_view,null);
         webView = new BridgeWebView(getActivity().getApplicationContext());
-        L.e(TAGUitl.INFORMATIONFRAGMENT, "objid_ref:" + objid_ref);
+        L.e(TAG, "objid_ref:" + objid_ref);
 
     }
 
@@ -244,7 +246,7 @@ public class InformationDetailFragment extends BaseFragment {
 
                     }
                 });
-                bottomDialogFragment.show(getChildFragmentManager(), TAGUitl.INFORMATIONDETAILFRAGMENT);
+                bottomDialogFragment.show(getChildFragmentManager(), TAG);
             }
         });
 

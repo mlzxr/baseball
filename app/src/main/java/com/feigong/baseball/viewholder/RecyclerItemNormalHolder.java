@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.feigong.baseball.R;
+import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.beans.ReturnMSG_VideoList;
 import com.feigong.baseball.common.ImageUtil;
 import com.feigong.baseball.listener.SampleListener;
@@ -39,6 +40,7 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
 
     public void onBind(final int position, ReturnMSG_VideoList.DataBean.VodListBean videoModel) {
 
+        L.e("videoModel:"+videoModel.get_id());
         //增加封面
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         ImageLoader.getInstance().displayImage(videoModel.getV_poster(), imageView, ImageUtil.getImageOptions());

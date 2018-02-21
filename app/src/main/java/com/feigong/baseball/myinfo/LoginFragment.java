@@ -228,7 +228,7 @@ public class LoginFragment extends BaseFragment {
         iwxapi.registerApp(Constant.WX.APP_ID);
         SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
-        req.state = "feigong_wx_login";
+        req.state = "none";
         iwxapi.sendReq(req);
 
 

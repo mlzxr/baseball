@@ -20,7 +20,6 @@ import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.DBConstant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.common.MethodsUtil;
-import com.feigong.baseball.common.TAGUitl;
 import com.feigong.baseball.dao.TabTitleNameService;
 import com.feigong.baseball.dto.TabTitleName;
 import com.feigong.baseball.fgview.ViewTopBar;
@@ -53,6 +52,8 @@ import okhttp3.Request;
  * @version 1.0
  */
 public class InformationFragment extends BaseFragment {
+
+    private static final String TAG="InformationFragment";
 
     private ViewTopBar viewTopBar;
     private ViewPager mViewPager;
