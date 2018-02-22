@@ -2,6 +2,8 @@ package com.feigong.baseball.base.common;/**
  * Created by ruler on 17/1/11.
  */
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -37,6 +39,14 @@ public class JSONUtil {
         }
         return arrayList;
     }
+
+    public static String objToStr(Class<?> clazz){
+        if(clazz!=null){
+            return new Gson().toJson(clazz);
+        }
+        return "";
+    }
+
 
     /**
      * 根据名称获取jsonArray数组
@@ -115,6 +125,7 @@ public class JSONUtil {
             return false;
         }
     }
+
 
 
 }

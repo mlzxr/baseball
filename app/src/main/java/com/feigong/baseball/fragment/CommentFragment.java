@@ -3,6 +3,7 @@ package com.feigong.baseball.fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.feigong.baseball.Interface.BaseInterFaceListenerText;
 import com.feigong.baseball.R;
@@ -12,6 +13,7 @@ import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.base.util.T;
+import com.feigong.baseball.base.view.util.ViewUtil;
 import com.feigong.baseball.beans.ReturnMSG;
 import com.feigong.baseball.beans.ReturnMSGComment;
 import com.feigong.baseball.common.Constant;
@@ -48,11 +50,12 @@ public class CommentFragment extends BaseFragment {
     private CommentAdapter commentAdapter;
     private ArrayList<ReturnMSGComment.DataBean>  datalist;
 
-    private EditText edit_text;
+    private View tv_comment;
 
     private ReturnMSGComment returnMSGComment;
 
     private String objid_ref;
+
 
     public static CommentFragment newInstance(String objid_ref) {
         CommentFragment newFragment = new CommentFragment();
@@ -138,46 +141,71 @@ public class CommentFragment extends BaseFragment {
             objid_ref = bundle.getString(Constant.OBJID_REF);
         }
         commentAdapter = new CommentAdapter(context, datalist, R.layout.item_type_comment);
+        commentAdapter.setBaseInterFaceListenerText(new BaseInterFaceListenerText() {
+            @Override
+            public void onClickListener(String id) {
+
+                openDialogFragment(id,false);
+            }
+        });
 
     }
 
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
         pullToLoadRecyclerView = (PullToLoadRecyclerView) view.findViewById(R.id.list_item_recycler);
-
-        view.findViewById(R.id.tv_comment).setOnClickListener(new View.OnClickListener() {
+        tv_comment =  (View)view.findViewById(R.id.tv_comment);
+        tv_comment.setTag(objid_ref);
+        tv_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomDialogFragment = new BottomDialogFragment();
-                bottomDialogFragment.setBaseInterFaceListener(new BaseInterFaceListenerText() {
-                    @Override
-                    public void onClickListener(String value) {
-                        HashMap<String, String> hashMap = new HashMap<String, String>();
-
-                        hashMap.put("refid", objid_ref);
-                        hashMap.put("message", value);
-                        String token = String.valueOf(SPUtils.get(App.getContext(), Constant.TOKEN, ""));
-                        String json = new Gson().toJson(hashMap);
-
-                        //
-                        String url = GetUrl.postComment();
-                        OkHttpUtils
-                                .postString()
-                                .addHeader(Constant.TOKEN, token)
-                                .content(json)
-                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                                .url(url)
-                                .id(710)
-                                .build()
-                                .execute(new MyStringCallback());
-
-                    }
-                });
-                bottomDialogFragment.show(getChildFragmentManager(), TAG);
+                String id = ViewUtil.getTag(v);
+                openDialogFragment(id,true);
             }
         });
 
     }
+
+    /**
+     * 打开评论弹出框
+     * @param id
+     */
+    private void openDialogFragment(final String id,final boolean apiFlag){
+        L.e(TAG,id);
+        //
+        bottomDialogFragment = new BottomDialogFragment();
+        bottomDialogFragment.setBaseInterFaceListener(new BaseInterFaceListenerText() {
+            @Override
+            public void onClickListener(String value) {
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+                hashMap.put("refid", id);
+                hashMap.put("message", value);
+                String token = String.valueOf(SPUtils.get(App.getContext(), Constant.TOKEN, ""));
+                String json = new Gson().toJson(hashMap);
+                //
+                String url;
+                if(apiFlag){
+                    url =GetUrl.postComment();
+                }else {
+                    url =GetUrl.postReply();
+                }
+                //
+                OkHttpUtils
+                        .postString()
+                        .addHeader(Constant.TOKEN, token)
+                        .content(json)
+                        .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                        .url(url)
+                        .id(710)
+                        .build()
+                        .execute(new MyStringCallback());
+
+            }
+        });
+        bottomDialogFragment.show(getChildFragmentManager(), TAG);
+
+    }
+
 
     @Override
     protected void loadData() {

@@ -207,6 +207,18 @@ public class GetUrl {
     }
 
     /**
+     * 回复评论
+     * @return
+     */
+    public static String postReply(){
+        String url = DOMAIN + "/userApi/u_reply";
+        return url;
+
+    }
+
+
+
+    /**
      * 加载评论列表
      * @param objid_ref
      * @param time

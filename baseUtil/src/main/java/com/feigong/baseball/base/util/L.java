@@ -16,7 +16,7 @@ import android.util.Log;
  */
 public class L {
 
-    private static final String TAG="L";
+    private static final String TAG="Log";
 
     private L(){
 

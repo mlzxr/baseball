@@ -151,9 +151,9 @@
 
     <!--评论-->
     <style name="item_comment" parent="layout_mw">
-        <item name="android:gravity">center_vertical</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:layout_margin">3dp</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginTop">3dp</item>
     </style>
 
     <style name="item_comment_avatar">
@@ -162,12 +162,12 @@
     </style>
 
     <style name="item_comment_title" parent="layout_ww">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="item_comment_title_img">
-        <item name="android:layout_width">24dp</item>
-        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
     </style>
 
     <style name="item_comment_text" parent="layout_mw">
@@ -175,11 +175,9 @@
     </style>
 
     <style name="item_comment_reply" parent="layout_mw">
-
-        <item name="android:layout_marginTop">20dp</item>
-        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:background">@color/gray</item>
+        <item name="android:background">@color/gainsboro</item>
     </style>
 
 
