@@ -47,6 +47,9 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.iv_advertising)
     ImageView ivAdvertising;
 
+
+    private CountDownTimer timer;
+
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
@@ -95,6 +98,7 @@ public class MainActivity extends BaseActivity {
         tvSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                timer.cancel();
                 openHomeActivity();
             }
         });
@@ -106,12 +110,15 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
 
-        CountDownTimer timer = new CountDownTimer(5200,1000) {
-            int num = 4;
+        timer = new CountDownTimer(5200,1000) {
+            int num = 5;
             @Override
             public void onTick(long millisUntilFinished) {
                 tvSkip.setText(getString(R.string.skip)+"("+String.valueOf(num)+")");
                 num--;
+                if(num==1){
+                    ivAdvertising.setVisibility(View.GONE);
+                }
             }
             @Override
             public void onFinish() {

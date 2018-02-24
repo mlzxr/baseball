@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.base.util.L;
@@ -14,6 +15,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -26,9 +29,12 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
 
     protected Context context = null;
     
-    StandardGSYVideoPlayer gsyVideoPlayer;
+    private StandardGSYVideoPlayer gsyVideoPlayer;
 
-    ImageView imageView;
+    private ImageView imageView,iv_avatar;
+
+    private TextView tv_title,tv_date;
+
 
 
     public RecyclerItemNormalHolder(Context context, View v) {
@@ -36,11 +42,15 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
         this.context = context;
         imageView = new ImageView(context);
         gsyVideoPlayer = (StandardGSYVideoPlayer)v.findViewById(R.id.video_item_player);
+        //
+        tv_title = (TextView)v.findViewById(R.id.tv_title);
+        tv_date =(TextView)v.findViewById(R.id.tv_date);
+        iv_avatar =(ImageView)v.findViewById(R.id.iv_avatar);
+
     }
 
     public void onBind(final int position, ReturnMSG_VideoList.DataBean.VodListBean videoModel) {
 
-        L.e("videoModel:"+videoModel.get_id());
         //增加封面
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         ImageLoader.getInstance().displayImage(videoModel.getV_poster(), imageView, ImageUtil.getImageOptions());
@@ -48,6 +58,9 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
             ViewGroup viewGroup = (ViewGroup)imageView.getParent();
             viewGroup.removeView(imageView);
         }
+
+
+        //
         gsyVideoPlayer.setThumbImageView(imageView);
 
         final String url = videoModel.getV_url();
@@ -56,7 +69,7 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
         gsyVideoPlayer.setUp(url, true , null, videoModel.getTitle());
 
         //增加title
-        gsyVideoPlayer.getTitleTextView().setVisibility(View.GONE);
+        gsyVideoPlayer.getTitleTextView().setVisibility(View.VISIBLE);
 
         //设置返回键
         gsyVideoPlayer.getBackButton().setVisibility(View.GONE);
@@ -105,6 +118,15 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
                 GSYVideoManager.instance().setNeedMute(false);
             }
         });
+
+
+        //发布人头像
+        ImageLoader.getInstance().displayImage(videoModel.getPublisher_avator(), iv_avatar, ImageUtil.getImageOptionsCircle());
+        //
+        tv_title.setText(videoModel.getPublisher_name());
+        tv_date.setText(videoModel.getPublish_time());
+
+
     }
 
     /**

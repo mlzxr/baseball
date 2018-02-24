@@ -80,6 +80,8 @@ public class VideoDetailActivity extends BaseActivity {
                             //增加title
                             detailPlayer.getTitleTextView().setVisibility(View.GONE);
                             detailPlayer.getBackButton().setVisibility(View.GONE);
+                            //
+                            viewTopBar.getTv_title().setText(bean.getTitle());
 
                         }
                     }
@@ -100,13 +102,13 @@ public class VideoDetailActivity extends BaseActivity {
     protected void initVariables() {
         Bundle bundle = getIntent().getExtras();
         objid_ref = bundle.getString("objid_ref");
-        T.showShort(App.getContext(),TAG);
 
     }
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
         viewTopBar =(ViewTopBar)findViewById(R.id.viewTopBar);
+
         viewTopBar.getIv_back().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +121,7 @@ public class VideoDetailActivity extends BaseActivity {
 
         //
         String url = "http://baobab.wdjcdn.com/14564977406580.mp4";
-        detailPlayer.setUp(url, false, null, "测试视频");
+        detailPlayer.setUp(url, false, null, "");
         detailPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

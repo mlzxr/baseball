@@ -13,26 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.feigong.baseball.Interface.BaseInterFaceListenerText;
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.common.JSONUtil;
-import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.base.view.util.ViewUtil;
 import com.feigong.baseball.beans.ReturnMSGComment;
 import com.feigong.baseball.common.ImageUtil;
-import com.feigong.baseball.fgview.View_TT_Horizontal;
-import com.feigong.baseball.viewholder.RecyclerItemNormalHolder;
-import com.google.gson.Gson;
-import com.mrw.wzmrecyclerview.SimpleAdapter.SimpleAdapter;
-import com.mrw.wzmrecyclerview.SimpleAdapter.ViewHolder;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tencent.mm.sdk.channel.MMessage;
-
 import java.util.ArrayList;
 
 /**
@@ -108,21 +97,13 @@ public class CommentAdapter extends RecyclerView.Adapter {
             for (ReturnMSGComment.DataBean.ReplysBean replysBean : dataBean.getReplys()) {
 
                 //
-                View_TT_Horizontal myViewReply = new View_TT_Horizontal(context);
-                myViewReply.getTv_replyer_name().setText(replysBean.getReplyer_name());
-                myViewReply.getTv_message().setText(replysBean.getMessage());
-                //
-                myViewReply.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                String text = replysBean.getReplyer_name() + ": " + replysBean.getMessage();
 
-                    }
-                });
-                commentViewHolder.ll_reply_list.addView(myViewReply);
 
-                //
-               // String text = fromUser + " " + "回复 " + toUser + " :";
-               // myViewReply.getTvReply().setText(addClickablePart(text, reply), TextView.BufferType.SPANNABLE);
+                TextView textView =new TextView(context);
+                textView.setText(addClickablePart(text, ""), TextView.BufferType.SPANNABLE);
+                commentViewHolder.ll_reply_list.addView(textView);
+
 
             }
         }
@@ -155,18 +136,18 @@ public class CommentAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View view) {
+
             return;
         }
 
         @Override
         public void updateDrawState(TextPaint ds) {
             super.updateDrawState(ds);
-            if (index == 0 || index == 2) {
-
+            if (index == 0) {
                 ds.setColor(ContextCompat.getColor(App.getContext(), R.color.skyblue)); // 设置文本颜色
                 ds.setUnderlineText(false);
-            } else {
-                ds.setColor(ContextCompat.getColor(App.getContext(), R.color.gold)); // 设置文本颜色
+            }else {
+                ds.setColor(ContextCompat.getColor(App.getContext(), R.color.tab_select_n)); // 设置文本颜色
                 ds.setUnderlineText(false);
             }
         }

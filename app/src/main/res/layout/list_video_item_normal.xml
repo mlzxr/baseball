@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
 
     <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
         android:id="@+id/video_item_player"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/post_media_height"/>
+        android:layout_height="@dimen/post_media_height" />
+
+    <!--title-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/layout_bottom"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            style="@style/item_video_title_img"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_toRightOf="@+id/iv_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="title" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="date" />
+    </RelativeLayout>
 
 </LinearLayout>

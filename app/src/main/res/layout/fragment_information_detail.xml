@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/layout_mm_fragment"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.feigong.baseball.fgview.ViewTopBar
@@ -12,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-
         <com.mrw.wzmrecyclerview.PullToLoad.PullToLoadRecyclerView
             android:id="@+id/list_item_recycler"
             android:layout_width="match_parent"

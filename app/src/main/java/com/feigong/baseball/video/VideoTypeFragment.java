@@ -92,6 +92,7 @@ public class VideoTypeFragment extends BaseFragment {
         public void onResponse(String response, int id) {
             switch (id) {
                 case 799://刷新列表
+                    L.show(TAG,response);
                     ReturnMSG_VideoList returnMSG_videoList = new Gson().fromJson(response, ReturnMSG_VideoList.class);
                     if (returnMSG_videoList != null && returnMSG_videoList.getCode() == Constant.FGCode.OpOk_code) {
                         ReturnMSG_VideoList.DataBean dataBean = returnMSG_videoList.getData();
@@ -195,15 +196,10 @@ public class VideoTypeFragment extends BaseFragment {
                 firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
 
-                L.e(TAG,"firstVisibleItem:"+firstVisibleItem);
-                L.e(TAG,"lastVisibleItem:"+lastVisibleItem);
-
                 //大于0说明有播放
                 if (GSYVideoManager.instance().getPlayPosition() >= 0) {
                     //当前播放的位置
                     int position = GSYVideoManager.instance().getPlayPosition();
-                    L.e(TAG,"position:"+position);
-
                     //对应的播放列表TAG
                     if (GSYVideoManager.instance().getPlayTag().equals(RecyclerItemNormalHolder.TAG)
                             && (position < firstVisibleItem || position > lastVisibleItem)) {

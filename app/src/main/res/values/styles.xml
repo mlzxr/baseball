@@ -73,7 +73,7 @@
 
     <style name="layout_mm_fragment" parent="layout_mm">
         <item name="android:checkable">true</item>
-        <item name="android:background">@color/whitesmoke</item>
+        <item name="android:background">@color/silver</item>
     </style>
 
 
@@ -144,7 +144,7 @@
         <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
         <item name="android:windowIsTranslucent">true</item><!--半透明-->
         <item name="android:windowNoTitle">false</item><!--无标题-->
-        <item name="android:windowBackground">@color/regard_container_bkg</item><!--背景透明-->
+        <item name="android:windowBackground">@color/tab_select_n</item><!--背景透明-->
         <item name="android:backgroundDimEnabled">false</item><!--模糊-->
     </style>
 
@@ -168,6 +168,11 @@
     <style name="item_comment_title_img">
         <item name="android:layout_width">20dp</item>
         <item name="android:layout_height">20dp</item>
+    </style>
+
+    <style name="item_video_title_img">
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
     </style>
 
     <style name="item_comment_text" parent="layout_mw">

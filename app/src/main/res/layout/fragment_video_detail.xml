@@ -6,22 +6,21 @@
 
     <com.feigong.baseball.fgview.ViewTopBar
         android:id="@+id/viewTopBar"
+        android:layout_marginBottom="1px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.feigong.baseball.fgview.ViewTopBar>
 
     <com.feigong.baseball.fgview.LandLayoutVideo
         android:id="@+id/detail_player"
         android:layout_width="match_parent"
+
         android:layout_height="@dimen/post_media_height">
-
     </com.feigong.baseball.fgview.LandLayoutVideo>
-
     <FrameLayout
         android:id="@+id/frameLayout"
+        android:layout_marginTop="1px"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </FrameLayout>
-
-
 </LinearLayout>

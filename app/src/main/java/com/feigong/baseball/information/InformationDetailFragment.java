@@ -156,7 +156,6 @@ public class InformationDetailFragment extends BaseFragment {
         //
         //View view = LayoutInflater.from(context).inflate(R.layout.web_view,null);
         webView = new BridgeWebView(getActivity().getApplicationContext());
-        L.e(TAG, "objid_ref:" + objid_ref);
 
     }
 
