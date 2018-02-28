@@ -242,4 +242,14 @@ public class GetUrl {
         return url;
     }
 
+    /**
+     * 手机发送验证码
+     * @param phonenumber
+     * @return
+     */
+    public static String sendCheckCode(String phonenumber) {
+        String url = DOMAIN+"/userApi/sendCheckCode/{mobile}";
+        url = url.replace("{mobile}", phonenumber);
+        return url;
+    }
 }

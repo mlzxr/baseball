@@ -29,7 +29,7 @@
             android:paddingRight="15.0dip"
             android:text="@string/skip"
             android:layout_alignParentRight="true"
-            android:textColor="@color/tab_select_n"
+            android:textColor="@color/white"
             android:textSize="12.0sp" />
 
     </RelativeLayout>

@@ -99,6 +99,8 @@
 
     <string name="loading_data_error">数据加载失败</string>
 
+    <string name="phone">手机号</string>
+    <string name="input_phone_error">手机号输入错误</string>
 
 
 </resources>

@@ -4,7 +4,9 @@ package com.feigong.baseball.myinfo;/**
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
+import com.feigong.baseball.Interface.BaseInterFaceListenerView;
 import com.feigong.baseball.R;
 import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.application.App;
@@ -12,12 +14,17 @@ import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.DateUtil;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
+import com.feigong.baseball.base.util.T;
+import com.feigong.baseball.base.view.util.ViewUtil;
 import com.feigong.baseball.beans.ReturnMSG_UserInfo;
+import com.feigong.baseball.common.AccountValidatorUtil;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.fgview.ViewTopBar;
 import com.feigong.baseball.fgview.View_TTIII_Horizontal;
 import com.feigong.baseball.fgview.View_TTI_Horizontal;
+import com.feigong.baseball.fragment.InputDialogFragment;
+import com.feigong.baseball.information.InformationDetailFragment;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -89,6 +96,13 @@ public class SecurityAccountFragment extends BaseFragment {
                         }
                     }
                     break;
+
+                case 101:
+
+
+
+                    break;
+
             }
         }
 
@@ -132,6 +146,7 @@ public class SecurityAccountFragment extends BaseFragment {
         view_tti_nickname.getLeft_textView().setText(getString(R.string.nickname));
         view_tti_sex.getLeft_textView().setText(getString(R.string.sex));
         view_tti_phone_binding.getLeft_textView().setText(getString(R.string.phone_binding));
+
         view_ttiii_other_account.getLeft_textView().setText(getString(R.string.account_binding));
         view_tti_register_time.getLeft_textView().setText(getString(R.string.register_time));
         view_tti_register_time.getRightImageView().setVisibility(View.INVISIBLE);
@@ -150,6 +165,43 @@ public class SecurityAccountFragment extends BaseFragment {
                 homeActivity.setLayout(map);
             }
         });
+        //
+        view_tti_phone_binding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+
+                InputDialogFragment inputDialogFragment = InputDialogFragment.newInstance(getString(R.string.phone));
+                inputDialogFragment.show(getChildFragmentManager(),"inputDialogFragment");
+                inputDialogFragment.setCallBackView(new BaseInterFaceListenerView() {
+                    @Override
+                    public void onClickListener(View view) {
+                        String phonenumber = ViewUtil.getEditText((EditText) view);
+                        if(AccountValidatorUtil.isMobile(phonenumber)){
+                            sendPhoneCode(phonenumber);
+                        }else {
+                            T.showShort(App.getContext(),R.string.input_phone_error);
+                        }
+                    }
+                });
+
+
+            }
+        });
+    }
+
+    /**
+     * 发送验证码
+     * @param phonenumber
+     */
+    private void sendPhoneCode(String phonenumber) {
+        String url = GetUrl.sendCheckCode(phonenumber);
+        OkHttpUtils
+                .get()
+                .url(url)
+                .id(101)
+                .build()
+                .execute(new MyStringCallback());
+
     }
 
     @Override

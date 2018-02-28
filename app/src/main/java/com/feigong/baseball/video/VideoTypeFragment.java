@@ -164,20 +164,43 @@ public class VideoTypeFragment extends BaseFragment {
             }
         });
 
-        list_item_recycler.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
-            @Override
-            public void onChildViewAttachedToWindow(View view) {
+//        list_item_recycler.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
+//
+//            int firstVisibleItem, lastVisibleItem;
+//
+//            @Override
+//            public void onChildViewAttachedToWindow(View view) {
+//
+//            }
+//
+//            @Override
+//            public void onChildViewDetachedFromWindow(View view) {
+//
+//                //
+//                firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+//                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+//
+//                //大于0说明有播放
+//                if (GSYVideoManager.instance().getPlayPosition() >= 0) {
+//                    //当前播放的位置
+//                    int position = GSYVideoManager.instance().getPlayPosition();
+//                    //对应的播放列表TAG
+//                    if (GSYVideoManager.instance().getPlayTag().equals(RecyclerItemNormalHolder.TAG)
+//                            && (position < firstVisibleItem || position > lastVisibleItem)) {
+//
+//                        //如果滑出去了上面和下面就是否，和今日头条一样
+//                        //是否全屏
+//                        if (!mFull) {
+//                            GSYVideoPlayer.releaseAllVideos();
+//                            recyclerNormalAdapter.notifyDataSetChanged();
+//                        }
+//                    }
+//                }
+//            }
+//        });
 
-            }
 
-            @Override
-            public void onChildViewDetachedFromWindow(View view) {
-
-            }
-        });
-
-
-        //
+        ///滑出停止
         list_item_recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             int firstVisibleItem, lastVisibleItem;
@@ -190,8 +213,6 @@ public class VideoTypeFragment extends BaseFragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
-                recyclerView.getChildCount();
 
                 firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
