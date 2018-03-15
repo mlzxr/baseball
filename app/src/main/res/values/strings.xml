@@ -101,6 +101,9 @@
 
     <string name="phone">手机号</string>
     <string name="input_phone_error">手机号输入错误</string>
+    <string name="input_phone_code">输入手机验证码</string>
+    <string name="send_phone_code_error">验证码发送错误</string>
+    <string name="phone_bind_error">手机绑定失败</string>
 
 
 </resources>

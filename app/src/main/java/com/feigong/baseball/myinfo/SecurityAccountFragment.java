@@ -3,6 +3,7 @@ package com.feigong.baseball.myinfo;/**
  */
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
@@ -16,13 +17,16 @@ import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.base.view.util.ViewUtil;
+import com.feigong.baseball.beans.ReturnMSG;
 import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.AccountValidatorUtil;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
+import com.feigong.baseball.common.MethodsUtil;
 import com.feigong.baseball.fgview.ViewTopBar;
 import com.feigong.baseball.fgview.View_TTIII_Horizontal;
 import com.feigong.baseball.fgview.View_TTI_Horizontal;
+import com.feigong.baseball.fragment.CommentFragment;
 import com.feigong.baseball.fragment.InputDialogFragment;
 import com.feigong.baseball.information.InformationDetailFragment;
 import com.google.gson.Gson;
@@ -33,6 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Call;
+import okhttp3.MediaType;
 import okhttp3.Request;
 
 /**
@@ -53,6 +58,11 @@ public class SecurityAccountFragment extends BaseFragment {
     private View_TTIII_Horizontal view_ttiii_other_account;
 
     private View_TTI_Horizontal view_tti_register_time;
+
+
+    private InputDialogFragment inputDialogFragment;
+
+    private String phone,code;
 
 
     public static SecurityAccountFragment newInstance(){
@@ -98,10 +108,42 @@ public class SecurityAccountFragment extends BaseFragment {
                     break;
 
                 case 101:
+                    ReturnMSG returnMSG = new Gson().fromJson(response,ReturnMSG.class);
+                    if(returnMSG!=null){
+                        T.showShort(App.getContext(),returnMSG.getMsg());
+                        //
+                        inputDialogFragment = InputDialogFragment.newInstance(getString(R.string.input_phone_code));
+                        inputDialogFragment.show(getChildFragmentManager(),"inputDialogFragment");
+                        inputDialogFragment.setCallBackView(new BaseInterFaceListenerView() {
+                            @Override
+                            public void onClickListener(View view) {
+                                code = ViewUtil.getEditText((EditText) view);
+                                if(!TextUtils.isEmpty(code)){
+                                    mobileBind(code);
+                                }else {
+                                    T.showShort(App.getContext(),R.string.input_phone_code);
+                                }
+                            }
+                        });
 
 
-
+                    }else {//
+                        T.showShort(App.getContext(),R.string.send_phone_code_error);
+                    }
                     break;
+
+                case 102:
+                    returnMSG = new Gson().fromJson(response,ReturnMSG.class);
+                    if(returnMSG!=null && returnMSG.getCode()== Constant.FGCode.OpOk_code){
+                        //绑定成功，刷新UI
+                        T.showShort(App.getContext(),returnMSG.getMsg());
+                        view_tti_phone_binding.getCentreTextView().setText(MethodsUtil.hidePhone(phone));
+
+                    }else {//
+                        T.showShort(App.getContext(),R.string.phone_bind_error);
+                    }
+                    break;
+
 
             }
         }
@@ -170,14 +212,14 @@ public class SecurityAccountFragment extends BaseFragment {
             @Override
             public void onClick(final View v) {
 
-                InputDialogFragment inputDialogFragment = InputDialogFragment.newInstance(getString(R.string.phone));
+                inputDialogFragment = InputDialogFragment.newInstance(getString(R.string.phone));
                 inputDialogFragment.show(getChildFragmentManager(),"inputDialogFragment");
                 inputDialogFragment.setCallBackView(new BaseInterFaceListenerView() {
                     @Override
                     public void onClickListener(View view) {
-                        String phonenumber = ViewUtil.getEditText((EditText) view);
-                        if(AccountValidatorUtil.isMobile(phonenumber)){
-                            sendPhoneCode(phonenumber);
+                        phone = ViewUtil.getEditText((EditText) view);
+                        if(AccountValidatorUtil.isMobile(phone)){
+                            sendPhoneCode(phone);
                         }else {
                             T.showShort(App.getContext(),R.string.input_phone_error);
                         }
@@ -203,6 +245,27 @@ public class SecurityAccountFragment extends BaseFragment {
                 .execute(new MyStringCallback());
 
     }
+
+
+    private void mobileBind(String code){
+        HashMap<String,String> hashMap =new HashMap<>();
+        hashMap.put("mobile",phone);
+        hashMap.put("checkcode",code);
+
+        String json = new Gson().toJson(hashMap);
+        //
+        String url = GetUrl.mobileBind();
+        OkHttpUtils
+                .postString()
+                .content(json)
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .url(url)
+                .id(102)
+                .build()
+                .execute(new MyStringCallback());
+
+    }
+
 
     @Override
     protected void loadData() {

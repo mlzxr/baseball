@@ -72,7 +72,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             ButterKnife.bind(this);
             //
 
-
             initVariables();
             initViews(savedInstanceState);
             initData();

@@ -252,4 +252,13 @@ public class GetUrl {
         url = url.replace("{mobile}", phonenumber);
         return url;
     }
+
+    /**
+     * 绑定手机
+     * @return
+     */
+    public static String mobileBind() {
+        String url = DOMAIN+"/userApi/mobile_bind";
+        return url;
+    }
 }

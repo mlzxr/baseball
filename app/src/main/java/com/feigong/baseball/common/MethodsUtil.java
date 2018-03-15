@@ -35,5 +35,16 @@ public class MethodsUtil {
         return uuid.toString().replaceAll("-","");
     }
 
+    /**
+     * 隐藏手机号
+     * @param phone
+     * @return
+     */
+    public static final String hidePhone(String  phone){
+        // 括号表示组，被替换的部分$n表示第n组的内容
+        phone = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        return phone;
+    }
+
 
 }
