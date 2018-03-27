@@ -27,11 +27,13 @@ import com.feigong.baseball.base.common.MapUtil;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.base.util.T;
+import com.feigong.baseball.beans.EventData;
 import com.feigong.baseball.beans.ReturnMSG_Channel;
 import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.CodeConstant;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.DBConstant;
+import com.feigong.baseball.common.EventCode;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.dao.TabTitleNameService;
 import com.feigong.baseball.dto.TabTitleName;
@@ -51,6 +53,10 @@ import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,12 +109,14 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initVariables() {
-
+        EventBus.getDefault().register(this);
 
         fragmentArrayList.add(InformationFragment.newInstance());
         fragmentArrayList.add(VideoFragment.newInstance());
         fragmentArrayList.add(MeFragment.newInstance());
     }
+
+
 
 
     @Override
@@ -349,6 +357,17 @@ public class HomeActivity extends BaseActivity {
         map.put(Constant.TAG, Constant.FragmentTAG.login_fragmentTAG);
         //
         this.setLayout(map);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN) //在ui线程执行
+    public void onEventData(EventData eventData) {
+        switch (eventData.getCode()){
+            case EventCode.USERINFO:
+                loadAvatar(2);
+                break;
+        }
+
     }
 
     public void loadAvatar(int index) {

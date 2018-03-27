@@ -5,6 +5,7 @@ package com.feigong.baseball.application;/**
 import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.multidex.MultiDexApplication;
 
 import com.feigong.baseball.base.crash.CrashHandler;
 import com.feigong.baseball.dto.DaoMaster;
@@ -29,7 +30,7 @@ import org.greenrobot.greendao.database.Database;
  *
  * @version 1.0
  */
-public class App extends Application {
+public class App extends MultiDexApplication {
 
 
     private static Context context;
@@ -51,9 +52,6 @@ public class App extends Application {
 
         //监听内存泄漏
         refWatcher = LeakCanary.install(this);
-
-
-
 
 
 

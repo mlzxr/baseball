@@ -14,10 +14,15 @@ import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
+import com.feigong.baseball.beans.EventData;
 import com.feigong.baseball.common.Constant;
+import com.feigong.baseball.common.EventCode;
 import com.feigong.baseball.common.ImageUtil;
 import com.feigong.baseball.fgview.View_ITI_Horizontal;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -115,6 +120,9 @@ public class MeFragment extends BaseFragment {
         }
     }
 
+
+
+
     public void loadAvator(){
         ImageLoader.getInstance().displayImage("file://"+Constant.UPLOADFILEPATH, iv_avator,ImageUtil.getImageOptionsCircle());
     }
@@ -127,6 +135,5 @@ public class MeFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        L.e(TAG,"onActivityResult----"+",requestCode:"+requestCode+"-----"+",resultCode:"+resultCode);
     }
 }

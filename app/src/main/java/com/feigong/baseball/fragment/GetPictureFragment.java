@@ -25,15 +25,19 @@ import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.base.util.SPUtils;
 import com.feigong.baseball.base.util.T;
+import com.feigong.baseball.beans.EventData;
 import com.feigong.baseball.beans.ReturnMSG;
 import com.feigong.baseball.common.BitmapUtil;
 import com.feigong.baseball.common.Constant;
+import com.feigong.baseball.common.EventCode;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.common.MethodsUtil;
 import com.feigong.baseball.fgview.ViewTopBar;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.HashMap;
@@ -103,6 +107,9 @@ public class GetPictureFragment extends BaseFragment {
 
                         T.showShort(App.getContext(),returnMSG.getMsg());
                         //更新头像
+                       // EventBus.getDefault().post(new EventData(EventCode.USERINFO,null));
+
+
                         Activity activity = getActivity();
                         if(activity instanceof HomeActivity){
                             HomeActivity homeActivity = (HomeActivity)activity;

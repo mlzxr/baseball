@@ -17,6 +17,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        multiDexEnabled true
+
     }
     buildTypes {
         release {
@@ -57,8 +59,6 @@ dependencies {
 
     compile 'com.github.lzyzsd:jsbridge:1.0.4'
 
-
-
     compile project(':baseUtil')
     compile files('libs/jcore-android_v1.0.0.jar')
     compile files('libs/jpush-android_v3.0.0.jar')
@@ -74,5 +74,7 @@ dependencies {
     compile project(':gsyVideoPlayer')
     compile project(':wzmrecyclerview')
 
+
+    compile 'com.android.support:multidex:'
 
 }

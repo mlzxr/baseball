@@ -9,8 +9,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.feigong.baseball.R;
+import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.util.L;
+import com.feigong.baseball.base.util.NetUtils;
 
 
 /**
@@ -25,17 +29,16 @@ import com.feigong.baseball.base.util.L;
  */
 public abstract class BaseFragment extends Fragment {
 
-    private static final String TAG="BaseFragment";
+    private static final String TAG = "BaseFragment";
 
-    protected static final String CODE="code";
-    protected static final String MSG="msg";
-    protected static final String DATA="data";
+    protected static final String CODE = "code";
+    protected static final String MSG = "msg";
+    protected static final String DATA = "data";
 
-    protected static final int OK=1;
-    protected static final int EER=0;
+    protected static final int OK = 1;
+    protected static final int EER = 0;
 
     protected Context context;
-
 
 
     //************************************************
@@ -57,23 +60,18 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //L.e(TAG,"onCreateView");
-        return inflater.inflate(getLayout(), null);
-    }
-
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //L.e(TAG,"onViewCreated");
+        View view;
         //
-        if(checkPass()){
+        if (checkNetWork()) {
+            view = inflater.inflate(getLayout(), null);
             initVariables();
             initViews(view, savedInstanceState);
             loadData();
+        } else {
+            view = inflater.inflate(R.layout.activity_network_anomaly, null);
         }
+        return view;
     }
-
 
 
     @Override
@@ -118,10 +116,9 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        L.e(TAG,"onDetach");
+        L.e(TAG, "onDetach");
 
     }
-
 
 
     //************************************************
@@ -132,17 +129,27 @@ public abstract class BaseFragment extends Fragment {
 
     //初始化变量
     protected abstract void initVariables();
+
     //初始化布局
-    protected abstract void initViews(View view,Bundle savedInstanceState);
+    protected abstract void initViews(View view, Bundle savedInstanceState);
+
     //加载数据
     protected abstract void loadData();
+
     //钩子
-    protected boolean checkPass() {
+    protected boolean checkNetWork() {
+        boolean flag =  NetUtils.isConnected(App.getContext());
         return true;
     }
 
-
-
+    /**
+     * [简化Toast]
+     *
+     * @param msg
+     */
+    protected void showToast(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
 
 
 }
