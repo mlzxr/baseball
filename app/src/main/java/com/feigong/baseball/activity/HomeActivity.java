@@ -121,8 +121,6 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-
-
         //
         fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

@@ -2,16 +2,10 @@ package com.feigong.baseball.base;/**
  * Created by ruler on 16/7/11.
  */
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -25,7 +19,6 @@ import com.feigong.baseball.common.Constant;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 
