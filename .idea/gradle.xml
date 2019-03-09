@@ -10,6 +10,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/app-business" />
+            <option value="$PROJECT_DIR$/app-core" />
             <option value="$PROJECT_DIR$/baseUtil" />
             <option value="$PROJECT_DIR$/gsyVideoPlayer" />
             <option value="$PROJECT_DIR$/magicindicator" />

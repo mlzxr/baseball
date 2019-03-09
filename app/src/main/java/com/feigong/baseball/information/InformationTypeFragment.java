@@ -3,7 +3,6 @@ package com.feigong.baseball.information;/**
  */
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -12,12 +11,12 @@ import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.adapter.InformationTypeAdpter;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
-import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.ReturnMSG_Information;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.google.gson.Gson;
+import com.ml.core.util.L;
+import com.ml.core.util.T;
 import com.mrw.wzmrecyclerview.Divider.BaseItemDecoration;
 import com.mrw.wzmrecyclerview.HeaderAndFooter.OnItemClickListener;
 import com.mrw.wzmrecyclerview.PullToLoad.OnLoadListener;

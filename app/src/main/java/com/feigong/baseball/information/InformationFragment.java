@@ -6,14 +6,12 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.feigong.baseball.R;
-import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.base.BaseFragment;
-import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.beans.ReturnMSG_Channel;
 import com.feigong.baseball.common.CodeConstant;
 import com.feigong.baseball.common.Constant;
@@ -54,6 +52,11 @@ import okhttp3.Request;
 public class InformationFragment extends BaseFragment {
 
     private static final String TAG="InformationFragment";
+    //
+    public static InformationFragment newInstance() {
+        InformationFragment newFragment = new InformationFragment();
+        return newFragment;
+    }
 
     private ViewTopBar viewTopBar;
     private ViewPager mViewPager;
@@ -64,7 +67,6 @@ public class InformationFragment extends BaseFragment {
     List<TabTitleName>  tabTitleNames;
 
     private List<Fragment> fragmentList = new ArrayList<>();
-
 
     @Override
     protected int getLayout() {
@@ -146,7 +148,7 @@ public class InformationFragment extends BaseFragment {
                     fragmentList.add(InformationTypeFragment.newInstance(tabTitleNames.get(k).getTitleCode()));
                 }
             }
-            mViewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+            mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
                 @Override
                 public Fragment getItem(int position) {
                     return fragmentList.get(position);
@@ -232,18 +234,6 @@ public class InformationFragment extends BaseFragment {
         @Override
         public void inProgress(float progress, long total, int id) {
         }
-    }
-
-
-
-
-
-
-
-    //
-    public static InformationFragment newInstance() {
-        InformationFragment newFragment = new InformationFragment();
-        return newFragment;
     }
 
 

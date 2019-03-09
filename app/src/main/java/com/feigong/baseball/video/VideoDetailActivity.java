@@ -8,10 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.feigong.baseball.R;
-import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseActivity;
-import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.ReturnMSG_VideoDetail;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
@@ -21,6 +18,7 @@ import com.feigong.baseball.fgview.ViewTopBar;
 import com.feigong.baseball.fragment.CommentFragment;
 import com.feigong.baseball.listener.SampleListener;
 import com.google.gson.Gson;
+import com.ml.core.util.L;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.GSYVideoPlayer;

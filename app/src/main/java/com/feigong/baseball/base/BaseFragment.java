@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.NetUtils;
+import com.ml.core.util.L;
+import com.ml.core.util.NetUtils;
 
 
 /**

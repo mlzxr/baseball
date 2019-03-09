@@ -13,16 +13,17 @@ import com.feigong.baseball.R;
 import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
-import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.SPUtils;
-import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.ReturnMSG_Push;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
+import com.feigong.baseball.common.MethodsUtil;
 import com.feigong.baseball.fgview.ViewTT_TB_Horizontal;
 import com.feigong.baseball.fgview.ViewTopBar;
 import com.feigong.baseball.fgview.View_TTI_Horizontal;
 import com.google.gson.Gson;
+import com.ml.core.util.L;
+import com.ml.core.util.SPUtils;
+import com.ml.core.util.T;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -211,9 +212,8 @@ public class SettingFragment extends BaseFragment {
         view.findViewById(R.id.bt_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SPUtils.put(App.getContext(),Constant.TOKEN,Constant.EMPTY);
-                SPUtils.put(App.getContext(),Constant.USERINFO.NICKNAME,Constant.EMPTY);
-                SPUtils.put(App.getContext(),Constant.USERINFO.AVATOR,Constant.EMPTY);
+                MethodsUtil.putToken(Constant.EMPTY);
+
                 getActivity().finish();
 
                 Intent intent =new Intent(getActivity(), MainActivity.class);

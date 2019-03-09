@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.feigong.baseball.R;
-import com.feigong.baseball.base.util.L;
 import com.feigong.baseball.beans.ReturnMSG_VideoList;
 import com.feigong.baseball.common.ImageUtil;
 import com.feigong.baseball.listener.SampleListener;
@@ -15,8 +14,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
-
-import org.w3c.dom.Text;
 
 
 /**

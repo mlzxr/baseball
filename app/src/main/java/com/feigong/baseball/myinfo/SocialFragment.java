@@ -13,10 +13,6 @@ import android.view.View;
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
-import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.SPUtils;
-import com.feigong.baseball.base.util.T;
-import com.feigong.baseball.base.view.util.ViewUtil;
 import com.feigong.baseball.beans.ReturnMSG;
 import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
@@ -26,6 +22,10 @@ import com.feigong.baseball.fgview.View_ITTI_Horizontal;
 import com.feigong.baseball.weibo.openapi.UsersAPI;
 import com.feigong.baseball.weibo.openapi.WBUser;
 import com.google.gson.Gson;
+import com.ml.core.util.L;
+import com.ml.core.util.SPUtils;
+import com.ml.core.util.T;
+import com.ml.core.util.ViewUtil;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
@@ -166,7 +166,7 @@ public class SocialFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        int is_binding_wx = (int)SPUtils.get(App.getContext(),Constant.USERINFO.IS_BINDING_WX,0);
+        int is_binding_wx = (int) SPUtils.get(App.getContext(),Constant.USERINFO.IS_BINDING_WX,0);
         if(view_itti_wx!=null){//获取微信的绑定状态
             setBindingText(view_itti_wx,is_binding_wx);
         }

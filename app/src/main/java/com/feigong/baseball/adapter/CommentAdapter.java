@@ -18,9 +18,9 @@ import android.widget.TextView;
 import com.feigong.baseball.Interface.BaseInterFaceListenerText;
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.view.util.ViewUtil;
 import com.feigong.baseball.beans.ReturnMSGComment;
 import com.feigong.baseball.common.ImageUtil;
+import com.ml.core.util.ViewUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 

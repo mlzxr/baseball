@@ -20,9 +20,9 @@ public class ImageUtil {
 
     //返回原始图片样式
     private final static DisplayImageOptions  options = new DisplayImageOptions.Builder()
-            .showImageOnLoading(R.drawable.no_photo_bak)
-            .showImageForEmptyUri(R.drawable.no_photo_bak)
-            .showImageOnFail(R.drawable.no_photo_bak)
+            .showImageOnLoading(R.color.image_background)
+            .showImageForEmptyUri(R.color.image_background)
+            .showImageOnFail(R.color.image_background)
             .cacheInMemory(true)
             .cacheOnDisk(true)
             .considerExifParams(true)
@@ -32,12 +32,11 @@ public class ImageUtil {
         return options;
     }
 
-
     //返回圆形图片样式
     private final static DisplayImageOptions  optionsCircle = new DisplayImageOptions.Builder()
-            .showImageOnLoading(R.drawable.no_photo_bak)
-            .showImageForEmptyUri(R.drawable.no_photo_bak)
-            .showImageOnFail(R.drawable.no_photo_bak)
+            .showImageOnLoading(R.color.image_background)
+            .showImageForEmptyUri(R.color.image_background)
+            .showImageOnFail(R.color.image_background)
             .cacheInMemory(true)
             .cacheOnDisk(true)
             .considerExifParams(true)

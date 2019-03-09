@@ -32,9 +32,7 @@ public class Constant {
 
 
     public interface USERINFO{
-        public static final String IS_BINDING_WX="is_binding_wx";
-        public static final String NICKNAME="nickname";
-        public static final String AVATOR="avator";
+        String IS_BINDING_WX="is_binding_wx";
 
     }
 
@@ -64,9 +62,6 @@ public class Constant {
         String InformationFragmentTAG="information_fragment";
 
 
-
-
-
         //视频
         int video_fragment = 7;
         String VideoFragmentTAG="video_fragment";
@@ -86,7 +81,7 @@ public class Constant {
 
 
     public interface H5{
-        public static final String ARTICLE="http://m.baseballsay.com/article/show/";
+        String ARTICLE="http://m.baseballsay.com/article/show/";
     }
 
 
@@ -95,10 +90,9 @@ public class Constant {
      * 拍照类型
      */
     public interface TAKE_PHONE_TYPE{
-        public static final String TAKE_TYPE="take_type";
+        String TAKE_TYPE="take_type";
         //头像
-        public static final int AVATOR=1;
-
+        int AVATOR=1;
 
     }
 
@@ -106,24 +100,24 @@ public class Constant {
     // 第三方应用参数
     public interface Other {
         //登录类型(1:微博,2:微信,3:扣扣)
-        public static final String WB = "1";
-        public static final String WX = "2";
-        public static final String QQ = "3";
+        String WB = "1";
+        String WX = "2";
+        String QQ = "3";
 
     }
 
     // 微信
 
     public interface WX {
-        public static final String APP_ID = "wx03acd4dc4205b6f2";
-        public static final String APP_SECRET = "4a70b851767dcb9b896468aaf43f086e";
+        String APP_ID = "wx03acd4dc4205b6f2";
+        String APP_SECRET = "4a70b851767dcb9b896468aaf43f086e";
     }
 
     //微博
     public interface WB {
-        public static final String APP_KEY = "3273926641";
-        public static final String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";
-        public static final String SCOPE =
+        String APP_KEY = "3273926641";
+        String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";
+        String SCOPE =
                 "email,direct_messages_read,direct_messages_write,"
                         + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
                         + "follow_app_official_microblog," + "invitation_write";
@@ -131,22 +125,22 @@ public class Constant {
 
     //QQ
     public interface QQ {
-        public static final String APP_ID = "1105849119";
+        String APP_ID = "1105849119";
     }
 
 
     //返回状态码
     public interface FGCode {
-        public static final int OpOk_code = 10000;
-        public static final String OpOk_msg = "操作成功";
-        public static final int OpFail_code = 10004;
-        public static final String OpFail_msg = "操作失败";
-        public static final int ParamError_code = 40001;
-        public static final String ParamError_msg = "参数问题";
-        public static final int TokenExpire_code = 40002;
-        public static final String TokenExpire_msg = "Token过期";
-        public static final int TokenInValid_code = 40003;
-        public static final String TokenInValid_msg = "无效的Token";
+        int OpOk_code = 10000;
+        String OpOk_msg = "操作成功";
+        int OpFail_code = 10004;
+        String OpFail_msg = "操作失败";
+        int ParamError_code = 40001;
+        String ParamError_msg = "参数问题";
+        int TokenExpire_code = 40002;
+        String TokenExpire_msg = "Token过期";
+        int TokenInValid_code = 40003;
+        String TokenInValid_msg = "无效的Token";
     }
 
 

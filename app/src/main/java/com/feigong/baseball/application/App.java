@@ -2,14 +2,12 @@ package com.feigong.baseball.application;/**
  * Created by ruler on 16/7/19.
  */
 
-import android.app.Application;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.multidex.MultiDexApplication;
 
-import com.feigong.baseball.base.crash.CrashHandler;
 import com.feigong.baseball.dto.DaoMaster;
 import com.feigong.baseball.dto.DaoSession;
+import com.ml.core.crash.CrashHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -43,9 +41,12 @@ public class App extends MultiDexApplication {
 
     private static DaoSession daoSession;
 
+
+
     @Override
     public void onCreate() {
         super.onCreate();
+
         //定义单列Context
         context = getApplicationContext();
 

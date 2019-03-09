@@ -5,7 +5,6 @@ package com.feigong.baseball.video;/**
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,13 +13,13 @@ import com.feigong.baseball.R;
 import com.feigong.baseball.adapter.RecyclerNormalAdapter;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
-import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.ReturnMSG_VideoList;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.viewholder.RecyclerItemNormalHolder;
 import com.google.gson.Gson;
+import com.ml.core.util.L;
+import com.ml.core.util.T;
 import com.mrw.wzmrecyclerview.Divider.BaseItemDecoration;
 import com.mrw.wzmrecyclerview.PullToLoad.OnLoadListener;
 import com.mrw.wzmrecyclerview.PullToLoad.PullToLoadRecyclerView;
@@ -163,43 +162,6 @@ public class VideoTypeFragment extends BaseFragment {
                moreData();
             }
         });
-
-//        list_item_recycler.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
-//
-//            int firstVisibleItem, lastVisibleItem;
-//
-//            @Override
-//            public void onChildViewAttachedToWindow(View view) {
-//
-//            }
-//
-//            @Override
-//            public void onChildViewDetachedFromWindow(View view) {
-//
-//                //
-//                firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
-//                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-//
-//                //大于0说明有播放
-//                if (GSYVideoManager.instance().getPlayPosition() >= 0) {
-//                    //当前播放的位置
-//                    int position = GSYVideoManager.instance().getPlayPosition();
-//                    //对应的播放列表TAG
-//                    if (GSYVideoManager.instance().getPlayTag().equals(RecyclerItemNormalHolder.TAG)
-//                            && (position < firstVisibleItem || position > lastVisibleItem)) {
-//
-//                        //如果滑出去了上面和下面就是否，和今日头条一样
-//                        //是否全屏
-//                        if (!mFull) {
-//                            GSYVideoPlayer.releaseAllVideos();
-//                            recyclerNormalAdapter.notifyDataSetChanged();
-//                        }
-//                    }
-//                }
-//            }
-//        });
-
-
         ///滑出停止
         list_item_recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -217,14 +179,19 @@ public class VideoTypeFragment extends BaseFragment {
                 firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
 
+                //当前播放的位置
+                int position = GSYVideoManager.instance().getPlayPosition();
+
                 //大于0说明有播放
-                if (GSYVideoManager.instance().getPlayPosition() >= 0) {
-                    //当前播放的位置
-                    int position = GSYVideoManager.instance().getPlayPosition();
+                if (position >= 0) {
                     //对应的播放列表TAG
                     if (GSYVideoManager.instance().getPlayTag().equals(RecyclerItemNormalHolder.TAG)
-                            && (position < firstVisibleItem || position > lastVisibleItem)) {
-
+                        //    && (position < firstVisibleItem || position > lastVisibleItem)) {
+                        && (position == lastVisibleItem )) {
+                        //
+                        L.e(TAG,"firstVisibleItem:"+firstVisibleItem);
+                        L.e(TAG,"lastVisibleItem:"+lastVisibleItem);
+                        L.e(TAG,"position:"+position);
                         //如果滑出去了上面和下面就是否，和今日头条一样
                         //是否全屏
                         if (!mFull) {

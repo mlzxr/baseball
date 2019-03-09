@@ -2,7 +2,6 @@ package com.feigong.baseball.myinfo;/**
  * Created by ruler on 16/9/7.
  */
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,22 +9,24 @@ import android.widget.ImageView;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.activity.HomeActivity;
-import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
-import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.SPUtils;
-import com.feigong.baseball.beans.EventData;
+import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
-import com.feigong.baseball.common.EventCode;
+import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.common.ImageUtil;
+import com.feigong.baseball.common.MethodsUtil;
 import com.feigong.baseball.fgview.View_ITI_Horizontal;
+import com.google.gson.Gson;
+import com.ml.core.util.L;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Request;
 
 /**
  * 项目名称：baseball
@@ -49,6 +50,52 @@ public class MeFragment extends BaseFragment {
         MeFragment newFragment = new MeFragment();
         return newFragment;
     }
+
+
+    public class MyStringCallback extends StringCallback {
+        @Override
+        public void onBefore(Request request, int id) {
+        }
+
+        @Override
+        public void onAfter(int id) {
+
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id) {
+            L.e(TAG, e.getMessage());
+        }
+
+        @Override
+        public void onResponse(String response, int id) {
+
+            L.e(TAG,response);
+
+            switch (id) {
+                case 100:
+                    ReturnMSG_UserInfo returnMSG_userInfo = new Gson().fromJson(response, ReturnMSG_UserInfo.class);
+                    if (returnMSG_userInfo != null && returnMSG_userInfo.getCode() == Constant.FGCode.OpOk_code) {
+                        ReturnMSG_UserInfo.DataBean dataBean = returnMSG_userInfo.getData();
+                        if (dataBean != null) {
+                            String nickname = dataBean.getLoginInfo().getNickname();
+                            String avator = dataBean.getLoginInfo().getAvator();
+                            if(!TextUtils.isEmpty(avator)){
+                                ImageLoader.getInstance().displayImage(avator, iv_avator,ImageUtil.getImageOptionsCircle());
+                            }
+                        }
+                    }
+                    break;
+
+            }
+        }
+
+        @Override
+        public void inProgress(float progress, long total, int id) {
+        }
+    }
+
+
 
     @Override
     protected int getLayout() {
@@ -108,19 +155,23 @@ public class MeFragment extends BaseFragment {
             }
         });
 
-
     }
 
     @Override
     protected void loadData() {
-        String nickname = String.valueOf(SPUtils.get(App.getContext(),Constant.USERINFO.NICKNAME,""));
-        String avator = String.valueOf(SPUtils.get(App.getContext(),Constant.USERINFO.AVATOR,""));
-        if(!TextUtils.isEmpty(avator)){
-            ImageLoader.getInstance().displayImage(avator, iv_avator,ImageUtil.getImageOptionsCircle());
-        }
+
+
+        String url = GetUrl.getUserInfoByToken();
+            OkHttpUtils
+                    .get()
+                    .url(url)
+                    .addHeader(Constant.TOKEN, MethodsUtil.getToken())
+                    .id(100)
+                    .build()
+                    .execute(new MyStringCallback());
+
+
     }
-
-
 
 
     public void loadAvator(){
@@ -132,8 +183,6 @@ public class MeFragment extends BaseFragment {
         homeActivity.setLayout(map);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+
+
 }

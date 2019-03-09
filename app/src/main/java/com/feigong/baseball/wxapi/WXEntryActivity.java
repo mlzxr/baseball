@@ -8,17 +8,14 @@ import android.text.TextUtils;
 import com.feigong.baseball.MainActivity;
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.common.JSONUtil;
-import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.SPUtils;
-import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.ReturnMSG;
 import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
-import com.feigong.baseball.myinfo.LoginFragment;
-import com.feigong.baseball.myinfo.SocialFragment;
 import com.google.gson.Gson;
+import com.ml.core.util.L;
+import com.ml.core.util.SPUtils;
+import com.ml.core.util.T;
 import com.tencent.mm.sdk.openapi.BaseReq;
 import com.tencent.mm.sdk.openapi.BaseResp;
 import com.tencent.mm.sdk.openapi.ConstantsAPI;
@@ -27,10 +24,7 @@ import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.SendAuth;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
 import com.zhy.http.okhttp.callback.StringCallback;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +32,6 @@ import java.util.Map;
 import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * 项目名称：feigong
@@ -117,8 +110,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         if(dataBean!=null){
 
                             SPUtils.put(App.getContext(),Constant.TOKEN,dataBean.getToken());
-                            SPUtils.put(App.getContext(),Constant.USERINFO.NICKNAME,dataBean.getLoginInfo().getNickname());
-                            SPUtils.put(App.getContext(),Constant.USERINFO.AVATOR,dataBean.getLoginInfo().getAvator());
 
                             WXEntryActivity.this.finish();
                             /*

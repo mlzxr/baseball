@@ -2,24 +2,22 @@ package com.feigong.baseball.fragment;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.feigong.baseball.Interface.BaseInterFaceListenerText;
 import com.feigong.baseball.R;
 import com.feigong.baseball.adapter.CommentAdapter;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
-import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.SPUtils;
-import com.feigong.baseball.base.util.T;
-import com.feigong.baseball.base.view.util.ViewUtil;
 import com.feigong.baseball.beans.ReturnMSG;
 import com.feigong.baseball.beans.ReturnMSGComment;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.dialog.BottomDialogFragment;
 import com.google.gson.Gson;
+import com.ml.core.util.L;
+import com.ml.core.util.SPUtils;
+import com.ml.core.util.T;
+import com.ml.core.util.ViewUtil;
 import com.mrw.wzmrecyclerview.Divider.BaseItemDecoration;
 import com.mrw.wzmrecyclerview.LayoutManager.WZMLinearLayoutManager;
 import com.mrw.wzmrecyclerview.PullToLoad.OnLoadListener;

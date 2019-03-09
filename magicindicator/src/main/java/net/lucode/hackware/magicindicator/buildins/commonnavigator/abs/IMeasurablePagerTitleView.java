@@ -6,6 +6,7 @@ package net.lucode.hackware.magicindicator.buildins.commonnavigator.abs;
  * Created by hackware on 2016/6/26.
  */
 public interface IMeasurablePagerTitleView extends IPagerTitleView {
+
     int getContentLeft();
 
     int getContentTop();

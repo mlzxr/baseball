@@ -9,11 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.feigong.baseball.R;
-import com.feigong.baseball.base.util.DateUtil;
-import com.feigong.baseball.base.util.DensityUtils;
-import com.feigong.baseball.base.util.ScreenUtils;
 import com.feigong.baseball.beans.ReturnMSG_Recommend;
 import com.feigong.baseball.common.ImageUtil;
+import com.ml.core.util.DateUtil;
+import com.ml.core.util.DensityUtils;
+import com.ml.core.util.ScreenUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -101,7 +101,7 @@ public class InformationRecommendAdaper extends RecyclerView.Adapter {
                 videoViewHolder.tv_format_duration.setText(bean.getFormat_duration());
 
                 long time =new Long((long)bean.getPub_time());
-                videoViewHolder.tv_time.setText(DateUtil.longToString(time,DateUtil.FORMAT_YYYY_MM_DD_HH_MM_SS));
+                videoViewHolder.tv_time.setText(DateUtil.longToString(time, DateUtil.FORMAT_YYYY_MM_DD_HH_MM_SS));
                 //
                 if(bean.getCover()!=null && bean.getCover().size()>0){
                     String cover =bean.getCover().get(0);

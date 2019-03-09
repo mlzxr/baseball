@@ -4,7 +4,6 @@ package com.feigong.baseball.information;/**
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -13,13 +12,12 @@ import com.feigong.baseball.activity.HomeActivity;
 import com.feigong.baseball.adapter.InformationRecommendAdaper;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
-import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.ReturnMSG_Recommend;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
 import com.feigong.baseball.video.VideoDetailActivity;
 import com.google.gson.Gson;
+import com.ml.core.util.T;
 import com.mrw.wzmrecyclerview.Divider.BaseItemDecoration;
 import com.mrw.wzmrecyclerview.HeaderAndFooter.OnItemClickListener;
 import com.mrw.wzmrecyclerview.PullToLoad.OnLoadListener;
@@ -140,11 +138,8 @@ public class InformationRecommendFragment extends BaseFragment {
             @Override
             public void OnItemClick(int position) {
                 ReturnMSG_Recommend.DataBean.RecommandListBean bean = dataList.get(position);
+                //
 
-                L.e(TAG,"getCover_mode:"+bean.getCover_mode());
-                L.e(TAG,"getMtype:"+bean.getMtype());
-
-                Map<String,Object> map = new HashMap<String, Object>();
                 if(bean.getMtype()==2){//视频
                     //
                     Bundle bundle =new Bundle();
@@ -156,16 +151,16 @@ public class InformationRecommendFragment extends BaseFragment {
                     startActivity(intent);
 
                 }else{
-
+                    Map<String,Object> map = new HashMap<String, Object>();
                     //
                     map.put(Constant.FLAG,Constant.FragmentTAG.informationDetail_fragment);
                     map.put(Constant.TAG,Constant.FragmentTAG.InformationDetailFragmentTAG);
                     map.put("objid_ref",bean.getObjid_ref());
-
+                    //
+                    HomeActivity homeActivity = (HomeActivity)getActivity();
+                    homeActivity.setLayout(map);
                 }
-                //
-                HomeActivity homeActivity = (HomeActivity)getActivity();
-                homeActivity.setLayout(map);
+
             }
         });
 

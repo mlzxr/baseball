@@ -1,7 +1,6 @@
 package com.feigong.baseball.dialog;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -10,15 +9,13 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.feigong.baseball.Interface.BaseInterFaceListenerText;
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
-import com.feigong.baseball.base.util.T;
-import com.feigong.baseball.base.view.util.ViewUtil;
+import com.ml.core.util.T;
+import com.ml.core.util.ViewUtil;
 
 /**
  * Created by ruler on 17/11/2.

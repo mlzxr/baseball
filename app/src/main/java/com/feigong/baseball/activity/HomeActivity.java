@@ -2,41 +2,24 @@ package com.feigong.baseball.activity;/**
  * Created by ruler on 16/9/6.
  */
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.feigong.baseball.MainActivity;
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseActivity;
-import com.feigong.baseball.base.common.MapUtil;
-import com.feigong.baseball.base.util.L;
-import com.feigong.baseball.base.util.SPUtils;
-import com.feigong.baseball.base.util.T;
 import com.feigong.baseball.beans.EventData;
-import com.feigong.baseball.beans.ReturnMSG_Channel;
-import com.feigong.baseball.beans.ReturnMSG_UserInfo;
-import com.feigong.baseball.common.CodeConstant;
 import com.feigong.baseball.common.Constant;
-import com.feigong.baseball.common.DBConstant;
 import com.feigong.baseball.common.EventCode;
-import com.feigong.baseball.common.GetUrl;
-import com.feigong.baseball.dao.TabTitleNameService;
-import com.feigong.baseball.dto.TabTitleName;
 import com.feigong.baseball.fragment.GetPictureFragment;
 import com.feigong.baseball.fragment.ShowWebVIewImagesFragment;
 import com.feigong.baseball.information.InformationDetailFragment;
@@ -47,12 +30,10 @@ import com.feigong.baseball.myinfo.SecurityAccountFragment;
 import com.feigong.baseball.myinfo.SettingFragment;
 import com.feigong.baseball.myinfo.SocialFragment;
 import com.feigong.baseball.video.VideoFragment;
-import com.google.gson.Gson;
+import com.ml.core.common.MapUtil;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -65,8 +46,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Request;
 
 /**
  * 项目名称：baseball
@@ -80,8 +59,8 @@ import okhttp3.Request;
  */
 public class HomeActivity extends BaseActivity {
 
-    @Bind(R.id.home_viewPager)
-    ViewPager homeViewPager;
+    private static final String TAG ="HomeActivity";
+
 
     @Bind(R.id.ll_information)
     LinearLayout llInformation;
@@ -95,10 +74,13 @@ public class HomeActivity extends BaseActivity {
     @Bind(R.id.ll_bottom)
     LinearLayout llBottom;
 
-    @Bind(R.id.frameLayout)
+    @Bind(R.id.body_layout)
+    FrameLayout bodyLayout;
+
+    @Bind(R.id.frame_layout)
     FrameLayout frameLayout;
 
-    private FragmentPagerAdapter fragmentPagerAdapter;
+    //长期驻存的碎片
     private List<Fragment> fragmentArrayList = new ArrayList<>();
 
     @Override
@@ -107,101 +89,84 @@ public class HomeActivity extends BaseActivity {
         return R.layout.activity_home;
     }
 
+    //当前tab索引位置
+    private int indexTab = 0;
+
     @Override
     protected void initVariables() {
+        //
         EventBus.getDefault().register(this);
-
+        //
         fragmentArrayList.add(InformationFragment.newInstance());
         fragmentArrayList.add(VideoFragment.newInstance());
         fragmentArrayList.add(MeFragment.newInstance());
+        //添加常驻碎片
+        for (Fragment fragment : fragmentArrayList) {
+            bodyFragment(fragment);
+        }
+    }
+
+    /**
+     * 添加主体碎片
+     * @param fragment
+     */
+    private void bodyFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.body_layout, fragment, fragment.getClass().getSimpleName());
+        fragmentTransaction.commitNow();
     }
 
 
+    /**
+     * 清除所有碎片
+     */
+    private void clearFragment() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        //
+        List<Fragment> lists = getSupportFragmentManager().getFragments();
+        if(lists!=null){
+            for(int k=0;k<lists.size();k++){
+                Fragment fragment =  lists.get(k);
+                if (fragment != null && fragment.getTag() != null) {
+                    String fragmentTag = fragment.getTag();
+                    //
+                    boolean flag = false;
+                    for (Fragment residentFragment : fragmentArrayList) {
+                        String residentTag = residentFragment.getTag();
+                        if (residentTag.equalsIgnoreCase(fragmentTag)) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    //
+                    if (flag) {
+                        fragmentTransaction.hide(fragment);
+                    } else {
+                        fragmentTransaction.remove(fragment);
+                    }
+                }
+            }
+        }
+        if (indexTab < fragmentArrayList.size()) {
+            Fragment fragment = fragmentArrayList.get(indexTab);
+            fragmentTransaction.show(fragment);
+        }
+        //
+        fragmentTransaction.commitNow();
+        //隐藏长期贮存的碎片
+
+    }
 
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        //
-        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return fragmentArrayList.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                return fragmentArrayList.size();
-            }
-        };
-        //
-        homeViewPager.setAdapter(fragmentPagerAdapter);
-        homeViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                setTag(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         //设置界面初使位置
         setTag(0);
     }
 
     @Override
     protected void initData() {
-        initPermission();
 
-        //
-        if (!checkLogin()) {
-            toLogin();
-        } else {
-            String url = GetUrl.getUserInfoByToken();
-            OkHttpUtils
-                    .get()
-                    .url(url)
-                    .addHeader(Constant.TOKEN, token)
-                    .id(100)
-                    .build()
-                    .execute(new MyStringCallback());
-        }
-
-    }
-
-
-    /**
-     * android 6.0 以上需要动态申请权限
-     */
-    private void initPermission() {
-        String[] permissions = {
-                Manifest.permission.INTERNET,
-                Manifest.permission.ACCESS_NETWORK_STATE,
-                Manifest.permission.MODIFY_AUDIO_SETTINGS,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_SETTINGS,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.ACCESS_WIFI_STATE,
-                Manifest.permission.CHANGE_WIFI_STATE
-        };
-
-        ArrayList<String> toApplyList = new ArrayList<String>();
-
-        for (String perm : permissions) {
-            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, perm)) {
-                toApplyList.add(perm);
-                // 进入到这里代表没有权限.
-            }
-        }
-        String[] tmpList = new String[toApplyList.size()];
-        if (!toApplyList.isEmpty()) {
-            ActivityCompat.requestPermissions(this, toApplyList.toArray(tmpList), 123);
-        }
 
     }
 
@@ -264,7 +229,7 @@ public class HomeActivity extends BaseActivity {
         //
         if (fragment != null) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.frameLayout, fragment, tag);
+            fragmentTransaction.add(R.id.frame_layout, fragment, tag);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commitAllowingStateLoss();
         }
@@ -273,9 +238,11 @@ public class HomeActivity extends BaseActivity {
 
     @OnClick({R.id.ll_information, R.id.ll_video, R.id.ll_me})
     public void CheckIndex(View view) {
+
         switch (view.getId()) {
             case R.id.ll_information:
                 setTag(0);
+
                 break;
 
             case R.id.ll_video:
@@ -283,19 +250,27 @@ public class HomeActivity extends BaseActivity {
                 break;
 
             case R.id.ll_me:
-                setTag(2);
+                if(checkLogin()){
+                    setTag(2);
+                }else {
+                    toLogin();
+                }
                 break;
         }
     }
 
 
+
+
     /**
      * 设置底部导航tab
+     *
      * @param index
      */
     private void setTag(int index) {
-        homeViewPager.setCurrentItem(index);
         resetTab();
+        indexTab = index;
+        clearFragment();
         switch (index) {
             case 0:
                 ((ImageView) llInformation.getChildAt(0)).setImageResource(R.mipmap.tab_information_s);
@@ -334,18 +309,6 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Fragment f = fragmentArrayList.get(homeViewPager.getCurrentItem());
-        f.onActivityResult(requestCode, resultCode, data);
-
-
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constant.FragmentTAG.login_fragmentTAG);
-        if (fragment != null) {
-            fragment.onActivityResult(requestCode, resultCode, data);
-        }
-        fragment = getSupportFragmentManager().findFragmentByTag(Constant.FragmentTAG.social_fragmentTAG);
-        if (fragment != null) {
-            fragment.onActivityResult(requestCode, resultCode, data);
-        }
     }
 
     private void toLogin() {
@@ -360,7 +323,7 @@ public class HomeActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN) //在ui线程执行
     public void onEventData(EventData eventData) {
-        switch (eventData.getCode()){
+        switch (eventData.getCode()) {
             case EventCode.USERINFO:
                 loadAvatar(2);
                 break;
@@ -375,48 +338,6 @@ public class HomeActivity extends BaseActivity {
             meFragment.loadAvator();
         }
     }
-
-    public class MyStringCallback extends StringCallback {
-        @Override
-        public void onBefore(Request request, int id) {
-        }
-
-        @Override
-        public void onAfter(int id) {
-
-        }
-
-        @Override
-        public void onError(Call call, Exception e, int id) {
-            L.e(TAG, e.getMessage());
-        }
-
-        @Override
-        public void onResponse(String response, int id) {
-            switch (id) {
-                case 100:
-                    L.e(TAG, response);
-                    ReturnMSG_UserInfo returnMSG_userInfo = new Gson().fromJson(response, ReturnMSG_UserInfo.class);
-                    if (returnMSG_userInfo != null && returnMSG_userInfo.getCode() == Constant.FGCode.OpOk_code) {
-                        ReturnMSG_UserInfo.DataBean dataBean = returnMSG_userInfo.getData();
-                        if (dataBean != null) {
-
-                            SPUtils.put(App.getContext(), Constant.USERINFO.NICKNAME, dataBean.getLoginInfo().getNickname());
-                            SPUtils.put(App.getContext(), Constant.USERINFO.AVATOR, dataBean.getLoginInfo().getAvator());
-                        }
-                    } else {
-                        toLogin();
-                    }
-                    break;
-
-            }
-        }
-
-        @Override
-        public void inProgress(float progress, long total, int id) {
-        }
-    }
-
 
     //
     @Override
@@ -436,6 +357,8 @@ public class HomeActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         GSYVideoPlayer.releaseAllVideos();
+        //
+        EventBus.getDefault().unregister(this);
     }
 
 
@@ -446,6 +369,7 @@ public class HomeActivity extends BaseActivity {
         }
         super.onBackPressed();
     }
+
 
 
 }
