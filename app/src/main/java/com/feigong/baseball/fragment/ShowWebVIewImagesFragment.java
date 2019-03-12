@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.feigong.baseball.R;
 import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.beans.ListImage;
-import com.feigong.baseball.common.ImageUtil;
 import com.google.gson.Gson;
+import com.ml.core.imageloader.ImageLoaderUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -58,7 +58,7 @@ public class ShowWebVIewImagesFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
-        if(listImage!=null && listImage.getImg_urls().size()>0){
+        if (listImage != null && listImage.getImg_urls().size() > 0) {
             ImageAdapter imageAdapter = new ImageAdapter();
             viewPager.setAdapter(imageAdapter);
             viewPager.setCurrentItem(listImage.getSelect_index());
@@ -71,7 +71,7 @@ public class ShowWebVIewImagesFragment extends BaseFragment {
                 @Override
                 public void onPageSelected(int position) {
 //
-                    tv_index.setText((position+1)+"/"+listImage.getImg_urls().size());
+                    tv_index.setText((position + 1) + "/" + listImage.getImg_urls().size());
                 }
 
                 @Override
@@ -81,7 +81,7 @@ public class ShowWebVIewImagesFragment extends BaseFragment {
             });
 
             //
-            tv_index.setText((listImage.getSelect_index()+1)+"/"+listImage.getImg_urls().size());
+            tv_index.setText((listImage.getSelect_index() + 1) + "/" + listImage.getImg_urls().size());
         }
     }
 
@@ -102,17 +102,16 @@ public class ShowWebVIewImagesFragment extends BaseFragment {
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView imageView = new ImageView(getContext());
             String imagUrl = listImage.getImg_urls().get(position);
-            ImageLoader.getInstance().displayImage(imagUrl, imageView, ImageUtil.getImageOptions());
+            ImageLoaderUtil.imageLoadingListener(imagUrl, imageView, 0);
             container.addView(imageView);
             return imageView;
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            ((ViewPager)container).removeView((View) object);
+            ((ViewPager) container).removeView((View) object);
         }
     }
-
 
 
 }

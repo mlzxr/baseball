@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.beans.ReturnMSG_Information;
-import com.feigong.baseball.common.ImageUtil;
+import com.ml.core.imageloader.ImageLoaderUtil;
 import com.ml.core.util.DateUtil;
 import com.ml.core.util.DensityUtils;
 import com.ml.core.util.ScreenUtils;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class InformationTypeAdpter extends RecyclerView.Adapter {
 
-    private static final String TAG="InformationTypeAdpter";
+    private static final String TAG = "InformationTypeAdpter";
 
     //
     private static final int TYPE_VIDEO = 2;
@@ -48,14 +48,14 @@ public class InformationTypeAdpter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        int itemType=0;
+        int itemType = 0;
 
-        if(position>-1){
+        if (position > -1) {
             //
             int count = datalist.get(position).getCover_mode();
-            if(count==3){//多图
+            if (count == 3) {//多图
                 itemType = TYPE_THREE;
-            }else {//单图
+            } else {//单图
                 itemType = TYPE_ONE;
             }
         }
@@ -66,7 +66,7 @@ public class InformationTypeAdpter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
 
-        if (TYPE_THREE == viewType){
+        if (TYPE_THREE == viewType) {
 
             view = layoutInflater.inflate(R.layout.item_type_three, parent, false);
             return new ThreeViewHolder(view);
@@ -85,25 +85,26 @@ public class InformationTypeAdpter extends RecyclerView.Adapter {
                 ThreeViewHolder threeViewHolder = (ThreeViewHolder) holder;
                 threeViewHolder.tv_title.setText(bean.getTitle());
                 threeViewHolder.tv_name.setText(bean.getPublish_time());
-                long time =new Long((long)bean.getPublish_timestamp());
+                long time = new Long((long) bean.getPublish_timestamp());
                 threeViewHolder.tv_time.setText(DateUtil.longToString(time, DateUtil.FORMAT_YYYY_MM_DD_HH_MM_SS));
-                if(bean.getCover_url()!=null && bean.getCover_url().size()>0){
+                if (bean.getCover_url() != null && bean.getCover_url().size() > 0) {
 
-                    ImageLoader.getInstance().displayImage(bean.getCover_url().get(0), threeViewHolder.iv_cover1, ImageUtil.getImageOptions());
-                    ImageLoader.getInstance().displayImage(bean.getCover_url().get(1), threeViewHolder.iv_cover2, ImageUtil.getImageOptions());
-                    ImageLoader.getInstance().displayImage(bean.getCover_url().get(2), threeViewHolder.iv_cover3, ImageUtil.getImageOptions());
+
+                    ImageLoaderUtil.imageLoadingListener(bean.getCover_url().get(0), threeViewHolder.iv_cover1, 0);
+                    ImageLoaderUtil.imageLoadingListener(bean.getCover_url().get(1), threeViewHolder.iv_cover2, 0);
+                    ImageLoaderUtil.imageLoadingListener(bean.getCover_url().get(2), threeViewHolder.iv_cover3, 0);
                 }
 
             } else {
                 OneViewHolder oneViewHolder = (OneViewHolder) holder;
                 oneViewHolder.tv_title.setText(bean.getTitle());
                 oneViewHolder.tv_name.setText(bean.getPublish_time());
-                long time =new Long((long)bean.getPublish_timestamp());
-                oneViewHolder.tv_time.setText(DateUtil.longToString(time,DateUtil.FORMAT_YYYY_MM_DD_HH_MM_SS));
+                long time = new Long((long) bean.getPublish_timestamp());
+                oneViewHolder.tv_time.setText(DateUtil.longToString(time, DateUtil.FORMAT_YYYY_MM_DD_HH_MM_SS));
                 //
-                if(bean.getCover_url()!=null && bean.getCover_url().size()>0){
-                    String cover =bean.getCover_url().get(0);
-                    ImageLoader.getInstance().displayImage(cover, oneViewHolder.iv_cover, ImageUtil.getImageOptions());
+                if (bean.getCover_url() != null && bean.getCover_url().size() > 0) {
+                    String cover = bean.getCover_url().get(0);
+                    ImageLoaderUtil.imageLoadingListener(cover, oneViewHolder.iv_cover, 0);
                 }
             }
         }
@@ -121,7 +122,6 @@ public class InformationTypeAdpter extends RecyclerView.Adapter {
     public int getItemCount() {
         return datalist.size();
     }
-
 
 
     class OneViewHolder extends RecyclerView.ViewHolder {
@@ -142,10 +142,10 @@ public class InformationTypeAdpter extends RecyclerView.Adapter {
             //设置图片宽高
             ViewGroup.LayoutParams layoutParams = iv_cover.getLayoutParams();
             int width = ScreenUtils.getScreenWidth(context);
-            int margin = DensityUtils.dp2px(context,5)*2;
+            int margin = DensityUtils.dp2px(context, 5) * 2;
 
-            layoutParams.height = width/16*9-margin;
-            layoutParams.width = width-margin;
+            layoutParams.height = width / 16 * 9 - margin;
+            layoutParams.width = width - margin;
             iv_cover.setLayoutParams(layoutParams);
         }
     }
@@ -172,13 +172,13 @@ public class InformationTypeAdpter extends RecyclerView.Adapter {
             //设置图片宽高
             ViewGroup.LayoutParams layoutParams = iv_cover1.getLayoutParams();
             int width = ScreenUtils.getScreenWidth(context);
-            int margin = DensityUtils.dp2px(context,5)*2;
-            layoutParams.height = (width-margin)/3/16*9;
-            layoutParams.width=(width-margin)/3-30;
+            int margin = DensityUtils.dp2px(context, 5) * 2;
+            layoutParams.height = (width - margin) / 3 / 16 * 9;
+            layoutParams.width = (width - margin) / 3 - 30;
 
             iv_cover1.setLayoutParams(layoutParams);
             iv_cover2.setLayoutParams(layoutParams);
-            iv_cover2.setPadding(margin/2,0,margin/2,0);
+            iv_cover2.setPadding(margin / 2, 0, margin / 2, 0);
             iv_cover3.setLayoutParams(layoutParams);
 
         }

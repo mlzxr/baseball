@@ -10,11 +10,10 @@ import android.widget.TextView;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.beans.ReturnMSG_Recommend;
-import com.feigong.baseball.common.ImageUtil;
+import com.ml.core.imageloader.ImageLoaderUtil;
 import com.ml.core.util.DateUtil;
 import com.ml.core.util.DensityUtils;
 import com.ml.core.util.ScreenUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -48,19 +47,19 @@ public class InformationRecommendAdaper extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        int itemType=0;
+        int itemType = 0;
 
-        if(position>-1){
+        if (position > -1) {
             //
-            int type =dataList.get(position).getMtype();
+            int type = dataList.get(position).getMtype();
             int count = dataList.get(position).getCover_mode();
             //
-            if(type==2){//视频
+            if (type == 2) {//视频
                 itemType = TYPE_VIDEO;
-            }else {
-                if(count==3){//多图
+            } else {
+                if (count == 3) {//多图
                     itemType = TYPE_THREE;
-                }else {//单图
+                } else {//单图
                     itemType = TYPE_ONE;
                 }
             }
@@ -72,10 +71,10 @@ public class InformationRecommendAdaper extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
 
-        if (TYPE_VIDEO == viewType){
+        if (TYPE_VIDEO == viewType) {
             view = layoutInflater.inflate(R.layout.item_type_video, parent, false);
             return new VideoViewHolder(view);
-        } else if (TYPE_THREE == viewType){
+        } else if (TYPE_THREE == viewType) {
 
             view = layoutInflater.inflate(R.layout.item_type_three, parent, false);
             return new ThreeViewHolder(view);
@@ -84,7 +83,6 @@ public class InformationRecommendAdaper extends RecyclerView.Adapter {
             return new OneViewHolder(view);
         }
     }
-
 
 
     @Override
@@ -100,37 +98,37 @@ public class InformationRecommendAdaper extends RecyclerView.Adapter {
                 videoViewHolder.tv_name.setText(bean.getPub_name());
                 videoViewHolder.tv_format_duration.setText(bean.getFormat_duration());
 
-                long time =new Long((long)bean.getPub_time());
+                long time = new Long((long) bean.getPub_time());
                 videoViewHolder.tv_time.setText(DateUtil.longToString(time, DateUtil.FORMAT_YYYY_MM_DD_HH_MM_SS));
                 //
-                if(bean.getCover()!=null && bean.getCover().size()>0){
-                    String cover =bean.getCover().get(0);
-                    ImageLoader.getInstance().displayImage(cover, videoViewHolder.iv_cover, ImageUtil.getImageOptions());
+                if (bean.getCover() != null && bean.getCover().size() > 0) {
+                    String coverUrl = bean.getCover().get(0);
+                    ImageLoaderUtil.imageLoadingListener(coverUrl, videoViewHolder.iv_cover, 0);
                 }
 
             } else if (holder instanceof ThreeViewHolder) {
                 ThreeViewHolder threeViewHolder = (ThreeViewHolder) holder;
                 threeViewHolder.tv_title.setText(bean.getTitle());
                 threeViewHolder.tv_name.setText(bean.getPub_name());
-                long time =new Long((long)bean.getPub_time());
-                threeViewHolder.tv_time.setText(DateUtil.longToString(time,DateUtil.FORMAT_YYYY_MM_DD_HH_MM_SS));
-                if(bean.getCover()!=null && bean.getCover().size()>0){
+                long time = new Long((long) bean.getPub_time());
+                threeViewHolder.tv_time.setText(DateUtil.longToString(time, DateUtil.FORMAT_YYYY_MM_DD_HH_MM_SS));
+                if (bean.getCover() != null && bean.getCover().size() > 0) {
 
-                    ImageLoader.getInstance().displayImage(bean.getCover().get(0), threeViewHolder.iv_cover1, ImageUtil.getImageOptions());
-                    ImageLoader.getInstance().displayImage(bean.getCover().get(1), threeViewHolder.iv_cover2, ImageUtil.getImageOptions());
-                    ImageLoader.getInstance().displayImage(bean.getCover().get(2), threeViewHolder.iv_cover3, ImageUtil.getImageOptions());
+                    ImageLoaderUtil.imageLoadingListener(bean.getCover().get(0), threeViewHolder.iv_cover1, 0);
+                    ImageLoaderUtil.imageLoadingListener(bean.getCover().get(1), threeViewHolder.iv_cover2, 0);
+                    ImageLoaderUtil.imageLoadingListener(bean.getCover().get(2), threeViewHolder.iv_cover3, 0);
                 }
 
             } else {
                 OneViewHolder oneViewHolder = (OneViewHolder) holder;
                 oneViewHolder.tv_title.setText(bean.getTitle());
                 oneViewHolder.tv_name.setText(bean.getPub_name());
-                long time =new Long((long)bean.getPub_time());
-                oneViewHolder.tv_time.setText(DateUtil.longToString(time,DateUtil.FORMAT_YYYY_MM_DD_HH_MM_SS));
+                long time = new Long((long) bean.getPub_time());
+                oneViewHolder.tv_time.setText(DateUtil.longToString(time, DateUtil.FORMAT_YYYY_MM_DD_HH_MM_SS));
                 //
-                if(bean.getCover()!=null && bean.getCover().size()>0){
-                    String cover =bean.getCover().get(0);
-                    ImageLoader.getInstance().displayImage(cover, oneViewHolder.iv_cover, ImageUtil.getImageOptions());
+                if (bean.getCover() != null && bean.getCover().size() > 0) {
+                    String cover = bean.getCover().get(0);
+                    ImageLoaderUtil.imageLoadingListener(cover, oneViewHolder.iv_cover, 0);
                 }
             }
         }
@@ -164,10 +162,10 @@ public class InformationRecommendAdaper extends RecyclerView.Adapter {
             //设置图片宽高
             ViewGroup.LayoutParams layoutParams = iv_cover.getLayoutParams();
             int width = ScreenUtils.getScreenWidth(context);
-            int margin = DensityUtils.dp2px(context,5)*2;
+            int margin = DensityUtils.dp2px(context, 5) * 2;
 
-            layoutParams.height = width/16*9-margin;
-            layoutParams.width = width-margin;
+            layoutParams.height = width / 16 * 9 - margin;
+            layoutParams.width = width - margin;
             iv_cover.setLayoutParams(layoutParams);
 
         }
@@ -191,10 +189,10 @@ public class InformationRecommendAdaper extends RecyclerView.Adapter {
             //设置图片宽高
             ViewGroup.LayoutParams layoutParams = iv_cover.getLayoutParams();
             int width = ScreenUtils.getScreenWidth(context);
-            int margin = DensityUtils.dp2px(context,5)*2;
+            int margin = DensityUtils.dp2px(context, 5) * 2;
 
-            layoutParams.height = width/16*9-margin;
-            layoutParams.width = width-margin;
+            layoutParams.height = width / 16 * 9 - margin;
+            layoutParams.width = width - margin;
             iv_cover.setLayoutParams(layoutParams);
         }
     }
@@ -221,13 +219,13 @@ public class InformationRecommendAdaper extends RecyclerView.Adapter {
             //设置图片宽高
             ViewGroup.LayoutParams layoutParams = iv_cover1.getLayoutParams();
             int width = ScreenUtils.getScreenWidth(context);
-            int margin = DensityUtils.dp2px(context,5)*2;
-            layoutParams.height = (width-margin)/3/16*9;
-            layoutParams.width=(width-margin)/3-30;
+            int margin = DensityUtils.dp2px(context, 5) * 2;
+            layoutParams.height = (width - margin) / 3 / 16 * 9;
+            layoutParams.width = (width - margin) / 3 - 30;
 
             iv_cover1.setLayoutParams(layoutParams);
             iv_cover2.setLayoutParams(layoutParams);
-            iv_cover2.setPadding(margin/2,0,margin/2,0);
+            iv_cover2.setPadding(margin / 2, 0, margin / 2, 0);
             iv_cover3.setLayoutParams(layoutParams);
 
         }

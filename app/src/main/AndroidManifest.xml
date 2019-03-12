@@ -52,6 +52,8 @@
             </intent-filter>
         </activity>
 
+
+
         <activity
             android:name="com.feigong.baseball.activity.HomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -94,9 +96,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- 第三方登陆 end  -->
-
-
-
 
 
 

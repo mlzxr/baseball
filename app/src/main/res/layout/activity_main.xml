@@ -5,13 +5,12 @@
     android:orientation="vertical"
     android:background="@mipmap/index"
     >
+
     <RelativeLayout
         android:id="@+id/rl_layout"
         android:layout_width="match_parent"
         android:layout_weight="3"
         android:layout_height="0dp">
-
-
 
         <ImageView
             android:id="@+id/iv_advertising"
@@ -41,6 +40,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         />
+
 </LinearLayout>
 
 

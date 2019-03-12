@@ -19,9 +19,9 @@ import com.feigong.baseball.Interface.BaseInterFaceListenerText;
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.beans.ReturnMSGComment;
-import com.feigong.baseball.common.ImageUtil;
+import com.ml.core.imageloader.ImageLoaderUtil;
 import com.ml.core.util.ViewUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
+
 import java.util.ArrayList;
 
 /**
@@ -71,9 +71,9 @@ public class CommentAdapter extends RecyclerView.Adapter {
         ReturnMSGComment.DataBean dataBean = datalist.get(position);
         if (dataBean != null) {
             CommentViewHolder commentViewHolder = (CommentViewHolder) holder;
-            String avator = dataBean.getReviewer_avator();
-            if (!TextUtils.isEmpty(avator)) {
-                ImageLoader.getInstance().displayImage(avator, commentViewHolder.iv_avatar, ImageUtil.getImageOptionsCircle());
+            String avatorUrl = dataBean.getReviewer_avator();
+            if (!TextUtils.isEmpty(avatorUrl)) {
+                ImageLoaderUtil.imageLoadingListener(avatorUrl, commentViewHolder.iv_avatar, 1);
             }
             commentViewHolder.tv_title.setText(dataBean.getReviewer_name());
             commentViewHolder.iv_like.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +100,7 @@ public class CommentAdapter extends RecyclerView.Adapter {
                 String text = replysBean.getReplyer_name() + ": " + replysBean.getMessage();
 
 
-                TextView textView =new TextView(context);
+                TextView textView = new TextView(context);
                 textView.setText(addClickablePart(text, ""), TextView.BufferType.SPANNABLE);
                 commentViewHolder.ll_reply_list.addView(textView);
 
@@ -146,7 +146,7 @@ public class CommentAdapter extends RecyclerView.Adapter {
             if (index == 0) {
                 ds.setColor(ContextCompat.getColor(App.getContext(), R.color.skyblue)); // 设置文本颜色
                 ds.setUnderlineText(false);
-            }else {
+            } else {
                 ds.setColor(ContextCompat.getColor(App.getContext(), R.color.tab_select_n)); // 设置文本颜色
                 ds.setUnderlineText(false);
             }

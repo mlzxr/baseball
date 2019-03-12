@@ -12,12 +12,12 @@ import com.feigong.baseball.base.BaseActivity;
 import com.feigong.baseball.beans.ReturnMSG_VideoDetail;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
-import com.feigong.baseball.common.ImageUtil;
 import com.feigong.baseball.fgview.LandLayoutVideo;
 import com.feigong.baseball.fgview.ViewTopBar;
 import com.feigong.baseball.fragment.CommentFragment;
 import com.feigong.baseball.listener.SampleListener;
 import com.google.gson.Gson;
+import com.ml.core.imageloader.ImageLoaderUtil;
 import com.ml.core.util.L;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
@@ -73,7 +73,9 @@ public class VideoDetailActivity extends BaseActivity {
                             //增加封面
                             ImageView imageView = new ImageView(VideoDetailActivity.this);
                             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                            ImageLoader.getInstance().displayImage(bean.getV_poster(), imageView, ImageUtil.getImageOptions());
+
+                            ImageLoaderUtil.imageLoadingListener(bean.getV_poster(), imageView, 0);
+
                             detailPlayer.setThumbImageView(imageView);
                             //增加title
                             detailPlayer.getTitleTextView().setVisibility(View.GONE);

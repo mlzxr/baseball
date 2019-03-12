@@ -3,15 +3,19 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app-business/app-business.iml" filepath="$PROJECT_DIR$/app-business/app-business.iml" />
       <module fileurl="file://$PROJECT_DIR$/app-core/app-core.iml" filepath="$PROJECT_DIR$/app-core/app-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/baseUtil/baseUtil.iml" filepath="$PROJECT_DIR$/baseUtil/baseUtil.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app-core/app-core.iml" filepath="$PROJECT_DIR$/app-core/app-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/baseUtil/baseUtil.iml" filepath="$PROJECT_DIR$/baseUtil/baseUtil.iml" />
       <module fileurl="file://$PROJECT_DIR$/baseball.iml" filepath="$PROJECT_DIR$/baseball.iml" />
+      <module fileurl="file://$PROJECT_DIR$/baseball.iml" filepath="$PROJECT_DIR$/baseball.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gsyVideoPlayer/gsyVideoPlayer.iml" filepath="$PROJECT_DIR$/gsyVideoPlayer/gsyVideoPlayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/gsyVideoPlayer/gsyVideoPlayer.iml" filepath="$PROJECT_DIR$/gsyVideoPlayer/gsyVideoPlayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/magicindicator/magicindicator.iml" filepath="$PROJECT_DIR$/magicindicator/magicindicator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/magicindicator/magicindicator.iml" filepath="$PROJECT_DIR$/magicindicator/magicindicator.iml" />
       <module fileurl="file://$PROJECT_DIR$/okhttputils/okhttputils.iml" filepath="$PROJECT_DIR$/okhttputils/okhttputils.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okhttputils/okhttputils.iml" filepath="$PROJECT_DIR$/okhttputils/okhttputils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wzmrecyclerview/wzmrecyclerview.iml" filepath="$PROJECT_DIR$/wzmrecyclerview/wzmrecyclerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/wzmrecyclerview/wzmrecyclerview.iml" filepath="$PROJECT_DIR$/wzmrecyclerview/wzmrecyclerview.iml" />
     </modules>
   </component>

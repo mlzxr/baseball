@@ -13,10 +13,10 @@ import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.GetUrl;
-import com.feigong.baseball.common.ImageUtil;
 import com.feigong.baseball.common.MethodsUtil;
 import com.feigong.baseball.fgview.View_ITI_Horizontal;
 import com.google.gson.Gson;
+import com.ml.core.imageloader.ImageLoaderUtil;
 import com.ml.core.util.L;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -40,7 +40,7 @@ import okhttp3.Request;
  */
 public class MeFragment extends BaseFragment {
 
-    private static final String TAG="MeFragment";
+    private static final String TAG = "MeFragment";
 
 
     private ImageView iv_avator;//头像
@@ -70,7 +70,7 @@ public class MeFragment extends BaseFragment {
         @Override
         public void onResponse(String response, int id) {
 
-            L.e(TAG,response);
+            L.e(TAG, response);
 
             switch (id) {
                 case 100:
@@ -80,8 +80,8 @@ public class MeFragment extends BaseFragment {
                         if (dataBean != null) {
                             String nickname = dataBean.getLoginInfo().getNickname();
                             String avator = dataBean.getLoginInfo().getAvator();
-                            if(!TextUtils.isEmpty(avator)){
-                                ImageLoader.getInstance().displayImage(avator, iv_avator,ImageUtil.getImageOptionsCircle());
+                            if (!TextUtils.isEmpty(avator)) {
+                                ImageLoaderUtil.imageLoadingListener(avator, iv_avator, 1);
                             }
                         }
                     }
@@ -94,7 +94,6 @@ public class MeFragment extends BaseFragment {
         public void inProgress(float progress, long total, int id) {
         }
     }
-
 
 
     @Override
@@ -110,13 +109,13 @@ public class MeFragment extends BaseFragment {
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
 
-        iv_avator =(ImageView)view.findViewById(R.id.iv_avator);
+        iv_avator = (ImageView) view.findViewById(R.id.iv_avator);
         //
-        View_ITI_Horizontal myMessage_iti = (View_ITI_Horizontal)view.findViewById(R.id.my_message_iti);
-        View_ITI_Horizontal myCollect_iti = (View_ITI_Horizontal)view.findViewById(R.id.my_collect_iti);
+        View_ITI_Horizontal myMessage_iti = (View_ITI_Horizontal) view.findViewById(R.id.my_message_iti);
+        View_ITI_Horizontal myCollect_iti = (View_ITI_Horizontal) view.findViewById(R.id.my_collect_iti);
         //
-        View_ITI_Horizontal myAccount_iti = (View_ITI_Horizontal)view.findViewById(R.id.my_account_iti);
-        View_ITI_Horizontal mySetting_iti = (View_ITI_Horizontal)view.findViewById(R.id.my_setting_iti);
+        View_ITI_Horizontal myAccount_iti = (View_ITI_Horizontal) view.findViewById(R.id.my_account_iti);
+        View_ITI_Horizontal mySetting_iti = (View_ITI_Horizontal) view.findViewById(R.id.my_setting_iti);
 
         //
         myMessage_iti.getLeftImageView().setImageResource(R.mipmap.iconmonst_email);
@@ -133,11 +132,11 @@ public class MeFragment extends BaseFragment {
         iv_avator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String,Object> map = new HashMap<String, Object>();
+                Map<String, Object> map = new HashMap<String, Object>();
                 //
-                map.put(Constant.FLAG,Constant.FragmentTAG.get_picture_fragment);
-                map.put(Constant.TAG,Constant.FragmentTAG.get_picture_fragmentTAG);
-                map.put(Constant.TAKE_PHONE_TYPE.TAKE_TYPE,Constant.TAKE_PHONE_TYPE.AVATOR);
+                map.put(Constant.FLAG, Constant.FragmentTAG.get_picture_fragment);
+                map.put(Constant.TAG, Constant.FragmentTAG.get_picture_fragmentTAG);
+                map.put(Constant.TAKE_PHONE_TYPE.TAKE_TYPE, Constant.TAKE_PHONE_TYPE.AVATOR);
                 //
                 openFragment(map);
             }
@@ -146,10 +145,10 @@ public class MeFragment extends BaseFragment {
         mySetting_iti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String,Object> map = new HashMap<String, Object>();
+                Map<String, Object> map = new HashMap<String, Object>();
                 //
-                map.put(Constant.FLAG,Constant.FragmentTAG.setting_fragment);
-                map.put(Constant.TAG,Constant.FragmentTAG.setting_fragmentTAG);
+                map.put(Constant.FLAG, Constant.FragmentTAG.setting_fragment);
+                map.put(Constant.TAG, Constant.FragmentTAG.setting_fragmentTAG);
                 //
                 openFragment(map);
             }
@@ -162,27 +161,27 @@ public class MeFragment extends BaseFragment {
 
 
         String url = GetUrl.getUserInfoByToken();
-            OkHttpUtils
-                    .get()
-                    .url(url)
-                    .addHeader(Constant.TOKEN, MethodsUtil.getToken())
-                    .id(100)
-                    .build()
-                    .execute(new MyStringCallback());
+        OkHttpUtils
+                .get()
+                .url(url)
+                .addHeader(Constant.TOKEN, MethodsUtil.getToken())
+                .id(100)
+                .build()
+                .execute(new MyStringCallback());
 
 
     }
 
 
-    public void loadAvator(){
-        ImageLoader.getInstance().displayImage("file://"+Constant.UPLOADFILEPATH, iv_avator,ImageUtil.getImageOptionsCircle());
+    public void loadAvator() {
+
+        ImageLoaderUtil.imageLoadingListener("file://" + Constant.UPLOADFILEPATH, iv_avator, 1);
     }
 
-    private void openFragment(Map map){
-        HomeActivity homeActivity = (HomeActivity)getActivity();
+    private void openFragment(Map map) {
+        HomeActivity homeActivity = (HomeActivity) getActivity();
         homeActivity.setLayout(map);
     }
-
 
 
 }
