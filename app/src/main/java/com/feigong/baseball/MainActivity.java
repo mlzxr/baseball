@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity {
         String url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522737230&di=7873305994bc28da3644e4baae8025a2&imgtype=jpg&er=1&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4610b912c8fcc3ce510ed22e9845d688d53f20e4.jpg";
 
         //
-        ImageLoaderUtil.imageLoadingListener(url, ivAdvertising, ImageLoaderUtil.DEFAULT, new CustomerImageLoadingListener() {
+        ImageLoaderUtil.imageLoadingDefaultListener(url, ivAdvertising, new CustomerImageLoadingListener() {
             @Override
             public void onLoadingComplete() {
                 ivAdvertising.setVisibility(View.VISIBLE);

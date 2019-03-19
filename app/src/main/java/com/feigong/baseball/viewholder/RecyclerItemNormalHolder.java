@@ -50,7 +50,7 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
         //增加封面
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        ImageLoaderUtil.imageLoadingListener(videoModel.getV_poster(), imageView, 0);
+        ImageLoaderUtil.imageLoadingDefault(videoModel.getV_poster(), imageView);
 
         if (imageView.getParent() != null) {
             ViewGroup viewGroup = (ViewGroup) imageView.getParent();
@@ -119,7 +119,7 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
 
 
         //发布人头像
-        ImageLoaderUtil.imageLoadingListener(videoModel.getPublisher_avator(), iv_avatar, 1);
+        ImageLoaderUtil.imageLoadingCircle(videoModel.getPublisher_avator(), iv_avatar);
         //
         tv_title.setText(videoModel.getPublisher_name());
         tv_date.setText(videoModel.getPublish_time());

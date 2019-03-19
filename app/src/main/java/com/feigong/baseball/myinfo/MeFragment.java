@@ -81,7 +81,7 @@ public class MeFragment extends BaseFragment {
                             String nickname = dataBean.getLoginInfo().getNickname();
                             String avator = dataBean.getLoginInfo().getAvator();
                             if (!TextUtils.isEmpty(avator)) {
-                                ImageLoaderUtil.imageLoadingListener(avator, iv_avator, 1);
+                                ImageLoaderUtil.imageLoadingCircle(avator, iv_avator);
                             }
                         }
                     }
@@ -175,7 +175,7 @@ public class MeFragment extends BaseFragment {
 
     public void loadAvator() {
 
-        ImageLoaderUtil.imageLoadingListener("file://" + Constant.UPLOADFILEPATH, iv_avator, 1);
+        ImageLoaderUtil.imageLoadingCircle("file://" + Constant.UPLOADFILEPATH, iv_avator);
     }
 
     private void openFragment(Map map) {
