@@ -1,12 +1,12 @@
 package com.feigong.baseball;
 
-import com.ml.core.mvp.base.AbstractMvpActivity;
+import com.ml.core.mvp.basex.BaseXActivity;
 
 /**
  * Created by zhangyajun on 2019/3/13.
  */
 
-public class StartActivity extends AbstractMvpActivity<StartView,StartPresenter> implements StartView{
+public class StartActivity extends BaseXActivity<StartView,StartPresenter> implements StartView{
 
 
 

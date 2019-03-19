@@ -1,15 +1,12 @@
 package com.feigong.baseball.activity;
 
-import android.os.Handler;
-import android.util.Log;
-
-import com.ml.core.mvp.base.AbstractMvpPersenter;
+import com.ml.core.mvp.basex.IBaseXPresenter;
 
 /**
  * Created by zhangyajun on 2019/3/12.
  */
 
-public class HomePresenter extends AbstractMvpPersenter<HomeView> {
+public class HomePresenter extends IBaseXPresenter<HomeView> {
 
 //    private final RequestMode4 mRequestMode;
 //
