@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.feigong.baseball.R;
-import com.feigong.baseball.activity.HomeActivity;
+import com.feigong.baseball.activity.home.HomeActivity;
 import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
@@ -18,7 +18,6 @@ import com.feigong.baseball.fgview.View_ITI_Horizontal;
 import com.google.gson.Gson;
 import com.ml.core.imageloader.ImageLoaderUtil;
 import com.ml.core.util.L;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 

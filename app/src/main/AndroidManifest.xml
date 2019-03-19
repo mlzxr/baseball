@@ -55,7 +55,7 @@
 
 
         <activity
-            android:name="com.feigong.baseball.activity.HomeActivity"
+            android:name="com.feigong.baseball.activity.home.HomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 

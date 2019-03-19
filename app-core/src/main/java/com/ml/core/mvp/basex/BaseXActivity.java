@@ -11,9 +11,6 @@ public abstract class BaseXActivity<P extends IBaseXPresenter> extends AppCompat
 
     private P presenter;
 
-    public abstract P onBindPresenter();
-
-
     public P getPresenter() {
         if (presenter == null) {
             presenter = onBindPresenter();
@@ -23,6 +20,9 @@ public abstract class BaseXActivity<P extends IBaseXPresenter> extends AppCompat
         }
         return presenter;
     }
+
+
+    public abstract P onBindPresenter();
 
     @Override
     public Activity getSelfActivity() {

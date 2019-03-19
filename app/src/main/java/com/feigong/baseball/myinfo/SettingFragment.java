@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.feigong.baseball.MainActivity;
 import com.feigong.baseball.R;
-import com.feigong.baseball.activity.HomeActivity;
+import com.feigong.baseball.activity.home.HomeActivity;
 import com.feigong.baseball.application.App;
 import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.beans.ReturnMSG_Push;

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.feigong.baseball.activity.HomeActivity;
+import com.feigong.baseball.activity.home.HomeActivity;
 import com.feigong.baseball.base.BaseActivity;
 import com.feigong.baseball.common.StatusBarUtil;
 import com.ml.core.imageloader.CustomerImageLoadingListener;
