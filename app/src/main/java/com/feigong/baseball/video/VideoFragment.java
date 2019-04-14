@@ -52,7 +52,6 @@ public class VideoFragment extends BaseFragment {
 
     private static final String TAG="VideoFragment";
 
-
     private ViewPager mViewPager;
     private MagicIndicator mMagicIndicator;
     private CommonNavigator mCommonNavigator;
@@ -149,8 +148,6 @@ public class VideoFragment extends BaseFragment {
         }
 
     }
-
-
 
 
     public class MyStringCallback extends StringCallback {

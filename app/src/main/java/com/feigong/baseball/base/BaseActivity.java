@@ -9,9 +9,11 @@ import android.widget.Toast;
 
 import com.feigong.baseball.R;
 import com.feigong.baseball.application.App;
+import com.feigong.baseball.common.Constant;
 import com.feigong.baseball.common.MethodsUtil;
 import com.feigong.baseball.common.StatusBarUtil;
 import com.ml.core.util.NetUtils;
+import com.ml.core.util.SPUtils;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -46,8 +48,8 @@ public abstract class BaseActivity extends BasicsActivity {
         //
         steepStatusBar();
 
-        //测试
-        //SPUtils.put(App.getContext(), Constant.TOKEN, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJNVU01UWpJNE0wRTVRVVpGTkRZMk5EaEZOMFF4T1VNMVJFTTVRVFl3TUVNPSIsImlhdCI6MTUyMjIxNTQ5ODE2MH0.3QbmRVGz4oTHSE9nj3X9VVTiXhiQGcz_8e85enQyNxI");
+        //mod
+        SPUtils.put(App.getContext(), Constant.TOKEN, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJSVGM1TVRNNU5UVkZRekk1TkVVeU5UZzBNamhETkRRd05EWTJOemMzTmtRPSIsImlhdCI6MTU1NTExNzM3NDc1M30.mr9QSKZsgfGxBBNLKOvb8yugONxGLvOAC9Rs_g1XWt4");
 
 
         if (checkNetWork()) {

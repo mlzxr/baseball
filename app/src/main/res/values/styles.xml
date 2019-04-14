@@ -62,10 +62,17 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="tab_bottom">
+    <style name="top_bar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
     </style>
+
+    <style name="tab_bottom">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">52dp </item>
+    </style>
+
+
 
     <style name="tv_silver" parent="layout_ww">
         <item name="android:textColor">@color/silver</item>

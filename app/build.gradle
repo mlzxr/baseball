@@ -38,6 +38,18 @@ android {
         //targetGenDir 'src/main/java'//保存到java代码路径
     }
 
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            if (variant.buildType.name.equals("release")) {
+                outputFileName = "AIUVS-${variant.versionCode}-release.apk"
+            }
+            if (variant.buildType.name.equals("debug")) {
+                outputFileName = "AIUVS-${variant.versionCode}-debug.apk"
+            }
+        }
+    }
+
+
 }
 
 

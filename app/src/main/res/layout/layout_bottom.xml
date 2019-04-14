@@ -5,6 +5,9 @@
     android:orientation="horizontal"
     android:background="@color/layout_bottom"
     android:gravity="center"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+
     >
     <LinearLayout
         android:id="@+id/ll_information"
