@@ -103,7 +103,7 @@ public class InformationRecommendAdaper extends RecyclerView.Adapter {
                 //
                 if (bean.getCover() != null && bean.getCover().size() > 0) {
                     String coverUrl = bean.getCover().get(0);
-                    ImageLoaderUtil.imageLoadingListener(coverUrl, videoViewHolder.iv_cover, 0);
+                    ImageLoaderUtil.imageLoadingDefault(coverUrl, videoViewHolder.iv_cover);
                 }
 
             } else if (holder instanceof ThreeViewHolder) {
@@ -114,9 +114,9 @@ public class InformationRecommendAdaper extends RecyclerView.Adapter {
                 threeViewHolder.tv_time.setText(DateUtil.longToString(time, DateUtil.FORMAT_YYYY_MM_DD_HH_MM_SS));
                 if (bean.getCover() != null && bean.getCover().size() > 0) {
 
-                    ImageLoaderUtil.imageLoadingListener(bean.getCover().get(0), threeViewHolder.iv_cover1, 0);
-                    ImageLoaderUtil.imageLoadingListener(bean.getCover().get(1), threeViewHolder.iv_cover2, 0);
-                    ImageLoaderUtil.imageLoadingListener(bean.getCover().get(2), threeViewHolder.iv_cover3, 0);
+                    ImageLoaderUtil.imageLoadingDefault(bean.getCover().get(0), threeViewHolder.iv_cover1);
+                    ImageLoaderUtil.imageLoadingDefault(bean.getCover().get(1), threeViewHolder.iv_cover2);
+                    ImageLoaderUtil.imageLoadingDefault(bean.getCover().get(2), threeViewHolder.iv_cover3);
                 }
 
             } else {
@@ -128,7 +128,7 @@ public class InformationRecommendAdaper extends RecyclerView.Adapter {
                 //
                 if (bean.getCover() != null && bean.getCover().size() > 0) {
                     String cover = bean.getCover().get(0);
-                    ImageLoaderUtil.imageLoadingListener(cover, oneViewHolder.iv_cover, 0);
+                    ImageLoaderUtil.imageLoadingDefault(cover, oneViewHolder.iv_cover);
                 }
             }
         }

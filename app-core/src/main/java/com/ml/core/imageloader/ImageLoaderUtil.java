@@ -17,29 +17,30 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
  */
 
 public class ImageLoaderUtil {
-    //默认
-    public static final int DEFAULT = 0;
-    //圆角
-    public static final int CIRCLE = 1;
 
     /**
-     * 监听网络图片加载进程
+     * 加载图片
+     *
+     * @param url
+     * @param imageView
+     */
+    public static void imageLoadingDefault(String url, final ImageView imageView) {
+
+        ImageLoader.getInstance().displayImage(url, imageView, options);
+
+    }
+
+    /**
+     * 加载图片，监听过程
      *
      * @param url
      * @param imageView
      * @param customerImageLoadingListener
-     * @param type                         1:圆角 0:原始的
      */
-    public static void imageLoadingListener(String url, final ImageView imageView, int type, final CustomerImageLoadingListener customerImageLoadingListener) {
+    public static void imageLoadingDefaultListener(String url, final ImageView imageView, final CustomerImageLoadingListener customerImageLoadingListener) {
 
-        DisplayImageOptions displayImageOptions = null;
-        if (type == CIRCLE) {
-            displayImageOptions = optionsCircle;
-        } else {
-            displayImageOptions = options;
-        }
         //
-        ImageLoader.getInstance().displayImage(url, imageView, displayImageOptions, new ImageLoadingListener() {
+        ImageLoader.getInstance().displayImage(url, imageView, options, new ImageLoadingListener() {
 
             @Override
             public void onLoadingStarted(String imageUri, View view) {
@@ -64,21 +65,16 @@ public class ImageLoaderUtil {
 
     }
 
+
     /**
-     * 加载网络图片
+     * 加载圆角图片
      *
      * @param url
      * @param imageView
-     * @param type      1:圆角  0:原始的
      */
-    public static void imageLoadingListener(String url, final ImageView imageView, int type) {
-        DisplayImageOptions displayImageOptions = null;
-        if (type == CIRCLE) {
-            displayImageOptions = optionsCircle;
-        } else {
-            displayImageOptions = options;
-        }
-        ImageLoader.getInstance().displayImage(url, imageView, displayImageOptions);
+    public static void imageLoadingCircle(String url, final ImageView imageView) {
+
+        ImageLoader.getInstance().displayImage(url, imageView, options);
 
     }
 
@@ -104,6 +100,5 @@ public class ImageLoaderUtil {
             .considerExifParams(true)
             .displayer(new CircleBitmapDisplayer(Color.WHITE, 5))
             .build();
-
 
 }

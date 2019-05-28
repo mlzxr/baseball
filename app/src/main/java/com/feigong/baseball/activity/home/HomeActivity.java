@@ -1,4 +1,4 @@
-package com.feigong.baseball.activity;/**
+package com.feigong.baseball.activity.home;/**
  * Created by ruler on 16/9/6.
  */
 

@@ -90,9 +90,9 @@ public class InformationTypeAdpter extends RecyclerView.Adapter {
                 if (bean.getCover_url() != null && bean.getCover_url().size() > 0) {
 
 
-                    ImageLoaderUtil.imageLoadingListener(bean.getCover_url().get(0), threeViewHolder.iv_cover1, 0);
-                    ImageLoaderUtil.imageLoadingListener(bean.getCover_url().get(1), threeViewHolder.iv_cover2, 0);
-                    ImageLoaderUtil.imageLoadingListener(bean.getCover_url().get(2), threeViewHolder.iv_cover3, 0);
+                    ImageLoaderUtil.imageLoadingDefault(bean.getCover_url().get(0), threeViewHolder.iv_cover1);
+                    ImageLoaderUtil.imageLoadingDefault(bean.getCover_url().get(1), threeViewHolder.iv_cover2);
+                    ImageLoaderUtil.imageLoadingDefault(bean.getCover_url().get(2), threeViewHolder.iv_cover3);
                 }
 
             } else {
@@ -104,7 +104,7 @@ public class InformationTypeAdpter extends RecyclerView.Adapter {
                 //
                 if (bean.getCover_url() != null && bean.getCover_url().size() > 0) {
                     String cover = bean.getCover_url().get(0);
-                    ImageLoaderUtil.imageLoadingListener(cover, oneViewHolder.iv_cover, 0);
+                    ImageLoaderUtil.imageLoadingDefault(cover, oneViewHolder.iv_cover);
                 }
             }
         }

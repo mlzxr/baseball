@@ -73,7 +73,7 @@ public class CommentAdapter extends RecyclerView.Adapter {
             CommentViewHolder commentViewHolder = (CommentViewHolder) holder;
             String avatorUrl = dataBean.getReviewer_avator();
             if (!TextUtils.isEmpty(avatorUrl)) {
-                ImageLoaderUtil.imageLoadingListener(avatorUrl, commentViewHolder.iv_avatar, 1);
+                ImageLoaderUtil.imageLoadingCircle(avatorUrl, commentViewHolder.iv_avatar);
             }
             commentViewHolder.tv_title.setText(dataBean.getReviewer_name());
             commentViewHolder.iv_like.setOnClickListener(new View.OnClickListener() {

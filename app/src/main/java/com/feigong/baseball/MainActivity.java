@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.feigong.baseball.activity.HomeActivity;
+import com.feigong.baseball.activity.home.HomeActivity;
 import com.feigong.baseball.base.BaseActivity;
 import com.feigong.baseball.common.StatusBarUtil;
 import com.ml.core.imageloader.CustomerImageLoadingListener;
@@ -53,6 +54,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getLayout() {
+        //去除状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         return R.layout.activity_main;
     }
 
@@ -68,7 +73,7 @@ public class MainActivity extends BaseActivity {
         String url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522737230&di=7873305994bc28da3644e4baae8025a2&imgtype=jpg&er=1&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4610b912c8fcc3ce510ed22e9845d688d53f20e4.jpg";
 
         //
-        ImageLoaderUtil.imageLoadingListener(url, ivAdvertising, ImageLoaderUtil.DEFAULT, new CustomerImageLoadingListener() {
+        ImageLoaderUtil.imageLoadingDefaultListener(url, ivAdvertising, new CustomerImageLoadingListener() {
             @Override
             public void onLoadingComplete() {
                 ivAdvertising.setVisibility(View.VISIBLE);

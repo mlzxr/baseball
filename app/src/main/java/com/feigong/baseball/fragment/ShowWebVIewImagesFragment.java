@@ -102,7 +102,7 @@ public class ShowWebVIewImagesFragment extends BaseFragment {
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView imageView = new ImageView(getContext());
             String imagUrl = listImage.getImg_urls().get(position);
-            ImageLoaderUtil.imageLoadingListener(imagUrl, imageView, 0);
+            ImageLoaderUtil.imageLoadingDefault(imagUrl, imageView);
             container.addView(imageView);
             return imageView;
         }

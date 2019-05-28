@@ -74,7 +74,7 @@ public class VideoDetailActivity extends BaseActivity {
                             ImageView imageView = new ImageView(VideoDetailActivity.this);
                             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                            ImageLoaderUtil.imageLoadingListener(bean.getV_poster(), imageView, 0);
+                            ImageLoaderUtil.imageLoadingDefault(bean.getV_poster(), imageView);
 
                             detailPlayer.setThumbImageView(imageView);
                             //增加title

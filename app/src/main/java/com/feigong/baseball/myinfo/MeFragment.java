@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.feigong.baseball.R;
-import com.feigong.baseball.activity.HomeActivity;
+import com.feigong.baseball.activity.home.HomeActivity;
 import com.feigong.baseball.base.BaseFragment;
 import com.feigong.baseball.beans.ReturnMSG_UserInfo;
 import com.feigong.baseball.common.Constant;
@@ -18,7 +18,6 @@ import com.feigong.baseball.fgview.View_ITI_Horizontal;
 import com.google.gson.Gson;
 import com.ml.core.imageloader.ImageLoaderUtil;
 import com.ml.core.util.L;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -81,7 +80,7 @@ public class MeFragment extends BaseFragment {
                             String nickname = dataBean.getLoginInfo().getNickname();
                             String avator = dataBean.getLoginInfo().getAvator();
                             if (!TextUtils.isEmpty(avator)) {
-                                ImageLoaderUtil.imageLoadingListener(avator, iv_avator, 1);
+                                ImageLoaderUtil.imageLoadingCircle(avator, iv_avator);
                             }
                         }
                     }
@@ -175,7 +174,7 @@ public class MeFragment extends BaseFragment {
 
     public void loadAvator() {
 
-        ImageLoaderUtil.imageLoadingListener("file://" + Constant.UPLOADFILEPATH, iv_avator, 1);
+        ImageLoaderUtil.imageLoadingCircle("file://" + Constant.UPLOADFILEPATH, iv_avator);
     }
 
     private void openFragment(Map map) {
